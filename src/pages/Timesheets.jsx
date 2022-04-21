@@ -2,7 +2,21 @@ import React from "react";
 import { useEffect, useState } from "react";
 import Timesheet from "../components/Timesheet";
 import services from "../services";
-import { Button, Select, Grid, Box, TextField, MenuItem } from "@mui/material";
+import {
+  Button,
+  Select,
+  Grid,
+  Box,
+  TextField,
+  MenuItem,
+  InputLabel,
+  FormControl,
+} from "@mui/material";
+
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import { Item } from "../components/Item";
 import "../components/timesheet.css";
@@ -11,6 +25,7 @@ export default function Timesheets() {
   const [timeList, setList] = useState([]);
   const [userList, setUserList] = useState([]);
   const [projectList, setProjectList] = useState([]);
+  const [dateValue, setDateValue] = useState(null);
 
   function fetchAndSetTimesheet() {
     services
@@ -53,9 +68,11 @@ export default function Timesheets() {
   }
   console.log(userList);
 
-  useEffect(fetchAndSetUserList, []);
-  useEffect(fetchAndSetTimesheet, []);
-  useEffect(fetchAndSetProjectList, []);
+  useEffect(() => {
+    fetchAndSetUserList();
+    fetchAndSetTimesheet();
+    fetchAndSetProjectList();
+  }, []);
 
   return (
     <div>
@@ -70,31 +87,46 @@ export default function Timesheets() {
         autoComplete="off"
         onSubmit={console.log("toto")}
       >
-        <TextField id="filled-basic" label="Filled" variant="filled" />
-
-        <Select>
-          {projectList.map((item) => (
-            <MenuItem
-              key={item._id}
-              value={item._id}
-              //   style={getStyles(name, personName, theme)}
-            >
-              {item.name}
-            </MenuItem>
-          ))}
-        </Select>
-
-        <Select>
-          {userList.map((item) => (
-            <MenuItem
-              key={item._id}
-              value={item._id}
-              //   style={getStyles(name, personName, theme)}
-            >
-              {item.first_name} {item.last_name}
-            </MenuItem>
-          ))}
-        </Select>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker
+            label="Date"
+            value={dateValue}
+            onChange={(newValue) => {
+              setDateValue(newValue);
+            }}
+            renderInput={(params) => <TextField {...params} />}
+          />
+        </LocalizationProvider>
+        <TextField id="filled-basic" label="Description" variant="filled" />
+        <TextField id="filled-basic" label="Duration (min)" variant="filled" />
+        <FormControl>
+          <InputLabel id="projectLabel">Project</InputLabel>
+          <Select labelId="projectLabel">
+            {projectList.map((item) => (
+              <MenuItem
+                key={item._id}
+                value={item._id}
+                //   style={getStyles(name, personName, theme)}
+              >
+                {item.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl>
+          <InputLabel id="userLabel">User</InputLabel>
+          <Select labelId="userLabel">
+            {userList.map((item) => (
+              <MenuItem
+                key={item._id}
+                value={item._id}
+                //   style={getStyles(name, personName, theme)}
+              >
+                {item.first_name} {item.last_name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
         <Button type="sumbit" variant="contained">
           Submit
