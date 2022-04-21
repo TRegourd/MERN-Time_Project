@@ -33,7 +33,8 @@ export default function Timesheets() {
 
   return (
     <div>
-      <h1>Timesheets</h1>
+      <h2>New Timesheet</h2>
+      <h2>Timesheets</h2>
       <Grid className="timesheets" container spacing={2}>
         <Grid item xs={4}>
           <Item className="headerItem">Description</Item>

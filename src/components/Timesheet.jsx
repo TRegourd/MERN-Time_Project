@@ -1,5 +1,6 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
 import "./timesheet.css";
 import { Item } from "./Item";
 
@@ -37,16 +38,16 @@ export default function Timesheet({
       <br />
       <Grid>
         <Grid item xs={12}>
-          <DeleteButton className="deleteButton" onDelete={onDeleteTimesheet}>
+          <Button
+            variant="contained"
+            className="deleteButton"
+            onClick={onDeleteTimesheet}
+          >
             Delete Timesheet
-          </DeleteButton>
+          </Button>
         </Grid>
       </Grid>
       <hr />
     </div>
   );
-}
-
-function DeleteButton({ onDelete, children }) {
-  return <button onClick={onDelete}> X {children} </button>;
 }
