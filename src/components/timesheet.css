@@ -1,0 +1,13 @@
+.timesheet {
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+.timesheets {
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+.headerItem {
+  background-color: lightgray !important;
+}
