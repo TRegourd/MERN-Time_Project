@@ -4,6 +4,7 @@ import Timesheet from "../components/Timesheet";
 import services from "../services";
 import Grid from "@mui/material/Grid";
 import { Item } from "../components/Item";
+import "../components/timesheet.css";
 
 export default function Timesheets() {
   const [timeList, setList] = useState([]);
@@ -33,21 +34,21 @@ export default function Timesheets() {
   return (
     <div>
       <h1>Timesheets</h1>
-      <Grid container spacing={2}>
+      <Grid className="timesheets" container spacing={2}>
         <Grid item xs={4}>
-          <Item>Description</Item>
+          <Item className="headerItem">Description</Item>
         </Grid>
         <Grid item xs={2}>
-          <Item>User</Item>
+          <Item className="headerItem">User</Item>
         </Grid>
         <Grid item xs={2}>
-          <Item>Project</Item>
+          <Item className="headerItem">Project</Item>
         </Grid>
         <Grid item xs={2}>
-          <Item>Date</Item>
+          <Item className="headerItem">Date</Item>
         </Grid>
         <Grid item xs={2}>
-          <Item>Duration</Item>
+          <Item className="headerItem">Duration</Item>
         </Grid>
       </Grid>
       {timeList.map((time) => (

@@ -7,6 +7,8 @@ export default function Timesheet({
   desc,
   userId,
   projectId,
+  date,
+  duration,
   onDeleteTimesheet,
 }) {
   return (
@@ -25,10 +27,10 @@ export default function Timesheet({
             <Item>{projectId.name}</Item>
           </Grid>
           <Grid item xs={2}>
-            <Item>xs=8</Item>
+            <Item>{date}</Item>
           </Grid>
           <Grid item xs={2}>
-            <Item>xs=8</Item>
+            <Item>{duration} min</Item>
           </Grid>
         </Grid>
       </div>
