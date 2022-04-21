@@ -8,6 +8,9 @@ const services = {
   getUsersList() {
     return base.get(`/users`).then((res) => res.data);
   },
+  getProjectList() {
+    return base.get(`/projects`).then((res) => res.data);
+  },
   getAllTimesheetList() {
     return base.get(`/timesheet/all`).then((res) => res.data);
   },

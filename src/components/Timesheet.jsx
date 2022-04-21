@@ -6,8 +6,8 @@ import { Item } from "./Item";
 
 export default function Timesheet({
   desc,
-  userId,
-  projectId,
+  user,
+  project,
   date,
   duration,
   onDeleteTimesheet,
@@ -21,11 +21,11 @@ export default function Timesheet({
           </Grid>
           <Grid item xs={2}>
             <Item>
-              {userId.first_name} {userId.last_name}
+              {user.first_name} {user.last_name}
             </Item>
           </Grid>
           <Grid item xs={2}>
-            <Item>{projectId.name}</Item>
+            <Item>{project.name}</Item>
           </Grid>
           <Grid item xs={2}>
             <Item>{date}</Item>
