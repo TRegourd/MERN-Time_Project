@@ -23,7 +23,7 @@ const Navbar = () => {
               <span>Homepage</span>
             </span>
           </Link>
-          <Link className="links" to="/timesheet/">
+          <Link className="links" to="/timesheet">
             <span className="topbarLink">
               <PunchClockIcon />
               My TimeSheet
