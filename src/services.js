@@ -8,6 +8,10 @@ const services = {
   getUsersList() {
     return base.get(`/users`).then((res) => res.data);
   },
+
+  getProjectsList() {
+    return base.get(`/projects`).then((res) => res.data);
+  },
 };
 
 export default services;
