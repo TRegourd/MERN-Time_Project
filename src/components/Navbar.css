@@ -62,10 +62,18 @@
   color: white;
 }
 
+.topbarLinks {
+  display: flex;
+  justify-content: space-evenly;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
 .topbarLink {
-  margin-right: 10px;
-  font-size: 14px;
   cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .topbarIcons {

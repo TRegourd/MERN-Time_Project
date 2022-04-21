@@ -14,6 +14,7 @@ function App() {
           <Route element="Users Page" path="/users" exact />
           <Route element="Projects Page" path="/projects" exact />
           <Route element="Login page" path="/login" exact></Route>
+          <Route element="Logout page" path="/logout" exact></Route>
           <Route element="Signin Page" path="/signin" exact></Route>
           <Route element="Profile Page" path="/profilePage" exact></Route>
         </Routes>

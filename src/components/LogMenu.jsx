@@ -49,9 +49,11 @@ export default function LogMenu() {
           </Link>
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          <Button variant="outlined" onClick={handleClick}>
-            Log Out
-          </Button>
+          <Link className="menuLinks" to="/logout">
+            <Button variant="outlined" onClick={handleClick}>
+              Log Out
+            </Button>
+          </Link>
         </MenuItem>
         <MenuItem onClick={handleClose}>
           <Link className="menuLinks" to="/signin">

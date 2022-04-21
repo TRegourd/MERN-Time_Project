@@ -1,8 +1,8 @@
 import "./Navbar.css";
-import SearchIcon from "@mui/icons-material/Search";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import PersonIcon from "@mui/icons-material/Person";
-import ChatIcon from "@mui/icons-material/Chat";
+import HomeIcon from "@mui/icons-material/Home";
+import PunchClockIcon from "@mui/icons-material/PunchClock";
+import AccountTreeIcon from "@mui/icons-material/AccountTree";
+import GroupIcon from "@mui/icons-material/Group";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import LogMenu from "./LogMenu";
 
@@ -18,16 +18,28 @@ const Navbar = () => {
       <div className="topbarCenter">
         <div className="topbarLinks">
           <Link className="links" to="/">
-            <span className="topbarLink">Homepage</span>
+            <span className="topbarLink">
+              <HomeIcon />
+              <span>Homepage</span>
+            </span>
           </Link>
           <Link className="links" to="/timesheet/">
-            <span className="topbarLink">My TimeSheet</span>
+            <span className="topbarLink">
+              <PunchClockIcon />
+              My TimeSheet
+            </span>
           </Link>
           <Link className="links" to="/projects">
-            <span className="topbarLink">Projects</span>
+            <span className="topbarLink">
+              <AccountTreeIcon />
+              Projects
+            </span>
           </Link>
           <Link className="links" to="/users">
-            <span className="topbarLink">Users</span>
+            <span className="topbarLink">
+              <GroupIcon />
+              Users
+            </span>
           </Link>
         </div>
       </div>
