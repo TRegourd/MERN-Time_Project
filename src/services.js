@@ -11,6 +11,9 @@ const services = {
   getAllTimesheetList() {
     return base.get(`/timesheet/all`).then((res) => res.data);
   },
+  deleteTimesheetById(id) {
+    return base.delete(`/timesheet/delete/${id}`).then((res) => res.data);
+  },
 };
 
 export default services;
