@@ -4,12 +4,15 @@ import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import services from "../services";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function Login() {
+export default function Login({ logged, setLogged }) {
   const [body, setBody] = useState({
     email: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -17,7 +20,10 @@ export default function Login() {
     services
       .login(body)
       .then(() => {
-        alert("logged");
+        localStorage.setItem("logged", true);
+        setLogged(true);
+        alert("successfully logged");
+        navigate("/");
       })
       .catch((err) => {
         console.log(err);
