@@ -66,7 +66,7 @@ export default function Timesheets() {
 
   function fetchAndSetProjectList() {
     services
-      .getProjectList()
+      .getProjectsList()
       .then((list) => {
         setProjectList(list);
       })

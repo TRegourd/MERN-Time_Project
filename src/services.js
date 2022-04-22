@@ -5,10 +5,18 @@ const baseURL = "http://localhost:1337";
 const base = axios.create({ baseURL });
 
 const services = {
+  /**
+   * SERVICES USERS
+   *
+   */
   getUsersList() {
     return base.get(`/users`).then((res) => res.data);
   },
 
+  /**
+   * SERVICES PROJECTS
+   *
+   */
   getProjectsList() {
     return base.get(`/projects`).then((res) => res.data);
   },
@@ -30,12 +38,22 @@ const services = {
       .then((res) => res.data);
   },
 
-  getProjectList() {
-    return base.get(`/projects`).then((res) => res.data);
+  deleteProject(projectId) {
+    return base.delete(`/projects/id/${projectId}`).then((res) => res.data);
   },
+
+  /**
+   * SERVICES TIMESHEET
+   *
+   */
   getAllTimesheetList() {
     return base.get(`/timesheet/all`).then((res) => res.data);
   },
+
+  getTimesheetOfProject(idProject) {
+    return base.get(`/timesheet/project/${idProject}`);
+  },
+
   deleteTimesheetById(id) {
     return base.delete(`/timesheet/delete/${id}`).then((res) => res.data);
   },
