@@ -17,6 +17,10 @@ const services = {
   deleteTimesheetById(id) {
     return base.delete(`/timesheet/delete/${id}`).then((res) => res.data);
   },
+
+  createNewTimesheet(body) {
+    return base.post(`timesheet/newtimesheet`, body);
+  },
 };
 
 export default services;

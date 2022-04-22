@@ -24,8 +24,11 @@ export default function Timesheets() {
   const [timeList, setList] = useState([]);
   const [userList, setUserList] = useState([]);
   const [projectList, setProjectList] = useState([]);
-  const [dateValue, setDateValue] = useState(null);
   const [showTimesheet, setShowTimesheet] = useState(false);
+
+  const [dateValue, setDateValue] = useState(null);
+  const [projectValue, setProjectValue] = useState("");
+  const [userValue, setUserValue] = useState("");
 
   function fetchAndSetTimesheet() {
     if (showTimesheet) {
@@ -56,7 +59,6 @@ export default function Timesheets() {
     services
       .getUsersList()
       .then((list) => {
-        console.log(list);
         setUserList(list);
       })
       .catch(() => alert("erreur"));
@@ -66,23 +68,58 @@ export default function Timesheets() {
     services
       .getProjectList()
       .then((list) => {
-        console.log(list);
         setProjectList(list);
       })
       .catch(() => alert("erreur"));
   }
 
   function handleShowButton() {
-    console.log("showtimesheet 1", showTimesheet);
-    // setShowTimesheet(!showTimesheet);
     fetchAndSetTimesheet();
   }
 
-  console.log("showtimesheet 2", showTimesheet);
+  // envoi du formulaire
+
+  const [form, setForm] = useState({
+    desc: "",
+    duration: "",
+  });
+
+  const body = {
+    desc: form.desc,
+    date: dateValue,
+    duration: form.duration,
+    project: projectValue,
+    user: userValue,
+  };
+
+  function updateForm(key, value) {
+    setForm({ ...form, [key]: value });
+  }
+
+  function handleChangeInput(e) {
+    const { name, value } = e.target;
+    updateForm(name, value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log(body);
+    services.createNewTimesheet(body);
+    // services
+    //   .login(body)
+    //   .then(() => {
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     alert("oups");
+    //   });
+  }
+
+  // envoi du formulaire
 
   useEffect(() => {
     fetchAndSetUserList();
-    fetchAndSetTimesheet();
+    //fetchAndSetTimesheet();
     fetchAndSetProjectList();
     fetchAndSetTimesheet();
   }, []);
@@ -90,9 +127,11 @@ export default function Timesheets() {
   return (
     <div>
       <h2>New Timesheet</h2>
-
+      {/* <pre>{JSON.stringify(body, null, 2)}</pre> */}
       <Box
         component="form"
+        onSubmit={handleSubmit}
+        onChange={handleChangeInput}
         sx={{
           "& > :not(style)": { m: 1, width: "25ch" },
         }}
@@ -103,6 +142,7 @@ export default function Timesheets() {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
             label="Date"
+            name="date"
             value={dateValue}
             onChange={(newValue) => {
               setDateValue(newValue);
@@ -110,11 +150,30 @@ export default function Timesheets() {
             renderInput={(params) => <TextField {...params} />}
           />
         </LocalizationProvider>
-        <TextField id="filled-basic" label="Description" variant="filled" />
-        <TextField id="filled-basic" label="Duration (min)" variant="filled" />
+
+        <TextField
+          id="filled-basic"
+          name="desc"
+          label="Description"
+          variant="filled"
+        />
+        <TextField
+          id="filled-basic"
+          name="duration"
+          label="Duration (min)"
+          variant="filled"
+        />
         <FormControl>
           <InputLabel id="projectLabel">Project</InputLabel>
-          <Select labelId="projectLabel">
+          <Select
+            labelId="projectLabel"
+            name="project"
+            value={projectValue}
+            onChange={(newValue) => {
+              setProjectValue(newValue.target.value);
+            }}
+          >
+            <MenuItem value={""}>Chose Project</MenuItem>
             {projectList.map((item) => (
               <MenuItem
                 key={item._id}
@@ -128,7 +187,15 @@ export default function Timesheets() {
         </FormControl>
         <FormControl>
           <InputLabel id="userLabel">User</InputLabel>
-          <Select labelId="userLabel">
+          <Select
+            labelId="userLabel"
+            name="user"
+            value={userValue}
+            onChange={(newValue) => {
+              setUserValue(newValue.target.value);
+            }}
+          >
+            <MenuItem value={""}>Chose User</MenuItem>
             {userList.map((item) => (
               <MenuItem
                 key={item._id}
@@ -171,7 +238,9 @@ export default function Timesheets() {
         <Timesheet
           key={time._id}
           {...time}
-          onDeleteTimesheet={() => deleteTimesheet(time._id)}
+          onDeleteTimesheet={() => {
+            deleteTimesheet(time._id);
+          }}
         />
       ))}
     </div>
