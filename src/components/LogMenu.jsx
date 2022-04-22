@@ -6,8 +6,7 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import "./Navbar.css";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 
-export default function LogMenu({ logged }) {
-  console.log("logmenu logged", logged);
+export default function LogMenu({ logged, setLogged }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -16,6 +15,11 @@ export default function LogMenu({ logged }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  function disconnect() {
+    setLogged(false);
+    localStorage.removeItem("logged");
+  }
 
   return (
     <div>
@@ -54,7 +58,12 @@ export default function LogMenu({ logged }) {
           </MenuItem>
         )}
         {logged && (
-          <MenuItem onClick={handleClose}>
+          <MenuItem
+            onClick={() => {
+              handleClose();
+              disconnect();
+            }}
+          >
             <Link className="menuLinks" to="/logout">
               <Button variant="outlined" onClick={handleClick}>
                 Log Out

@@ -4,14 +4,15 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Timesheets from "./pages/Timesheets";
 import Login from "./pages/Login";
 import { useState } from "react";
+import Logout from "./pages/Logout";
 
 function App() {
-  const [logged, setLogged] = useState(false);
+  const [logged, setLogged] = useState(true);
 
   return (
     <div className="App">
       <Router>
-        <Navbar logged={logged}></Navbar>
+        <Navbar logged={logged} setLogged={setLogged}></Navbar>
 
         <Routes>
           <Route element="Home page" path="/" exact />
@@ -19,7 +20,7 @@ function App() {
           <Route element="Users Page" path="/users" exact />
           <Route element="Projects Page" path="/projects" exact />
           <Route element={<Login />} path="/login" exact></Route>
-          <Route element="Logout page" path="/logout" exact></Route>
+          <Route element={<Logout />} path="/logout" exact></Route>
           <Route element="Signin Page" path="/signin" exact></Route>
           <Route element="Profile Page" path="/profilePage" exact></Route>
         </Routes>
