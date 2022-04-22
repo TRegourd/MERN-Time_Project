@@ -6,8 +6,6 @@ import services from "../services";
 import { useState } from "react";
 
 export default function Login() {
-  //let body = { email: "marrington3@youtube.com", password: "dQHYdc3rBZX" };
-
   const [body, setBody] = useState({
     email: "",
     password: "",
@@ -48,7 +46,6 @@ export default function Login() {
       onChange={handleChange}
     >
       <h1>Login</h1>
-      <pre>{JSON.stringify(body, null, 2)}</pre>
       <div>
         <TextField
           required

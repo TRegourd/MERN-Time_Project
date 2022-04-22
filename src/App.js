@@ -3,12 +3,15 @@ import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Timesheets from "./pages/Timesheets";
 import Login from "./pages/Login";
+import { useState } from "react";
 
 function App() {
+  const [logged, setLogged] = useState(false);
+
   return (
     <div className="App">
       <Router>
-        <Navbar></Navbar>
+        <Navbar logged={logged}></Navbar>
 
         <Routes>
           <Route element="Home page" path="/" exact />

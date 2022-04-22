@@ -6,7 +6,8 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import "./Navbar.css";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 
-export default function LogMenu() {
+export default function LogMenu({ logged }) {
+  console.log("logmenu logged", logged);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -36,32 +37,40 @@ export default function LogMenu() {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleClose}>
-          <Link className="menuLinks" to="/profilePage">
-            Profile
-          </Link>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Link className="menuLinks" to="/login">
-            <Button variant="outlined" onClick={handleClick}>
-              Log In
-            </Button>
-          </Link>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Link className="menuLinks" to="/logout">
-            <Button variant="outlined" onClick={handleClick}>
-              Log Out
-            </Button>
-          </Link>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Link className="menuLinks" to="/signin">
-            <Button variant="outlined" onClick={handleClick}>
-              Sign In
-            </Button>
-          </Link>
-        </MenuItem>
+        {logged && (
+          <MenuItem onClick={handleClose}>
+            <Link className="menuLinks" to="/profilePage">
+              Profile
+            </Link>
+          </MenuItem>
+        )}
+        {!logged && (
+          <MenuItem onClick={handleClose}>
+            <Link className="menuLinks" to="/login">
+              <Button variant="outlined" onClick={handleClick}>
+                Log In
+              </Button>
+            </Link>
+          </MenuItem>
+        )}
+        {logged && (
+          <MenuItem onClick={handleClose}>
+            <Link className="menuLinks" to="/logout">
+              <Button variant="outlined" onClick={handleClick}>
+                Log Out
+              </Button>
+            </Link>
+          </MenuItem>
+        )}
+        {!logged && (
+          <MenuItem onClick={handleClose}>
+            <Link className="menuLinks" to="/signin">
+              <Button variant="outlined" onClick={handleClick}>
+                Sign In
+              </Button>
+            </Link>
+          </MenuItem>
+        )}
       </Menu>
     </div>
   );
