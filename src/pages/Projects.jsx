@@ -1,56 +1,49 @@
 import { Grid, Button, TextField } from "@mui/material/";
 import { useEffect, useState } from "react";
-import ButtonColor from "../components/ColorReact";
+import Project from "../components/Project";
 import services from "../services";
 
 export default function Projects() {
-  const [project, setProject] = useState([]);
+  const [projectsList, setprojectsList] = useState([]);
 
   function fetchAndSetProjects() {
     services
       .getProjectsList()
-      .then((res) => setProject(res))
+      .then((res) => setprojectsList(res))
       .catch(() => alert("Impossible de charger la liste des projets"));
   }
 
-  useEffect(fetchAndSetProjects, []);
-  return (
-    <div>
-      <h2>Projects</h2>
+  function deleteProject(project) {
+    services.getTimesheetOfProject(project._id).then((times) => {
+      if (times.data.length === 0) {
+        services
+          .deleteProject(project._id)
+          .then(() => {
+            fetchAndSetProjects();
+            alert("Project deleted!");
+          })
+          .catch(() => alert("Impossible de charger la liste des projets"));
+      } else {
+        alert(`You can't delete this project!
+                There is time associate to this project`);
+      }
+    });
+  }
 
-      <Grid
-        container
-        rowSpacing={1}
-        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-        justifyContent="space-evenly"
-      >
-        <Grid item xs={8} textAlign="left">
-          <h2> Name </h2>
-        </Grid>
-        {project.map((oneProject) => (
-          <Grid item xs={8} key={oneProject._id}>
-            <Grid container>
-              <Grid item xs={2}>
-                <ButtonColor
-                  r={oneProject.color.r}
-                  g={oneProject.color.g}
-                  b={oneProject.color.b}
-                  onUpdateColor={(color) =>
-                    services.updateProjectColor(oneProject._id, color)
-                  }
-                ></ButtonColor>
-              </Grid>
-              <Grid item xs={8} textAlign="left">
-                <TextField
-                  variant="outlined"
-                  value={oneProject.name}
-                  fullWidth
-                />
-              </Grid>
-            </Grid>
-          </Grid>
-        ))}
+  useEffect(fetchAndSetProjects, []);
+
+  return (
+    <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+      <Grid item xs={8} textAlign="center">
+        <h1> Name Projects</h1>
       </Grid>
-    </div>
+      {projectsList.map((oneProject) => (
+        <Project
+          key={oneProject._id}
+          {...oneProject}
+          onDeleteProject={() => deleteProject(oneProject)}
+        />
+      ))}
+    </Grid>
   );
 }
