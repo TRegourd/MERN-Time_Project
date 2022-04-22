@@ -147,7 +147,7 @@ export default function Timesheets() {
       </Box>
 
       <h2>Timesheets</h2>
-      <Button onClick={handleShowButton} variant="outlined">
+      <Button onClick={handleShowButton} variant="contained">
         Show/Hide
       </Button>
       <Grid className="timesheets" container spacing={2}>

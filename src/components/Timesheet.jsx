@@ -39,7 +39,7 @@ export default function Timesheet({
       <Grid>
         <Grid item xs={12}>
           <Button
-            variant="contained"
+            variant="outlined"
             className="deleteButton"
             onClick={onDeleteTimesheet}
           >
@@ -47,7 +47,6 @@ export default function Timesheet({
           </Button>
         </Grid>
       </Grid>
-      <hr />
     </div>
   );
 }
