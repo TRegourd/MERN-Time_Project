@@ -127,7 +127,7 @@ export default function Timesheets() {
   return (
     <div>
       <h2>New Timesheet</h2>
-      <pre>{JSON.stringify(body, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(body, null, 2)}</pre> */}
       <Box
         component="form"
         onSubmit={handleSubmit}
@@ -238,7 +238,9 @@ export default function Timesheets() {
         <Timesheet
           key={time._id}
           {...time}
-          onDeleteTimesheet={() => deleteTimesheet(time._id)}
+          onDeleteTimesheet={() => {
+            deleteTimesheet(time._id);
+          }}
         />
       ))}
     </div>
