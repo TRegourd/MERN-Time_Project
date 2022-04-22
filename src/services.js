@@ -21,6 +21,11 @@ const services = {
   createNewTimesheet(body) {
     return base.post(`timesheet/newtimesheet`, body);
   },
+
+  login(body) {
+    // email, password
+    return base.post("/auth/login", body);
+  },
 };
 
 export default services;
