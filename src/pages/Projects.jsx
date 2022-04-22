@@ -35,7 +35,9 @@ export default function Projects() {
                   r={oneProject.color.r}
                   g={oneProject.color.g}
                   b={oneProject.color.b}
-                  onUpdateColor={() => console.log(oneProject._id)}
+                  onUpdateColor={(color) =>
+                    services.updateProjectColor(oneProject._id, color)
+                  }
                 ></ButtonColor>
               </Grid>
               <Grid item xs={8} textAlign="left">

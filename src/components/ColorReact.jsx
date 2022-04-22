@@ -26,7 +26,7 @@ class ButtonColor extends React.Component {
 
   handleChange = (color) => {
     this.setState({ color: color.rgb });
-    this.props.onUpdateColor();
+    this.props.onUpdateColor(color.rgb);
   };
 
   render() {
