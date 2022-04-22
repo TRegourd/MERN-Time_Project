@@ -12,6 +12,10 @@ const services = {
   getProjectsList() {
     return base.get(`/projects`).then((res) => res.data);
   },
+
+  updateProject() {
+    return base.post(`/projects/id/:id`).then((res) => res.data);
+  },
 };
 
 export default services;
