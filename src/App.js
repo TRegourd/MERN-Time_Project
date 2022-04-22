@@ -5,13 +5,13 @@ import Timesheets from "./pages/Timesheets";
 import Login from "./pages/Login";
 import { useState, useEffect } from "react";
 import Logout from "./pages/Logout";
+import Signin from "./pages/Signin";
 
 function App() {
   const [logged, setLogged] = useState(true);
 
   useEffect(() => {
     const logged = localStorage.getItem("logged");
-    console.log(logged);
     setLogged(logged == "true");
   }, []);
 
@@ -31,7 +31,7 @@ function App() {
             exact
           ></Route>
           <Route element={<Logout />} path="/logout" exact></Route>
-          <Route element="Signin Page" path="/signin" exact></Route>
+          <Route element={<Signin />} path="/signin" exact></Route>
           <Route element="Profile Page" path="/profilePage" exact></Route>
         </Routes>
       </Router>
