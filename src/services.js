@@ -61,6 +61,15 @@ const services = {
   createNewTimesheet(body) {
     return base.post(`timesheet/newtimesheet`, body);
   },
+
+  login(body) {
+    // email, password
+    return base.post("/auth/login", body);
+  },
+
+  signin(body) {
+    return base.post("/auth/signin", body);
+  },
 };
 
 export default services;

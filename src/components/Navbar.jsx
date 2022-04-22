@@ -6,7 +6,7 @@ import GroupIcon from "@mui/icons-material/Group";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import LogMenu from "./LogMenu";
 
-const Navbar = () => {
+const Navbar = ({ logged, setLogged }) => {
   return (
     <div className="topbarContainer">
       <div className="topbarLeft">
@@ -44,7 +44,7 @@ const Navbar = () => {
         </div>
       </div>
       <div className="topbarRight">
-        <LogMenu />
+        <LogMenu logged={logged} setLogged={setLogged} />
       </div>
     </div>
   );
