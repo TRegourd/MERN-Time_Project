@@ -7,6 +7,8 @@ import { useState, useEffect } from "react";
 import Logout from "./pages/Logout";
 import Signin from "./pages/Signin";
 
+import Projects from './pages/Projects'
+
 function App() {
   const [logged, setLogged] = useState(true);
 
@@ -24,7 +26,6 @@ function App() {
           <Route element="Home page" path="/" exact />
           <Route element={<Timesheets />} path="/timesheet" exact></Route>
           <Route element="Users Page" path="/users" exact />
-          <Route element="Projects Page" path="/projects" exact />
           <Route
             element={<Login logged={logged} setLogged={setLogged} />}
             path="/login"
@@ -32,6 +33,7 @@ function App() {
           ></Route>
           <Route element={<Logout />} path="/logout" exact></Route>
           <Route element={<Signin />} path="/signin" exact></Route>
+          <Route element={<Projects />} path="/projects" exact />
           <Route element="Profile Page" path="/profilePage" exact></Route>
         </Routes>
       </Router>
