@@ -25,15 +25,21 @@ export default function Timesheets() {
   const [userList, setUserList] = useState([]);
   const [projectList, setProjectList] = useState([]);
   const [dateValue, setDateValue] = useState(null);
+  const [showTimesheet, setShowTimesheet] = useState(false);
 
   function fetchAndSetTimesheet() {
-    services
-      .getAllTimesheetList()
-      .then((list) => {
-        console.log(list);
-        setList(list);
-      })
-      .catch(() => alert("erreur"));
+    if (showTimesheet) {
+      services
+        .getAllTimesheetList()
+        .then((list) => {
+          setList(list);
+          setShowTimesheet(!showTimesheet);
+        })
+        .catch(() => alert("erreur"));
+    } else {
+      setList([]);
+      setShowTimesheet(!showTimesheet);
+    }
   }
 
   function deleteTimesheet(id) {
@@ -65,12 +71,20 @@ export default function Timesheets() {
       })
       .catch(() => alert("erreur"));
   }
-  console.log(userList);
+
+  function handleShowButton() {
+    console.log("showtimesheet 1", showTimesheet);
+    // setShowTimesheet(!showTimesheet);
+    fetchAndSetTimesheet();
+  }
+
+  console.log("showtimesheet 2", showTimesheet);
 
   useEffect(() => {
     fetchAndSetUserList();
     fetchAndSetTimesheet();
     fetchAndSetProjectList();
+    fetchAndSetTimesheet();
   }, []);
 
   return (
@@ -84,7 +98,7 @@ export default function Timesheets() {
         }}
         noValidate
         autoComplete="off"
-        onSubmit={console.log("toto")}
+        // onSubmit={console.log("toto")}
       >
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
@@ -133,6 +147,9 @@ export default function Timesheets() {
       </Box>
 
       <h2>Timesheets</h2>
+      <Button onClick={handleShowButton} variant="contained">
+        Show/Hide
+      </Button>
       <Grid className="timesheets" container spacing={2}>
         <Grid item xs={4}>
           <Item className="headerItem">Description</Item>
