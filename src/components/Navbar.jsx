@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 import LogMenu from "./LogMenu";
 import { AuthContext } from "../AuthProvider";
 import { useContext } from "react";
+import { Button } from "@mui/material";
 
 const Navbar = () => {
   const { logged, setLogged } = useContext(AuthContext);
@@ -20,12 +21,21 @@ const Navbar = () => {
 
       <div className="topbarCenter">
         <div className="topbarLinks">
-          <Link className="links" to="/">
-            <span className="topbarLink">
-              <HomeIcon />
-              <span>Homepage</span>
-            </span>
-          </Link>
+          {!logged && (
+            <Link className="links" to="/login">
+              <span className="topbarLink">
+                <Button variant="contained">Get Started</Button>
+              </span>
+            </Link>
+          )}
+          {logged && (
+            <Link className="links" to="/">
+              <span className="topbarLink">
+                <HomeIcon />
+                <span>Homepage</span>
+              </span>
+            </Link>
+          )}
           {logged && (
             <Link className="links" to="/timesheet">
               <span className="topbarLink">
