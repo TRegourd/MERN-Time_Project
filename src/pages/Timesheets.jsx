@@ -59,7 +59,6 @@ export default function Timesheets() {
     services
       .getCurrentUser()
       .then((user) => {
-        console.log(user);
         setCurrentUser(user);
       })
       .catch(() => alert("erreur"));

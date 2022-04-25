@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 import { AuthContext } from "../AuthProvider";
 
 export default function LogMenu() {
-  const { logged, setLogged } = useContext(AuthContext);
+  const { logged, setLogged, disconnect } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -17,11 +17,6 @@ export default function LogMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  function disconnect() {
-    setLogged(false);
-    localStorage.removeItem("jwt");
-  }
 
   return (
     <div>
