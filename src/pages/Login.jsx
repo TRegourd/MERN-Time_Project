@@ -19,7 +19,10 @@ export default function Login({ logged, setLogged }) {
     console.log(body);
     services
       .login(body)
-      .then(() => {
+      .then((result) => {
+        console.log(result.data);
+        const { jwt } = result.data;
+        localStorage.setItem("jwt", jwt);
         localStorage.setItem("logged", true);
         setLogged(true);
         alert("successfully logged");
