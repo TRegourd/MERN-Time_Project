@@ -1,13 +1,16 @@
 import { Button, Grid } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthProvider";
-import { Item } from "../components/Item";
+import DisplayProfile from "../components/DisplayProfile";
+import EditProfile from "../components/EditProfile";
+
 import LogOutSnackbar from "../components/LogoutSnackbar";
 import services from "../services";
 import "./Profile.css";
 
 export default function Profile() {
   const [currentUser, setCurrentUser] = useState({});
+  const [edit, setEdit] = useState(false);
   const { disconnect } = useContext(AuthContext);
 
   function fetchAndSetUserList() {
@@ -26,19 +29,26 @@ export default function Profile() {
   return (
     <div className="profileContainer">
       <h1>My Profile</h1>
-      <Item className="profileItem">First Name : {currentUser.first_name}</Item>
-      <Item className="profileItem">Last Name : {currentUser.last_name}</Item>
-      <Item className="profileItem">Adress : </Item>
-      <Item className="profileItem">Position : </Item>
-
-      <Button className="profileItem" onClick={disconnect} variant="contained">
-        Edit Password
-      </Button>
-      {/* 
+      {!edit && (
+        <DisplayProfile
+          currentUser={currentUser}
+          edit={edit}
+          setEdit={setEdit}
+        ></DisplayProfile>
+      )}
+      <br />
+      {edit && (
+        <EditProfile
+          currentUser={currentUser}
+          edit={edit}
+          setEdit={setEdit}
+        ></EditProfile>
+      )}
+      <br />
       <LogOutSnackbar
         className="profileItem"
         onClick={disconnect}
-      ></LogOutSnackbar> */}
+      ></LogOutSnackbar>
     </div>
   );
 }
