@@ -22,7 +22,7 @@ import "../components/timesheet.css";
 
 export default function Timesheets() {
   const [timeList, setList] = useState([]);
-  const [userList, setUserList] = useState([]);
+  const [currentUser, setCurrentUser] = useState({});
   const [projectList, setProjectList] = useState([]);
   const [showTimesheet, setShowTimesheet] = useState(false);
 
@@ -57,9 +57,10 @@ export default function Timesheets() {
 
   function fetchAndSetUserList() {
     services
-      .getUsersList()
-      .then((list) => {
-        setUserList(list);
+      .getCurrentUser()
+      .then((user) => {
+        console.log(user);
+        setCurrentUser(user);
       })
       .catch(() => alert("erreur"));
   }
@@ -105,14 +106,6 @@ export default function Timesheets() {
     e.preventDefault();
     console.log(body);
     services.createNewTimesheet(body);
-    // services
-    //   .login(body)
-    //   .then(() => {
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     alert("oups");
-    //   });
   }
 
   // envoi du formulaire
@@ -175,11 +168,7 @@ export default function Timesheets() {
           >
             <MenuItem value={""}>Chose Project</MenuItem>
             {projectList.map((item) => (
-              <MenuItem
-                key={item._id}
-                value={item._id}
-                //   style={getStyles(name, personName, theme)}
-              >
+              <MenuItem key={item._id} value={item._id}>
                 {item.name}
               </MenuItem>
             ))}
@@ -196,15 +185,9 @@ export default function Timesheets() {
             }}
           >
             <MenuItem value={""}>Chose User</MenuItem>
-            {userList.map((item) => (
-              <MenuItem
-                key={item._id}
-                value={item._id}
-                //   style={getStyles(name, personName, theme)}
-              >
-                {item.first_name} {item.last_name}
-              </MenuItem>
-            ))}
+            <MenuItem key={currentUser._id} value={currentUser._id}>
+              {currentUser.first_name} {currentUser.last_name}
+            </MenuItem>
           </Select>
         </FormControl>
 

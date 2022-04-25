@@ -25,7 +25,7 @@ function App() {
     <div className="App">
       <Navbar></Navbar>
 
-      <Routes style={{ marginTop: "100px" }}>
+      <Routes>
         <Route element={<Home />} path="/" exact />
         {logged && (
           <Route element={<Timesheets />} path="/timesheet" exact></Route>
