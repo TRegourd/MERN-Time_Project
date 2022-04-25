@@ -78,6 +78,7 @@ export default function Projects() {
   }, []);
 
   return (
+
     <Grid container rowSpacing={2}>
       <Grid item xs={12} textAlign="center">
         <h1> New Projects</h1>
@@ -131,6 +132,7 @@ export default function Projects() {
             onDeleteProject={() => deleteProject(oneProject)}
           />
         ))}
+
       </Grid>
     </Grid>
   );
