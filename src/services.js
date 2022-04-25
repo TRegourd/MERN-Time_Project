@@ -10,8 +10,11 @@ const services = {
    * SERVICES USERS
    *
    */
-  getUsersList() {
-    return base.get(`/users`).then((res) => res.data);
+  getCurrentUser() {
+    const token = localStorage.getItem("jwt");
+    return base
+      .get(`/users`, { headers: { Authorization: `Bearer ${token}` } })
+      .then((res) => res.data);
   },
 
   /**
@@ -62,7 +65,12 @@ const services = {
   },
 
   createNewTimesheet(body) {
-    return base.post(`timesheet/newtimesheet`, body);
+    const token = localStorage.getItem("jwt");
+    return base
+      .post(`timesheet/newtimesheet`, body, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => res.data);
   },
 
   login(body) {
