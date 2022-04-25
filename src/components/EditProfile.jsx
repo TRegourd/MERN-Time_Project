@@ -13,14 +13,16 @@ export default function EditProfile({ currentUser, edit, setEdit }) {
         First Name :{" "}
         <TextField
           className="profileItem"
-          value={currentUser.first_name}
+          defaultValue={currentUser.first_name}
+          placeholder={currentUser.first_name}
         ></TextField>
       </Item>
       <Item>
         Last Name :{" "}
         <TextField
           className="profileItem"
-          value={currentUser.last_name}
+          defaultValue={currentUser.last_name}
+          placeholder={currentUser.last_name}
         ></TextField>
       </Item>
       <Item>
