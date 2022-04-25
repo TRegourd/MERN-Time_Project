@@ -47,7 +47,10 @@ const services = {
    *
    */
   getAllTimesheetList() {
-    return base.get(`/timesheet/all`).then((res) => res.data);
+    const token = localStorage.getItem("jwt");
+    return base
+      .get(`/timesheet/all`, { headers: { Authorization: `Bearer ${token}` } })
+      .then((res) => res.data);
   },
 
   getTimesheetOfProject(idProject) {

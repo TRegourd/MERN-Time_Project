@@ -25,8 +25,10 @@ function App() {
 
         <Routes>
           <Route element={<Home />} path="/" exact />
-          <Route element={<Timesheets />} path="/timesheet" exact></Route>
-          <Route element="Users Page" path="/users" exact />
+          {logged && (
+            <Route element={<Timesheets />} path="/timesheet" exact></Route>
+          )}
+          {logged && <Route element="Users Page" path="/users" exact />}
           <Route
             element={<Login logged={logged} setLogged={setLogged} />}
             path="/login"
@@ -34,7 +36,7 @@ function App() {
           ></Route>
           <Route element={<Logout />} path="/logout" exact></Route>
           <Route element={<Signin />} path="/signin" exact></Route>
-          <Route element={<Projects />} path="/projects" exact />
+          {logged && <Route element={<Projects />} path="/projects" exact />}
           <Route element="Profile Page" path="/profilePage" exact></Route>
         </Routes>
       </Router>

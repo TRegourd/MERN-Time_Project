@@ -19,6 +19,7 @@ export default function LogMenu({ logged, setLogged }) {
   function disconnect() {
     setLogged(false);
     localStorage.removeItem("logged");
+    localStorage.removeItem("jwt");
   }
 
   return (
