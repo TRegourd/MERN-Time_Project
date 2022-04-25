@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 
 export default function Logout() {
   return (
-    <div>
+    <div style={{ marginTop: "100px" }}>
       <Alert severity="success" style={{ justifyContent: "center" }}>
         <AlertTitle>LogOut Successfull</AlertTitle>
         <Link style={{ textDecoration: "none" }} to="/">
