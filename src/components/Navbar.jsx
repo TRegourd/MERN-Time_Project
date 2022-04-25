@@ -23,24 +23,30 @@ const Navbar = ({ logged, setLogged }) => {
               <span>Homepage</span>
             </span>
           </Link>
-          <Link className="links" to="/timesheet">
-            <span className="topbarLink">
-              <PunchClockIcon />
-              My TimeSheet
-            </span>
-          </Link>
-          <Link className="links" to="/projects">
-            <span className="topbarLink">
-              <AccountTreeIcon />
-              Projects
-            </span>
-          </Link>
-          <Link className="links" to="/users">
-            <span className="topbarLink">
-              <GroupIcon />
-              Users
-            </span>
-          </Link>
+          {logged && (
+            <Link className="links" to="/timesheet">
+              <span className="topbarLink">
+                <PunchClockIcon />
+                My TimeSheet
+              </span>
+            </Link>
+          )}
+          {logged && (
+            <Link className="links" to="/projects">
+              <span className="topbarLink">
+                <AccountTreeIcon />
+                Projects
+              </span>
+            </Link>
+          )}
+          {logged && (
+            <Link className="links" to="/users">
+              <span className="topbarLink">
+                <GroupIcon />
+                Users
+              </span>
+            </Link>
+          )}
         </div>
       </div>
       <div className="topbarRight">

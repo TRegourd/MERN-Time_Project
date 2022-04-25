@@ -7,7 +7,8 @@ import { useState, useEffect } from "react";
 import Logout from "./pages/Logout";
 import Signin from "./pages/Signin";
 
-import Projects from './pages/Projects'
+import Projects from "./pages/Projects";
+import Home from "./pages/Home";
 
 function App() {
   const [logged, setLogged] = useState(true);
@@ -23,7 +24,7 @@ function App() {
         <Navbar logged={logged} setLogged={setLogged}></Navbar>
 
         <Routes>
-          <Route element="Home page" path="/" exact />
+          <Route element={<Home />} path="/" exact />
           <Route element={<Timesheets />} path="/timesheet" exact></Route>
           <Route element="Users Page" path="/users" exact />
           <Route
