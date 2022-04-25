@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import services from "../services";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Login({ logged, setLogged }) {
   const [body, setBody] = useState({
@@ -71,6 +71,10 @@ export default function Login({ logged, setLogged }) {
       <Button type="submit" variant="outlined">
         Login
       </Button>
+      <br />
+      <div className="signinToLoginLink" style={{ marginTop: "10px" }}>
+        Dont' have account yet ? <Link to="/signin">{"Sign in"}</Link>
+      </div>
     </Box>
   );
 }
