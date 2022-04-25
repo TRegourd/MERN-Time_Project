@@ -52,6 +52,7 @@ export default function Login() {
       autoComplete="off"
       onSubmit={handleSubmit}
       onChange={handleChange}
+      style={{ marginTop: "100px" }}
     >
       <h1>Login</h1>
       <div>
