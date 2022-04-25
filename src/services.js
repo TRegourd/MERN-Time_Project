@@ -1,4 +1,5 @@
 import axios from "axios";
+import stringifyRGB from "./libs/colors";
 
 const baseURL = "http://localhost:1337";
 
@@ -9,8 +10,11 @@ const services = {
    * SERVICES USERS
    *
    */
-  getUsersList() {
-    return base.get(`/users`).then((res) => res.data);
+  getCurrentUser() {
+    const token = localStorage.getItem("jwt");
+    return base
+      .get(`/users`, { headers: { Authorization: `Bearer ${token}` } })
+      .then((res) => res.data);
   },
 
   /**
@@ -26,16 +30,15 @@ const services = {
   },
 
   updateProjectColor(projectId, color) {
-    function stringifyRGB(RGBasNumber) {
-      const { r, g, b } = RGBasNumber;
-      return { r: String(r), g: String(g), b: String(b) };
-    }
-
     const { r, g, b } = stringifyRGB(color);
 
     return base
       .put(`/projects/id/color/${projectId}`, { r, g, b }) // {r,g,b} variable passées en body
       .then((res) => res.data);
+  },
+
+  createProject(body) {
+    return base.post(`/projects/`, body);
   },
 
   deleteProject(projectId) {
@@ -62,7 +65,12 @@ const services = {
   },
 
   createNewTimesheet(body) {
-    return base.post(`timesheet/newtimesheet`, body);
+    const token = localStorage.getItem("jwt");
+    return base
+      .post(`timesheet/newtimesheet`, body, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => res.data);
   },
 
   login(body) {

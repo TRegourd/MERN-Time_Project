@@ -1,0 +1,10 @@
+.profileContainer {
+  margin-top: 100px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.profileItem {
+  margin: 10px;
+}

@@ -10,6 +10,7 @@ import Signin from "./pages/Signin";
 import Projects from "./pages/Projects";
 import Home from "./pages/Home";
 import { AuthContext } from "./AuthProvider";
+import Profile from "./pages/Profile";
 
 function App() {
   // const [logged, setLogged] = useState(true);
@@ -39,7 +40,7 @@ function App() {
         <Route element={<Logout />} path="/logout" exact></Route>
         <Route element={<Signin />} path="/signin" exact></Route>
         {logged && <Route element={<Projects />} path="/projects" exact />}
-        <Route element="Profile Page" path="/profilePage" exact></Route>
+        <Route element={<Profile></Profile>} path="/profilePage" exact></Route>
       </Routes>
     </div>
   );
