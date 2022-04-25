@@ -5,8 +5,11 @@ import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import GroupIcon from "@mui/icons-material/Group";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import LogMenu from "./LogMenu";
+import { AuthContext } from "../AuthProvider";
+import { useContext } from "react";
 
-const Navbar = ({ logged, setLogged }) => {
+const Navbar = () => {
+  const { logged, setLogged } = useContext(AuthContext);
   return (
     <div className="topbarContainer">
       <div className="topbarLeft">
@@ -50,7 +53,7 @@ const Navbar = ({ logged, setLogged }) => {
         </div>
       </div>
       <div className="topbarRight">
-        <LogMenu logged={logged} setLogged={setLogged} />
+        <LogMenu />
       </div>
     </div>
   );

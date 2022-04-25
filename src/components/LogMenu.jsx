@@ -1,12 +1,14 @@
-import * as React from "react";
+import React, { useContext } from "react";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import "./Navbar.css";
 import { BrowserRouter as Router, Link } from "react-router-dom";
+import { AuthContext } from "../AuthProvider";
 
-export default function LogMenu({ logged, setLogged }) {
+export default function LogMenu() {
+  const { logged, setLogged } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -18,7 +20,6 @@ export default function LogMenu({ logged, setLogged }) {
 
   function disconnect() {
     setLogged(false);
-    localStorage.removeItem("logged");
     localStorage.removeItem("jwt");
   }
 

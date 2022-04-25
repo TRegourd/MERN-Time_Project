@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import services from "../services";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { AuthContext } from "../AuthProvider";
 
-export default function Login({ logged, setLogged }) {
+export default function Login() {
+  const { logged, setLogged } = useContext(AuthContext);
   const [body, setBody] = useState({
     email: "",
     password: "",
@@ -16,14 +18,11 @@ export default function Login({ logged, setLogged }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(body);
     services
       .login(body)
       .then((result) => {
-        console.log(result.data);
         const { jwt } = result.data;
         localStorage.setItem("jwt", jwt);
-        localStorage.setItem("logged", true);
         setLogged(true);
         alert("successfully logged");
         navigate("/");
