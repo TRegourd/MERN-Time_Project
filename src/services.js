@@ -1,4 +1,5 @@
 import axios from "axios";
+import stringifyRGB from "./libs/colors";
 
 const baseURL = "http://localhost:1337";
 
@@ -26,16 +27,15 @@ const services = {
   },
 
   updateProjectColor(projectId, color) {
-    function stringifyRGB(RGBasNumber) {
-      const { r, g, b } = RGBasNumber;
-      return { r: String(r), g: String(g), b: String(b) };
-    }
-
     const { r, g, b } = stringifyRGB(color);
 
     return base
       .put(`/projects/id/color/${projectId}`, { r, g, b }) // {r,g,b} variable passées en body
       .then((res) => res.data);
+  },
+
+  createProject(body) {
+    return base.post(`/projects/`, body);
   },
 
   deleteProject(projectId) {
