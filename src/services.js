@@ -17,6 +17,13 @@ const services = {
       .then((res) => res.data);
   },
 
+  updateCurrentUser(body) {
+    const token = localStorage.getItem("jwt");
+    return base
+      .put(`/users`, body, { headers: { Authorization: `Bearer ${token}` } })
+      .then((res) => res.data);
+  },
+
   /**
    * SERVICES PROJECTS
    *

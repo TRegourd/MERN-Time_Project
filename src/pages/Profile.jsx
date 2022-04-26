@@ -42,6 +42,7 @@ export default function Profile() {
           currentUser={currentUser}
           edit={edit}
           setEdit={setEdit}
+          fetchCurrentUser={fetchAndSetUserList}
         ></EditProfile>
       )}
       <br />
