@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Grid, Button } from "@mui/material";
 import React from "react";
 import { Item } from "../components/Item";
 
@@ -9,14 +9,39 @@ export default function DisplayProfile({ currentUser, edit, setEdit }) {
 
   return (
     <div>
-      <Item className="profileItem">First Name : {currentUser.first_name}</Item>
-      <Item className="profileItem">Last Name : {currentUser.last_name}</Item>
-      <Item className="profileItem">Adress : {currentUser.adress}</Item>
-      <Item className="profileItem">Position : {currentUser.position}</Item>
-
-      <Button onClick={handleClick} className="profileItem" variant="contained">
-        Edit Profile
-      </Button>
+      <Grid container direction="row" spacing={2} justifyContent="center">
+        <Item className="profileItem">
+          First Name : <span>{currentUser.first_name}</span>
+        </Item>
+        <Item className="profileItem" xs={4}>
+          Last Name : <span>{currentUser.last_name}</span>
+        </Item>
+      </Grid>
+      <Grid container direction="row" spacing={2} justifyContent="center">
+        <Item className="profileItem">
+          Adress : <span>{currentUser.adress}</span>
+        </Item>
+      </Grid>
+      <Grid container direction="row" spacing={2} justifyContent="center">
+        <Item className="profileItem">
+          Position : <span>{currentUser.position}</span>
+        </Item>
+      </Grid>
+      <Grid
+        container
+        direction="row"
+        spacing={2}
+        justifyContent="center"
+        marginTop={2}
+      >
+        <Button
+          onClick={handleClick}
+          className="profileItem"
+          variant="contained"
+        >
+          Edit Profile
+        </Button>
+      </Grid>
     </div>
   );
 }

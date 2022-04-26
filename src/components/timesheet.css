@@ -11,3 +11,6 @@
 .headerItem {
   background-color: lightgray !important;
 }
+span {
+  font-weight: bold;
+}

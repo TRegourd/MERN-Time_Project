@@ -73,14 +73,23 @@ export default function Projects() {
     });
   }
 
+  function modifyProject(id, nameProject) {
+    services
+      .updateProjectName(id, nameProject)
+      .then(() => {
+        fetchAndSetProjects();
+      })
+      .catch(() => alert("Impossible de charger la liste des projets"));
+  }
+
   useEffect(() => {
     fetchAndSetProjects();
   }, []);
 
   return (
-    <Grid container rowSpacing={2}>
+    <Grid container Spacing={2} style={{ marginTop: "100px" }}>
       <Grid item xs={12} textAlign="center">
-        <h1> New Projects</h1>
+        <h2> New Project</h2>
       </Grid>
       <Grid item xs={12} textAlign="center">
         <Box
@@ -93,7 +102,7 @@ export default function Projects() {
           noValidate
           autoComplete="off"
         >
-          <Grid container>
+          <Grid container direction="row" spacing={1} alignItems="center">
             <Grid item xs={2}>
               <ButtonColor
                 r="120"
@@ -103,7 +112,7 @@ export default function Projects() {
                 onUpdateColor={(color) => handleChangeColor}
               ></ButtonColor>
             </Grid>
-            <Grid item xs={8} textAlign="left">
+            <Grid item xs={7} textAlign="left">
               <TextField
                 required
                 id="outlined-required"
@@ -121,13 +130,14 @@ export default function Projects() {
         </Box>
       </Grid>
       <Grid item xs={12} textAlign="center">
-        <h1> Projects</h1>
+        <h2> Projects</h2>
       </Grid>
       <Grid item xs={12} textAlign="center">
         {projectsList.map((oneProject) => (
           <Project
             key={oneProject._id}
             {...oneProject}
+            onChangeProjectName={(id, name) => modifyProject(id, name)}
             onDeleteProject={() => deleteProject(oneProject)}
           />
         ))}

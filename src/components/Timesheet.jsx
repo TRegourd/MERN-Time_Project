@@ -19,8 +19,8 @@ export default function Timesheet({
   return (
     <div className="timesheet">
       <div className="timesheetConatiner">
-        <Grid container spacing={2}>
-          <Grid item xs={4}>
+        <Grid container direction="row" spacing={2} alignItems="center">
+          <Grid item xs={3}>
             <Item>{desc}</Item>
           </Grid>
           <Grid item xs={2}>
@@ -28,7 +28,7 @@ export default function Timesheet({
               {user.first_name} {user.last_name}
             </Item>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={3}>
             <Item>{project.name}</Item>
           </Grid>
           <Grid item xs={2}>
