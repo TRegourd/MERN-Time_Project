@@ -3,9 +3,7 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import "./timesheet.css";
 import { Item } from "./Item";
-import { TextField } from "@mui/material";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
 
 export default function Timesheet({
   desc,
@@ -15,6 +13,11 @@ export default function Timesheet({
   duration,
   onDeleteTimesheet,
 }) {
+  console.log(date);
+  let formatedDate = dayjs(date).format("DD-MM-YYYY");
+
+  console.log(formatedDate);
+
   return (
     <div className="timesheet">
       <div className="timesheetConatiner">
@@ -31,7 +34,7 @@ export default function Timesheet({
             <Item>{project.name}</Item>
           </Grid>
           <Grid item xs={2}>
-            <Item>{date}</Item>
+            <Item>{formatedDate}</Item>
           </Grid>
           <Grid item xs={2}>
             <Item>{duration} min</Item>
