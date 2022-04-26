@@ -11,7 +11,15 @@ import {
   MenuItem,
   InputLabel,
   FormControl,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
 } from "@mui/material";
+import dayjs from "dayjs";
 
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
@@ -195,11 +203,65 @@ export default function Timesheets() {
         </Button>
       </Box>
 
-      <h2>Timesheets</h2>
+      <h2>
+        Timesheets of {currentUser.first_name} {currentUser.last_name}{" "}
+      </h2>
       <Button onClick={handleShowButton} variant="contained">
         Show/Hide
       </Button>
       <Grid
+        className="timesheets"
+        container
+        direction="row"
+        spacing={2}
+        justifyContent="Center"
+      >
+        <Grid item xs={10}>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 400 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Description</TableCell>
+                  <TableCell align="center">Project</TableCell>
+                  <TableCell align="center">Date</TableCell>
+                  <TableCell align="center">Duration</TableCell>
+                  <TableCell align="center"></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {timeList.map((time) => (
+                  <TableRow
+                    key={time._id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {time.desc}
+                    </TableCell>
+                    <TableCell align="center">{time.project.name}</TableCell>
+                    <TableCell align="center">
+                      {dayjs(time.date).format("DD-MM-YYYY")}
+                    </TableCell>
+                    <TableCell align="center">{time.duration}</TableCell>
+                    <TableCell align="center">
+                      <Button
+                        variant="outlined"
+                        className="deleteButton"
+                        onClick={() => {
+                          deleteTimesheet(time._id);
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Grid>
+      </Grid>
+
+      {/* <Grid
         className="timesheets"
         container
         direction="row"
@@ -230,7 +292,7 @@ export default function Timesheets() {
             deleteTimesheet(time._id);
           }}
         />
-      ))}
+      ))} */}
     </div>
   );
 }
