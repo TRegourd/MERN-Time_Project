@@ -11,8 +11,8 @@ export default function DisplayProfile({ currentUser, edit, setEdit }) {
     <div>
       <Item className="profileItem">First Name : {currentUser.first_name}</Item>
       <Item className="profileItem">Last Name : {currentUser.last_name}</Item>
-      <Item className="profileItem">Adress : </Item>
-      <Item className="profileItem">Position : </Item>
+      <Item className="profileItem">Adress : {currentUser.adress}</Item>
+      <Item className="profileItem">Position : {currentUser.position}</Item>
 
       <Button onClick={handleClick} className="profileItem" variant="contained">
         Edit Profile
