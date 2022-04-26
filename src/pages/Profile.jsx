@@ -28,28 +28,34 @@ export default function Profile() {
 
   return (
     <div className="profileContainer">
-      <h1>My Profile</h1>
-      {!edit && (
-        <DisplayProfile
-          currentUser={currentUser}
-          edit={edit}
-          setEdit={setEdit}
-        ></DisplayProfile>
-      )}
-      <br />
-      {edit && (
-        <EditProfile
-          currentUser={currentUser}
-          edit={edit}
-          setEdit={setEdit}
-          fetchCurrentUser={fetchAndSetUserList}
-        ></EditProfile>
-      )}
-      <br />
-      <LogOutSnackbar
-        className="profileItem"
-        onClick={disconnect}
-      ></LogOutSnackbar>
+      <h2>My Profile</h2>
+      <Grid container spacing={1} marginTop={2} justifyContent="center">
+        {!edit && (
+          <DisplayProfile
+            currentUser={currentUser}
+            edit={edit}
+            setEdit={setEdit}
+          ></DisplayProfile>
+        )}
+
+        {edit && (
+          <EditProfile
+            currentUser={currentUser}
+            edit={edit}
+            setEdit={setEdit}
+            fetchCurrentUser={fetchAndSetUserList}
+          ></EditProfile>
+        )}
+
+        <Grid container direction="row" marginTop={6} justifyContent="center">
+          <Grid item xs={2}>
+            <LogOutSnackbar
+              className="profileItem"
+              onClick={disconnect}
+            ></LogOutSnackbar>
+          </Grid>
+        </Grid>
+      </Grid>
     </div>
   );
 }

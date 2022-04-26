@@ -42,7 +42,7 @@ export default function LogOutSnackbar() {
   };
 
   return (
-    <Stack spacing={2} sx={{ width: "100%" }}>
+    <Stack spacing={2} sx={{ width: "100%" }} justifyContent="center">
       <Button variant="outlined" onClick={handleClick}>
         LogOut
       </Button>
