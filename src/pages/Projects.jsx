@@ -74,7 +74,6 @@ export default function Projects() {
   }
 
   function modifyProject(id, nameProject) {
-    console.log(id);
     services
       .updateProjectName(id, nameProject)
       .then(() => {
