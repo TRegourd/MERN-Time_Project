@@ -199,14 +199,20 @@ export default function Timesheets() {
       <Button onClick={handleShowButton} variant="contained">
         Show/Hide
       </Button>
-      <Grid className="timesheets" container spacing={2}>
-        <Grid item xs={4}>
+      <Grid
+        className="timesheets"
+        container
+        direction="row"
+        spacing={2}
+        alignItems="center"
+      >
+        <Grid item xs={3}>
           <Item className="headerItem">Description</Item>
         </Grid>
         <Grid item xs={2}>
           <Item className="headerItem">User</Item>
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <Item className="headerItem">Project</Item>
         </Grid>
         <Grid item xs={2}>
