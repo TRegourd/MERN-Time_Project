@@ -71,6 +71,15 @@ const services = {
       .then((res) => res.data);
   },
 
+  getTotalTimebyProject() {
+    const token = localStorage.getItem("jwt");
+    return base
+      .get(`/timesheet/project/graph`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => res.data);
+  },
+
   getTimesheetOfProject(idProject) {
     return base.get(`/timesheet/project/${idProject}`);
   },

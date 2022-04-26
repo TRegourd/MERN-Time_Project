@@ -27,6 +27,7 @@ import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers/";
 
 import { Item } from "../components/Item";
 import "../components/timesheet.css";
+import Charts from "../components/Charts";
 
 export default function Timesheets() {
   const [timeList, setList] = useState([]);
@@ -39,19 +40,17 @@ export default function Timesheets() {
   const [userValue, setUserValue] = useState("");
 
   function fetchAndSetTimesheet() {
-    if (showTimesheet) {
-      services
-        .getAllTimesheetList()
-        .then((list) => {
-          setList(list);
-          setShowTimesheet(!showTimesheet);
-        })
-        .catch(() => alert("erreur"));
-    } else {
-      setList([]);
-      setShowTimesheet(!showTimesheet);
-    }
+    services
+      .getAllTimesheetList()
+      .then((list) => {
+        setList(list);
+        // setShowTimesheet(!showTimesheet);
+      })
+      .catch(() => alert("erreur"));
+    // setShowTimesheet(!showTimesheet);
   }
+
+  useEffect(fetchAndSetTimesheet, []);
 
   function deleteTimesheet(id) {
     services
@@ -82,7 +81,7 @@ export default function Timesheets() {
   }
 
   function handleShowButton() {
-    fetchAndSetTimesheet();
+    setShowTimesheet((currentState) => !currentState);
   }
 
   // envoi du formulaire
@@ -112,16 +111,29 @@ export default function Timesheets() {
   function handleSubmit(e) {
     e.preventDefault();
     console.log(body);
-    services.createNewTimesheet(body);
+    services.createNewTimesheet(body).then(() => {
+      fetchAndSetChartData();
+      fetchAndSetTimesheet();
+    });
   }
 
   // envoi du formulaire
+
+  const [data, setData] = useState([]);
+
+  function fetchAndSetChartData() {
+    services.getTotalTimebyProject().then((result) => {
+      setData(result);
+      console.log(result);
+    });
+  }
 
   useEffect(() => {
     fetchAndSetUserList();
     //fetchAndSetTimesheet();
     fetchAndSetProjectList();
     fetchAndSetTimesheet();
+    fetchAndSetChartData();
   }, []);
 
   return (
@@ -203,9 +215,14 @@ export default function Timesheets() {
         </Button>
       </Box>
 
+      <Box>
+        <Charts data={data}></Charts>
+      </Box>
+
       <h2>
         Timesheets of {currentUser.first_name} {currentUser.last_name}{" "}
       </h2>
+
       <Button onClick={handleShowButton} variant="contained">
         Show/Hide
       </Button>
@@ -284,15 +301,19 @@ export default function Timesheets() {
           <Item className="headerItem">Duration</Item>
         </Grid>
       </Grid>
-      {timeList.map((time) => (
-        <Timesheet
-          key={time._id}
-          {...time}
-          onDeleteTimesheet={() => {
-            deleteTimesheet(time._id);
-          }}
-        />
-      ))} */}
+      {showTimesheet &&
+        timeList.map((time) => (
+          <Timesheet
+            key={time._id}
+            {...time}
+            onDeleteTimesheet={() => {
+              deleteTimesheet(time._id);
+            }}
+          />
+        ))}
+
+*/}
+
     </div>
   );
 }
