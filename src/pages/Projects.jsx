@@ -73,12 +73,22 @@ export default function Projects() {
     });
   }
 
+  function modifyProject(id, nameProject) {
+    console.log(id);
+    services
+      .updateProjectName(id, nameProject)
+      .then(() => {
+        fetchAndSetProjects();
+      })
+      .catch(() => alert("Impossible de charger la liste des projets"));
+  }
+
   useEffect(() => {
     fetchAndSetProjects();
   }, []);
 
   return (
-    <Grid container rowSpacing={2}>
+    <Grid container rowSpacing={2} style={{ marginTop: "100px" }}>
       <Grid item xs={12} textAlign="center">
         <h1> New Projects</h1>
       </Grid>
@@ -103,7 +113,7 @@ export default function Projects() {
                 onUpdateColor={(color) => handleChangeColor}
               ></ButtonColor>
             </Grid>
-            <Grid item xs={8} textAlign="left">
+            <Grid item xs={7} textAlign="left">
               <TextField
                 required
                 id="outlined-required"
@@ -128,6 +138,7 @@ export default function Projects() {
           <Project
             key={oneProject._id}
             {...oneProject}
+            onChangeProjectName={(id, name) => modifyProject(id, name)}
             onDeleteProject={() => deleteProject(oneProject)}
           />
         ))}

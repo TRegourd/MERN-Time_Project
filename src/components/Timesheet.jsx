@@ -21,7 +21,7 @@ export default function Timesheet({
   return (
     <div className="timesheet">
       <div className="timesheetConatiner">
-        <Grid container spacing={2}>
+        <Grid container direction="row" rowSpacing={2} alignItems="center">
           <Grid item xs={4}>
             <Item>{desc}</Item>
           </Grid>
