@@ -31,7 +31,7 @@ function App() {
         {logged && (
           <Route element={<Timesheets />} path="/timesheet" exact></Route>
         )}
-        {logged && <Route element="Users Page" path="/users" exact />}
+        {logged && <Route element="Admin Page" path="/admin" exact />}
         <Route
           element={<Login logged={logged} setLogged={setLogged} />}
           path="/login"

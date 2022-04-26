@@ -35,7 +35,7 @@ export default function EditProfile({
 
   return (
     <div>
-      <pre>{JSON.stringify(form, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(form, null, 2)}</pre> */}
       <Box
         component="form"
         onSubmit={handleSubmit}
