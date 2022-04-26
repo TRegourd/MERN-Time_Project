@@ -87,9 +87,9 @@ export default function Projects() {
   }, []);
 
   return (
-    <Grid container rowSpacing={2} style={{ marginTop: "100px" }}>
+    <Grid container Spacing={2} style={{ marginTop: "100px" }}>
       <Grid item xs={12} textAlign="center">
-        <h1> New Projects</h1>
+        <h2> New Project</h2>
       </Grid>
       <Grid item xs={12} textAlign="center">
         <Box
@@ -102,7 +102,7 @@ export default function Projects() {
           noValidate
           autoComplete="off"
         >
-          <Grid container>
+          <Grid container direction="row" spacing={1} alignItems="center">
             <Grid item xs={2}>
               <ButtonColor
                 r="120"
@@ -130,7 +130,7 @@ export default function Projects() {
         </Box>
       </Grid>
       <Grid item xs={12} textAlign="center">
-        <h1> Projects</h1>
+        <h2> Projects</h2>
       </Grid>
       <Grid item xs={12} textAlign="center">
         {projectsList.map((oneProject) => (

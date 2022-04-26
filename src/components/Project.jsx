@@ -21,7 +21,7 @@ export default function Project({
       noValidate
       autoComplete="off"
     >
-      <Grid container direction="row" rowSpacing={2} alignItems="center">
+      <Grid container direction="row" spacing={2} alignItems="center">
         <Grid item xs={2}>
           <ButtonColor
             r={color.r}
