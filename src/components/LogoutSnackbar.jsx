@@ -13,7 +13,7 @@ export default function LogOutSnackbar() {
   const [open, setOpen] = React.useState(false);
   const { disconnect } = React.useContext(AuthContext);
 
-  const handleClick = () => {
+  const wait3s = () => {
     setOpen(true);
 
     return new Promise((resolve) => {
@@ -21,12 +21,10 @@ export default function LogOutSnackbar() {
     });
   };
 
-  async function asyncCall() {
+  async function handleClick() {
     console.log("calling");
-    const result = await handleClick();
-    if (result) {
-      disconnect();
-    }
+    await wait3s();
+    disconnect();
   }
 
   //   React.useEffect(() => {

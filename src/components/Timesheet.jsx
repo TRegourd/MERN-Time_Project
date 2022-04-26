@@ -16,8 +16,6 @@ export default function Timesheet({
   console.log(date);
   let formatedDate = dayjs(date).format("DD-MM-YYYY");
 
-  console.log(formatedDate);
-
   return (
     <div className="timesheet">
       <div className="timesheetConatiner">

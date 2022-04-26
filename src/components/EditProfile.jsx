@@ -27,10 +27,13 @@ export default function EditProfile({
 
   function handleSubmit(e) {
     e.preventDefault();
-    services.updateCurrentUser(form);
+    services.updateCurrentUser(form).then(() => {
+      setEdit(false);
+      fetchCurrentUser();
+    });
     // setForm(form);
-    setEdit(false);
-    fetchCurrentUser();
+    // setEdit(false);
+    // fetchCurrentUser();
   }
 
   return (
