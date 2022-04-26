@@ -32,8 +32,16 @@ const services = {
     return base.get(`/projects`).then((res) => res.data);
   },
 
-  updateProject(id) {
-    return base.put(`/projects/id/${id}`).then((res) => res.data);
+  updateProject(projectId, project) {
+    return base
+      .put(`/projects/id/${projectId}`, project)
+      .then((res) => res.data);
+  },
+
+  updateProjectName(projectId, name) {
+    return base
+      .put(`/projects/id/name/${projectId}`, { name })
+      .then((res) => res.data);
   },
 
   updateProjectColor(projectId, color) {
