@@ -13,7 +13,6 @@ export default function Timesheet({
   duration,
   onDeleteTimesheet,
 }) {
-  console.log(date);
   let formatedDate = dayjs(date).format("DD-MM-YYYY");
 
   return (
