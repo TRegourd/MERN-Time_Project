@@ -8,6 +8,7 @@ import services from "../services";
 
 export default function Projects() {
   const [projectsList, setprojectsList] = useState([]);
+  const [currentUser, setCurrentUser] = useState({});
 
   // CREATION PROJECT
   const [form, setForm] = useState({
@@ -46,6 +47,7 @@ export default function Projects() {
       r: form.color.r,
       g: form.color.g,
       b: form.color.b,
+      user: currentUser._id,
     };
 
     services
@@ -82,9 +84,21 @@ export default function Projects() {
       .catch(() => alert("Impossible de charger la liste des projets"));
   }
 
+  function fetchAndSetUserList() {
+    services
+      .getCurrentUser()
+      .then((user) => {
+        setCurrentUser(user);
+      })
+      .catch(() => alert("erreur"));
+  }
+
   useEffect(() => {
     fetchAndSetProjects();
+    fetchAndSetUserList();
   }, []);
+
+  console.log(currentUser._id);
 
   return (
     <Grid container Spacing={2} style={{ marginTop: "100px" }}>
@@ -130,7 +144,9 @@ export default function Projects() {
         </Box>
       </Grid>
       <Grid item xs={12} textAlign="center">
-        <h2> Projects</h2>
+        <h2>
+          Projects of {currentUser.first_name} {currentUser.last_name}
+        </h2>
       </Grid>
       <Grid item xs={12} textAlign="center">
         {projectsList.map((oneProject) => (
