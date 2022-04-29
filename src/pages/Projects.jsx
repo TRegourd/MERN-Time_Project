@@ -98,8 +98,6 @@ export default function Projects() {
     fetchAndSetUserList();
   }, []);
 
-  console.log(currentUser._id);
-
   return (
     <Grid container Spacing={2} style={{ marginTop: "100px" }}>
       <Grid item xs={12} textAlign="center">
