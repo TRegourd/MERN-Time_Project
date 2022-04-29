@@ -13,23 +13,19 @@ export default function LogOutSnackbar() {
   const [open, setOpen] = React.useState(false);
   const { disconnect } = React.useContext(AuthContext);
 
-  const wait3s = () => {
+  const wait = () => {
     setOpen(true);
 
     return new Promise((resolve) => {
-      setTimeout(() => resolve(true), 3000);
+      setTimeout(() => resolve(true), 1500);
     });
   };
 
   async function handleClick() {
-    console.log("calling");
-    await wait3s();
+    console.log("loging out...");
+    await wait();
     disconnect();
   }
-
-  //   React.useEffect(() => {
-  //     asyncCall();
-  //   }, []);
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -40,7 +36,7 @@ export default function LogOutSnackbar() {
   };
 
   return (
-    <Stack spacing={2} sx={{ width: "100%" }} justifyContent="center">
+    <Stack spacing={2} sx={{ width: "100%" }}>
       <Button variant="outlined" onClick={handleClick}>
         LogOut
       </Button>

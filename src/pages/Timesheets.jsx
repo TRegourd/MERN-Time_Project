@@ -110,7 +110,6 @@ export default function Timesheets() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(body);
     services.createNewTimesheet(body).then(() => {
       fetchAndSetChartData();
       fetchAndSetTimesheet();
@@ -124,7 +123,6 @@ export default function Timesheets() {
   function fetchAndSetChartData() {
     services.getTotalTimebyProject().then((result) => {
       setData(result);
-      console.log(result);
     });
   }
 
@@ -149,7 +147,6 @@ export default function Timesheets() {
         }}
         noValidate
         autoComplete="off"
-        // onSubmit={console.log("toto")}
       >
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker

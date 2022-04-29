@@ -29,7 +29,10 @@ const services = {
    *
    */
   getProjectsList() {
-    return base.get(`/projects`).then((res) => res.data);
+    const token = localStorage.getItem("jwt");
+    return base
+      .get(`/projects`, { headers: { Authorization: `Bearer ${token}` } })
+      .then((res) => res.data);
   },
 
   updateProject(projectId, project) {
@@ -53,7 +56,10 @@ const services = {
   },
 
   createProject(body) {
-    return base.post(`/projects/`, body);
+    const token = localStorage.getItem("jwt");
+    return base.post(`/projects/`, body, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
   },
 
   deleteProject(projectId) {

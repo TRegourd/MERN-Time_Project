@@ -19,7 +19,6 @@ export default function Signin() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(body);
     services
       .signin(body)
       .then(() => {
