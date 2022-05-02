@@ -1,17 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import services from "../services";
 import "./Contact.css";
 
-export default function Contact(currentUser) {
+export default function Contact() {
   const [form, setForm] = useState({
-    first_name: currentUser.first_name,
-    last_name: currentUser.last_name,
-    adress: currentUser.adress,
-    position: currentUser.position,
+    first_name: "", //currentUser.first_name,
+    last_name: "", //currentUser.last_name,
+    email: "", //currentUser.email,
+    phone: "",
+    object: "",
+    message: "",
+    user: "",
   });
+
+  const [currentUser, setCurrentUser] = useState({});
+
+  function fetchAndSetUserList() {
+    services
+      .getCurrentUser()
+      .then((user) => {
+        setCurrentUser(user);
+      })
+      .catch(() => alert("erreur"));
+  }
+
+  useEffect(() => {
+    fetchAndSetUserList();
+  }, []);
 
   function updateForm(key, value) {
     setForm({ ...form, [key]: value });
@@ -24,8 +42,24 @@ export default function Contact(currentUser) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    services.updateCurrentUser(form).then(() => {});
+    console.log(body);
+    // services.updateCurrentUser(form).then(() => {});
   }
+
+  const body = {
+    first_name: form.first_name,
+    last_name: form.last_name,
+    email: form.email,
+    phone: form.phone,
+    object: form.object,
+    message: form.message,
+    user: currentUser._id,
+  };
+
+  //const [firstNameValue, setFirstNameValue] = useState(currentUser.first_name);
+  //   const handleChange = (event) => {
+  //     setFirstNameValue(event.target.value);
+  //   };
 
   return (
     <Box
@@ -39,16 +73,8 @@ export default function Contact(currentUser) {
       autoComplete="off"
       style={{ marginTop: "100px" }}
     >
-      <pre>{JSON.stringify(form, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(form, null, 2)}</pre> */}
       <div className="formContainer">
-        {/* <TextField
-          id="outlined-multiline-flexible"
-          label="Multiline"
-          multiline
-          maxRows={4}
-          value={value}
-          onChange={handleChange}
-        /> */}
         <TextField
           id="outlined-textarea"
           label="First Name"
@@ -56,6 +82,16 @@ export default function Contact(currentUser) {
           name="first_name"
           multiline
         />
+        {/* {logged && (
+          <TextField
+            id="outlined-multiline-flexible"
+            label={firstNameValue}
+            multiline
+            maxRows={4}
+            value={firstNameValue}
+            onChange={handleChange}
+          />
+        )} */}
         <TextField
           id="outlined-textarea"
           label="Last Name"
