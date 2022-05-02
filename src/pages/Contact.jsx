@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import services from "../services";
+import "./Contact.css";
 
 export default function Contact(currentUser) {
   const [form, setForm] = useState({
@@ -30,7 +31,7 @@ export default function Contact(currentUser) {
     <Box
       component="form"
       sx={{
-        "& .MuiTextField-root": { m: 1, width: "25ch" },
+        "& .MuiTextField-root": { m: 1, width: "40ch" },
       }}
       //noValidate
       onSubmit={handleSubmit}
@@ -39,7 +40,7 @@ export default function Contact(currentUser) {
       style={{ marginTop: "100px" }}
     >
       <pre>{JSON.stringify(form, null, 2)}</pre>
-      <div>
+      <div className="formContainer">
         {/* <TextField
           id="outlined-multiline-flexible"
           label="Multiline"
