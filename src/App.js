@@ -11,6 +11,7 @@ import Projects from "./pages/Projects";
 import Home from "./pages/Home";
 import { AuthContext } from "./AuthProvider";
 import Profile from "./pages/Profile";
+import Contact from "./pages/Contact";
 
 function App() {
   // const [logged, setLogged] = useState(true);
@@ -31,7 +32,7 @@ function App() {
         {logged && (
           <Route element={<Timesheets />} path="/timesheet" exact></Route>
         )}
-        {logged && <Route element="About Us" path="/about" exact />}
+        <Route element={<Contact />} path="/contact" exact />
         <Route
           element={<Login logged={logged} setLogged={setLogged} />}
           path="/login"

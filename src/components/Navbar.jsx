@@ -53,10 +53,10 @@ const Navbar = () => {
             </Link>
           )}
           {logged && (
-            <Link className="links" to="/about">
+            <Link className="links" to="/contact">
               <span className="topbarLink">
                 <GroupIcon />
-                About Us
+                Contact
               </span>
             </Link>
           )}
