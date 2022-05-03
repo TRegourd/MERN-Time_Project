@@ -121,7 +121,7 @@ export default function Projects() {
                 g="200"
                 b="200"
                 name="color"
-                onUpdateColor={(color) => handleChangeColor}
+                onUpdateColor={(color) => handleChangeColor(color)}
               ></ButtonColor>
             </Grid>
             <Grid item xs={7} textAlign="left">
