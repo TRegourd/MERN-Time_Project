@@ -111,6 +111,10 @@ const services = {
   signin(body) {
     return base.post("/auth/signin", body);
   },
+
+  createNewMessage(body) {
+    return base.post("/contact", body);
+  },
 };
 
 export default services;

@@ -42,7 +42,12 @@ export default function Contact() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(body);
+    services
+      .createNewMessage(body)
+      .then(() => {
+        alert("Message Sent");
+      })
+      .catch(() => alert("erreur"));
     // services.updateCurrentUser(form).then(() => {});
   }
 
