@@ -28,6 +28,13 @@ const Navbar = () => {
               </span>
             </Link>
           )}
+          {!logged && (
+            <Link className="links" to="/contact">
+              <span className="topbarLink">
+                <Button variant="outlined">Contact Us</Button>
+              </span>
+            </Link>
+          )}
           {logged && (
             <Link className="links" to="/">
               <span className="topbarLink">

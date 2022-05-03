@@ -24,7 +24,7 @@ export default function Contact() {
       .then((user) => {
         setCurrentUser(user);
       })
-      .catch(() => alert("erreur"));
+      .catch(() => console.log("no user connected"));
   }
 
   useEffect(() => {
