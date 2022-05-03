@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import services from "../services";
 import "./Contact.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Contact() {
   const [form, setForm] = useState({
@@ -17,6 +18,8 @@ export default function Contact() {
   });
 
   const [currentUser, setCurrentUser] = useState({});
+
+  const navigate = useNavigate();
 
   function fetchAndSetUserList() {
     services
@@ -46,6 +49,7 @@ export default function Contact() {
       .createNewMessage(body)
       .then(() => {
         alert("Message Sent");
+        navigate("/");
       })
       .catch(() => alert("erreur"));
     // services.updateCurrentUser(form).then(() => {});
