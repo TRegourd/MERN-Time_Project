@@ -14,3 +14,13 @@ export interface IProfileProps {
   currentUser: IUser;
   fetchAndSetCurrentUser: () => void;
 }
+
+export interface ITimeList {
+  createdAt: string;
+  date: Date;
+  desc: string;
+  duration: number;
+  project: any;
+  user: any;
+  _id: string;
+}

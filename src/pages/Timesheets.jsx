@@ -26,6 +26,7 @@ import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers/";
 
 import "../components/timesheet.css";
 import Charts from "../components/Charts";
+import ExportCSV from "../components/TimeSheet_Components/ExportCSV";
 
 export default function Timesheets() {
   const [timeList, setList] = useState([]);
@@ -136,6 +137,7 @@ export default function Timesheets() {
     <div style={{ marginTop: "100px" }}>
       <h2>New Timesheet</h2>
       {/* <pre>{JSON.stringify(body, null, 2)}</pre> */}
+
       <Box
         component="form"
         onSubmit={handleSubmit}
@@ -209,11 +211,9 @@ export default function Timesheets() {
           Submit
         </Button>
       </Box>
-
       <Box>
         <Charts data={data}></Charts>
       </Box>
-
       <h2>
         Timesheets of {currentUser.first_name} {currentUser.last_name}{" "}
       </h2>
@@ -221,6 +221,7 @@ export default function Timesheets() {
       <Button onClick={handleShowButton} variant="contained">
         Show/Hide
       </Button>
+      {timeList.length != 0 && <ExportCSV timeList={timeList}></ExportCSV>}
       <Grid
         className="timesheets"
         container
