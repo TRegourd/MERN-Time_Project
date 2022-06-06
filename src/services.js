@@ -77,6 +77,15 @@ const services = {
       .then((res) => res.data);
   },
 
+  getFilteredTimesheetList(body) {
+    const token = localStorage.getItem("jwt");
+    return base
+      .post(`/timesheet/filter`, body, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => res.data);
+  },
+
   getTotalTimebyProject() {
     const token = localStorage.getItem("jwt");
     return base

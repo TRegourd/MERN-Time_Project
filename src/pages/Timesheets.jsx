@@ -27,26 +27,39 @@ import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers/";
 import "../components/timesheet.css";
 import Charts from "../components/Charts";
 import ExportCSV from "../components/TimeSheet_Components/ExportCSV";
+import { TimesheetFilter } from "../components/TimeSheet_Components/Filter";
 
 export default function Timesheets() {
   const [timeList, setList] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
   const [projectList, setProjectList] = useState([]);
-  const [showTimesheet, setShowTimesheet] = useState(false);
-
   const [dateValue, setDateValue] = useState(null);
   const [projectValue, setProjectValue] = useState("");
   const [userValue, setUserValue] = useState("");
+  const [filterStartValue, setFilterStartValue] = useState(null);
+  const [filterEndValue, setFilterEndValue] = useState(null);
 
   function fetchAndSetTimesheet() {
-    services
-      .getAllTimesheetList()
-      .then((list) => {
-        setList(list);
-        // setShowTimesheet(!showTimesheet);
-      })
-      .catch(() => alert("erreur"));
-    // setShowTimesheet(!showTimesheet);
+    if (filterStartValue && filterEndValue) {
+      const filter = { startDate: filterStartValue, endDate: filterEndValue };
+      services
+        .getFilteredTimesheetList(filter)
+        .then((list) => {
+          setList(list);
+          // setShowTimesheet(!showTimesheet);
+        })
+        .catch(() => alert("erreur"));
+      // setShowTimesheet(!showTimesheet);
+    } else {
+      services
+        .getAllTimesheetList()
+        .then((list) => {
+          setList(list);
+          // setShowTimesheet(!showTimesheet);
+        })
+        .catch(() => alert("erreur"));
+      // setShowTimesheet(!showTimesheet);
+    }
   }
 
   useEffect(fetchAndSetTimesheet, []);
@@ -77,10 +90,6 @@ export default function Timesheets() {
         setProjectList(list);
       })
       .catch(() => alert("erreur"));
-  }
-
-  function handleShowButton() {
-    setShowTimesheet((currentState) => !currentState);
   }
 
   // envoi du formulaire
@@ -120,18 +129,29 @@ export default function Timesheets() {
   const [data, setData] = useState([]);
 
   function fetchAndSetChartData() {
-    services.getTotalTimebyProject().then((result) => {
-      setData(result);
-    });
+    if (filterStartValue && filterEndValue) {
+      const filter = { startDate: filterStartValue, endDate: filterEndValue };
+      services.getTotalTimebyProject(filter).then((result) => {
+        setData(result);
+      });
+    } else {
+      services.getTotalTimebyProject().then((result) => {
+        setData(result);
+      });
+    }
   }
 
   useEffect(() => {
     fetchAndSetUserList();
-    //fetchAndSetTimesheet();
     fetchAndSetProjectList();
     fetchAndSetTimesheet();
     fetchAndSetChartData();
   }, []);
+
+  function handleFilter() {
+    fetchAndSetTimesheet();
+    fetchAndSetChartData();
+  }
 
   return (
     <div style={{ marginTop: "100px" }}>
@@ -217,11 +237,25 @@ export default function Timesheets() {
       <h2>
         Timesheets of {currentUser.first_name} {currentUser.last_name}{" "}
       </h2>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: "2rem",
+          justifyContent: "center",
+          margin: "2rem",
+        }}
+      >
+        {TimesheetFilter(
+          filterStartValue,
+          setFilterStartValue,
+          filterEndValue,
+          setFilterEndValue,
+          handleFilter
+        )}
+        {timeList.length != 0 && <ExportCSV timeList={timeList}></ExportCSV>}
+      </Box>
 
-      <Button onClick={handleShowButton} variant="contained">
-        Show/Hide
-      </Button>
-      {timeList.length != 0 && <ExportCSV timeList={timeList}></ExportCSV>}
       <Grid
         className="timesheets"
         container
@@ -229,51 +263,49 @@ export default function Timesheets() {
         spacing={2}
         justifyContent="Center"
       >
-        {showTimesheet && (
-          <Grid item xs={10}>
-            <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 400 }} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Description</TableCell>
-                    <TableCell align="center">Project</TableCell>
-                    <TableCell align="center">Date</TableCell>
-                    <TableCell align="center">Duration</TableCell>
-                    <TableCell align="center"></TableCell>
+        <Grid item xs={10}>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 400 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Description</TableCell>
+                  <TableCell align="center">Project</TableCell>
+                  <TableCell align="center">Date</TableCell>
+                  <TableCell align="center">Duration</TableCell>
+                  <TableCell align="center"></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {timeList.map((time) => (
+                  <TableRow
+                    key={time._id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {time.desc}
+                    </TableCell>
+                    <TableCell align="center">{time.project.name}</TableCell>
+                    <TableCell align="center">
+                      {dayjs(time.date).format("DD-MM-YYYY")}
+                    </TableCell>
+                    <TableCell align="center">{time.duration}</TableCell>
+                    <TableCell align="center">
+                      <Button
+                        variant="outlined"
+                        className="deleteButton"
+                        onClick={() => {
+                          deleteTimesheet(time._id);
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    </TableCell>
                   </TableRow>
-                </TableHead>
-                <TableBody>
-                  {timeList.map((time) => (
-                    <TableRow
-                      key={time._id}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell component="th" scope="row">
-                        {time.desc}
-                      </TableCell>
-                      <TableCell align="center">{time.project.name}</TableCell>
-                      <TableCell align="center">
-                        {dayjs(time.date).format("DD-MM-YYYY")}
-                      </TableCell>
-                      <TableCell align="center">{time.duration}</TableCell>
-                      <TableCell align="center">
-                        <Button
-                          variant="outlined"
-                          className="deleteButton"
-                          onClick={() => {
-                            deleteTimesheet(time._id);
-                          }}
-                        >
-                          Delete
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Grid>
-        )}
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Grid>
       </Grid>
     </div>
   );
