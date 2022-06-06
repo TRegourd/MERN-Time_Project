@@ -1,6 +1,5 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import Timesheet from "../components/Timesheet";
 import services from "../services";
 import {
   Button,
@@ -25,7 +24,6 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers/";
 
-import { Item } from "../components/Item";
 import "../components/timesheet.css";
 import Charts from "../components/Charts";
 
@@ -276,42 +274,6 @@ export default function Timesheets() {
           </Grid>
         )}
       </Grid>
-
-      {/* <Grid
-        className="timesheets"
-        container
-        direction="row"
-        spacing={2}
-        alignItems="center"
-      >
-        <Grid item xs={3}>
-          <Item className="headerItem">Description</Item>
-        </Grid>
-        <Grid item xs={2}>
-          <Item className="headerItem">User</Item>
-        </Grid>
-        <Grid item xs={3}>
-          <Item className="headerItem">Project</Item>
-        </Grid>
-        <Grid item xs={2}>
-          <Item className="headerItem">Date</Item>
-        </Grid>
-        <Grid item xs={2}>
-          <Item className="headerItem">Duration</Item>
-        </Grid>
-      </Grid>
-      {showTimesheet &&
-        timeList.map((time) => (
-          <Timesheet
-            key={time._id}
-            {...time}
-            onDeleteTimesheet={() => {
-              deleteTimesheet(time._id);
-            }}
-          />
-        ))}
-
-*/}
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { Button } from "./Button";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { AuthContext, AuthContextType } from "../../AuthProvider";
+import { AuthContext } from "../../AuthProvider";
 import Logo from "../../assets/stopwatch.png";
 
 function Navbar() {
@@ -47,7 +47,7 @@ function Navbar() {
                   className="nav-links"
                   onClick={closeMobileMenu}
                 >
-                  My TimeSheets
+                  TimeSheets
                 </Link>
               </li>
             )}
@@ -59,7 +59,7 @@ function Navbar() {
                   className="nav-links"
                   onClick={closeMobileMenu}
                 >
-                  My Projects
+                  Projects
                 </Link>
               </li>
             )}

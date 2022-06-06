@@ -20,11 +20,6 @@ export default function Projects() {
     },
   });
 
-  const body = {
-    name: form.projectName,
-    color: form.color,
-  };
-
   function handleChangeName(e) {
     setForm({ ...form, name: e.target.value });
   }
