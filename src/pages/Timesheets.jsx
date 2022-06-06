@@ -1,6 +1,5 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import Timesheet from "../components/Timesheet";
 import services from "../services";
 import {
   Button,
@@ -25,7 +24,6 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers/";
 
-import { Item } from "../components/Item";
 import "../components/timesheet.css";
 import Charts from "../components/Charts";
 

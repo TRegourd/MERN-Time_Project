@@ -3,7 +3,7 @@ import { Button } from "./Button";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { AuthContext, AuthContextType } from "../../AuthProvider";
+import { AuthContext } from "../../AuthProvider";
 import Logo from "../../assets/stopwatch.png";
 
 function Navbar() {

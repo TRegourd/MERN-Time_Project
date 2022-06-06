@@ -8,7 +8,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../AuthProvider";
 
 export default function Login() {
-  const { logged, setLogged } = useContext(AuthContext);
+  const { setLogged } = useContext(AuthContext);
   const [body, setBody] = useState({
     email: "",
     password: "",

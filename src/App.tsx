@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar/Navbar";
 import { Route, Routes } from "react-router-dom";
 import Timesheets from "./pages/Timesheets";
 import Login from "./pages/Login";
-import { useState, useEffect, useContext, FC } from "react";
+import { useContext } from "react";
 import Logout from "./pages/Logout";
 import Signin from "./pages/Signin";
 

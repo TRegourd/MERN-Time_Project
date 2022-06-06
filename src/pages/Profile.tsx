@@ -1,14 +1,14 @@
-import { Button, Grid } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../AuthProvider";
+import { Grid } from "@mui/material";
+import React, { useEffect, useState } from "react";
+
 import DisplayProfile from "../components/Profile_Components/DisplayProfile";
 import LogOutSnackbar from "../components/Profile_Components/LogoutSnackbar";
+import { IUser } from "../Interfaces";
 import services from "../services";
 import "./Profile.css";
 
 export default function Profile() {
-  const [currentUser, setCurrentUser] = useState({});
-  const { disconnect } = useContext(AuthContext);
+  const [currentUser, setCurrentUser] = useState<IUser>();
 
   function fetchAndSetCurrentUser() {
     services
@@ -35,10 +35,7 @@ export default function Profile() {
 
         <Grid container direction="row" marginTop={6} justifyContent="center">
           <Grid item xs={2}>
-            <LogOutSnackbar
-              className="profileItem"
-              onClick={disconnect}
-            ></LogOutSnackbar>
+            <LogOutSnackbar />
           </Grid>
         </Grid>
       </Grid>

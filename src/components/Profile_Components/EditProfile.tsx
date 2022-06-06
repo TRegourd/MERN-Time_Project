@@ -4,25 +4,29 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import services from "../../services";
+import { IProfileProps, IUser } from "../../Interfaces";
 
-export default function EditProfile({ currentUser, fetchAndSetCurrentUser }) {
+export default function EditProfile({
+  currentUser,
+  fetchAndSetCurrentUser,
+}: IProfileProps) {
   const [open, setOpen] = React.useState(false);
-  const [form, setForm] = React.useState({
+  const [form, setForm] = React.useState<IUser>({
     first_name: currentUser.first_name,
     last_name: currentUser.last_name,
     adress: currentUser.adress,
     position: currentUser.position,
     email: currentUser.email,
+    _id: currentUser._id,
   });
 
-  function updateForm(key, value) {
+  function updateForm(key: string, value: string) {
     setForm({ ...form, [key]: value });
   }
 
-  function handleChangeInput(e) {
+  function handleChangeInput(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     updateForm(name, value);
   }
@@ -53,10 +57,6 @@ export default function EditProfile({ currentUser, fetchAndSetCurrentUser }) {
       <Dialog open={open} onClose={handleClose} onChange={handleChangeInput}>
         <DialogTitle>Edit My Profile</DialogTitle>
         <DialogContent>
-          {/* <DialogContentText>
-            <pre>{JSON.stringify(form, null, 2)}</pre>
-          </DialogContentText> */}
-
           <TextField
             autoFocus
             margin="dense"

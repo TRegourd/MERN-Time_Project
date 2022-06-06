@@ -1,8 +1,6 @@
-import { Grid, Button } from "@mui/material";
 import React from "react";
 import ProfileAvatar from "./Avatar";
 import EditProfile from "./EditProfile";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -10,11 +8,12 @@ import Typography from "@mui/material/Typography";
 import { BiBuildings, BiMap, BiUser } from "react-icons/bi";
 import { MdAlternateEmail } from "react-icons/md";
 import styled from "styled-components";
+import { IProfileProps } from "../../Interfaces";
 
 export default function DisplayProfile({
   currentUser,
   fetchAndSetCurrentUser,
-}) {
+}: IProfileProps) {
   return (
     <div>
       <Card

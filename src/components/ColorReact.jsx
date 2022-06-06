@@ -1,9 +1,6 @@
-"use strict";
-
 import React from "react";
 import reactCSS from "reactcss";
 import { TwitterPicker } from "react-color";
-import services from "../services";
 
 class ButtonColor extends React.Component {
   state = {
