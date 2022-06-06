@@ -5,6 +5,7 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
 import { useNavigate } from "react-router-dom";
+import services from "../../../services";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -23,16 +24,16 @@ export default function ContactSnackbar({ body }) {
   };
 
   async function handleClick() {
-    // contactServices
-    //   .createNewMessage(body)
-    //   .then(() => {
-    //     setSigned(true);
-    //     snackBarTrue();
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     setOpen(true);
-    //   });
+    services
+      .createNewMessage(body)
+      .then(() => {
+        setSigned(true);
+        snackBarTrue();
+      })
+      .catch((err) => {
+        console.log(err);
+        setOpen(true);
+      });
   }
 
   async function snackBarTrue() {
