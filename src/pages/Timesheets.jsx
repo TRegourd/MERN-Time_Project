@@ -69,6 +69,7 @@ export default function Timesheets() {
       .deleteTimesheetById(id)
       .then(() => {
         fetchAndSetTimesheet();
+        fetchAndSetChartData();
         alert("Timesheet Deleted from DB");
       })
       .catch(() => alert("erreur"));
@@ -104,7 +105,7 @@ export default function Timesheets() {
     date: dateValue,
     duration: form.duration,
     project: projectValue,
-    user: userValue,
+    user: currentUser,
   };
 
   function updateForm(key, value) {
@@ -155,7 +156,6 @@ export default function Timesheets() {
 
   return (
     <div style={{ marginTop: "100px" }}>
-      <h2>New Timesheet</h2>
       {/* <pre>{JSON.stringify(body, null, 2)}</pre> */}
 
       <Box
@@ -164,6 +164,8 @@ export default function Timesheets() {
         onChange={handleChangeInput}
         sx={{
           "& > :not(style)": { m: 1, width: "25ch" },
+          display: "flex",
+          justifyContent: "center",
         }}
         noValidate
         autoComplete="off"
@@ -210,33 +212,11 @@ export default function Timesheets() {
             ))}
           </Select>
         </FormControl>
-        <FormControl>
-          <InputLabel id="userLabel">User</InputLabel>
-          <Select
-            labelId="userLabel"
-            name="user"
-            value={userValue}
-            onChange={(newValue) => {
-              setUserValue(newValue.target.value);
-            }}
-          >
-            <MenuItem value={""}>Chose User</MenuItem>
-            <MenuItem key={currentUser._id} value={currentUser._id}>
-              {currentUser.first_name} {currentUser.last_name}
-            </MenuItem>
-          </Select>
-        </FormControl>
 
         <Button type="sumbit" variant="contained">
           Submit
         </Button>
       </Box>
-      <Box>
-        <Charts data={data}></Charts>
-      </Box>
-      <h2>
-        Timesheets of {currentUser.first_name} {currentUser.last_name}{" "}
-      </h2>
       <Box
         sx={{
           display: "flex",
@@ -255,7 +235,9 @@ export default function Timesheets() {
         )}
         {timeList.length != 0 && <ExportCSV timeList={timeList}></ExportCSV>}
       </Box>
-
+      <Box>
+        <Charts data={data}></Charts>
+      </Box>
       <Grid
         className="timesheets"
         container
