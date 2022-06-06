@@ -26,6 +26,7 @@ import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers/";
 
 import "../components/timesheet.css";
 import Charts from "../components/Charts";
+import { CSVLink } from "react-csv";
 
 export default function Timesheets() {
   const [timeList, setList] = useState([]);
@@ -132,10 +133,33 @@ export default function Timesheets() {
     fetchAndSetChartData();
   }, []);
 
+  // Export CSV
+
+  const headers = [
+    { label: "Created At", key: "createdAt" },
+    { label: "Date", key: "date" },
+    { label: "Description", key: "desc" },
+    { label: "Duration", key: "duration" },
+    { label: "Project", key: "project" },
+    { label: "user", key: "user" },
+    { ID: "ID", key: "_id" },
+  ];
+
+  // createdAt: "2022-04-29T06:44:18.392Z"
+  // date: "2022-04-27T06:43:56.000Z"
+  // desc: "Construction du projet"
+  // duration: 120
+  // project: {color: {…}, _id: '626a37278dad8a8f3af6fb90', name: 'Appli Mobile Météo', user: '626794e6495c3d16a04b4fde', __v: 0}
+  // updatedAt: "2022-04-29T06:44:18.392Z"
+  // user: {adress: 'Adresse de Paul', position: 'Responsable Dev', profilePicture: '', _id: '626794e6495c3d16a04b4fde', first_name: 'Paul', …}
+  // __v: 0
+  // _id: "626b89420896c47fe3d89d60"
+
   return (
     <div style={{ marginTop: "100px" }}>
       <h2>New Timesheet</h2>
       {/* <pre>{JSON.stringify(body, null, 2)}</pre> */}
+
       <Box
         component="form"
         onSubmit={handleSubmit}
@@ -209,14 +233,16 @@ export default function Timesheets() {
           Submit
         </Button>
       </Box>
-
       <Box>
         <Charts data={data}></Charts>
       </Box>
-
       <h2>
         Timesheets of {currentUser.first_name} {currentUser.last_name}{" "}
       </h2>
+
+      <CSVLink data={timeList} headers={headers}>
+        <Button variant="outlined">Download CSV</Button>
+      </CSVLink>
 
       <Button onClick={handleShowButton} variant="contained">
         Show/Hide
