@@ -47,7 +47,7 @@ function Navbar() {
                   className="nav-links"
                   onClick={closeMobileMenu}
                 >
-                  My TimeSheets
+                  TimeSheets
                 </Link>
               </li>
             )}
@@ -59,7 +59,7 @@ function Navbar() {
                   className="nav-links"
                   onClick={closeMobileMenu}
                 >
-                  My Projects
+                  Projects
                 </Link>
               </li>
             )}

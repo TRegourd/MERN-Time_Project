@@ -1,19 +1,16 @@
 import { Button, Grid } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthProvider";
-import DisplayProfile from "../components/DisplayProfile";
-import EditProfile from "../components/EditProfile";
-
-import LogOutSnackbar from "../components/LogoutSnackbar";
+import DisplayProfile from "../components/Profile_Components/DisplayProfile";
+import LogOutSnackbar from "../components/Profile_Components/LogoutSnackbar";
 import services from "../services";
 import "./Profile.css";
 
 export default function Profile() {
   const [currentUser, setCurrentUser] = useState({});
-  const [edit, setEdit] = useState(false);
   const { disconnect } = useContext(AuthContext);
 
-  function fetchAndSetUserList() {
+  function fetchAndSetCurrentUser() {
     services
       .getCurrentUser()
       .then((user) => {
@@ -23,28 +20,17 @@ export default function Profile() {
   }
 
   useEffect(() => {
-    fetchAndSetUserList();
+    fetchAndSetCurrentUser();
   }, []);
 
   return (
     <div className="profileContainer">
-      <h2>My Profile</h2>
       <Grid container spacing={1} marginTop={2} justifyContent="center">
-        {!edit && (
+        {currentUser && (
           <DisplayProfile
             currentUser={currentUser}
-            edit={edit}
-            setEdit={setEdit}
+            fetchAndSetCurrentUser={fetchAndSetCurrentUser}
           ></DisplayProfile>
-        )}
-
-        {edit && (
-          <EditProfile
-            currentUser={currentUser}
-            edit={edit}
-            setEdit={setEdit}
-            fetchCurrentUser={fetchAndSetUserList}
-          ></EditProfile>
         )}
 
         <Grid container direction="row" marginTop={6} justifyContent="center">
