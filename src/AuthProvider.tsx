@@ -1,10 +1,16 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const AuthContext = createContext(null);
+export interface AuthContextType {
+  logged: boolean;
+  setLogged: (logged: boolean) => void;
+  disconnect: () => void;
+}
 
-export default function AuthProvider({ children }) {
-  const [logged, setLogged] = useState(false);
+export const AuthContext = createContext<AuthContextType | null>(null);
+
+export default function AuthProvider({ children }: any) {
+  const [logged, setLogged] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
