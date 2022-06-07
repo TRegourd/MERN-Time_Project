@@ -28,13 +28,13 @@ export default function AuthProvider({ children }: any) {
   useEffect(() => {
     const hasJwt = localStorage.getItem("jwt");
     setLogged(Boolean(hasJwt));
-    getCurrentUser();
+    Boolean(hasJwt) && getCurrentUser();
   }, []);
 
   function disconnect() {
-    navigate("/");
     setLogged(false);
     localStorage.removeItem("jwt");
+    navigate("/");
   }
 
   function getCurrentUser() {

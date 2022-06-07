@@ -8,11 +8,13 @@ import DialogTitle from "@mui/material/DialogTitle";
 import services from "../../services";
 import { IProfileProps, IUser } from "../../Interfaces";
 import { AuthContext, AuthContextType } from "../../AuthProvider";
+import { useSnackbar } from "notistack";
 
 export default function EditProfile() {
   const { currentUser, setCurrentUser } = React.useContext(
     AuthContext
   ) as AuthContextType;
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [open, setOpen] = React.useState(false);
   const [form, setForm] = React.useState<IUser>({
     first_name: currentUser.first_name,
@@ -45,22 +47,28 @@ export default function EditProfile() {
       if (form.password === form.confirmPassword) {
         services
           .updateCurrentUser(form)
-          .then(() => {
+          .then(async () => {
             services.getCurrentUser().then((user) => setCurrentUser(user));
             setOpen(false);
+            enqueueSnackbar("Successfully Modified", { variant: "success" });
           })
-          .catch(() => alert("erreur"));
+          .catch(() =>
+            enqueueSnackbar("Incorrect modification", { variant: "error" })
+          );
       } else {
-        alert("Password does not match !");
+        enqueueSnackbar("Passwords not matching", { variant: "error" });
       }
     } else {
       services
         .updateCurrentUser(form)
         .then(() => {
           services.getCurrentUser().then((user) => setCurrentUser(user));
+          enqueueSnackbar("Successfully Modified", { variant: "success" });
           setOpen(false);
         })
-        .catch(() => alert("erreur"));
+        .catch(() =>
+          enqueueSnackbar("Incorrect modification", { variant: "error" })
+        );
     }
   };
 
@@ -81,7 +89,6 @@ export default function EditProfile() {
         Edit Profile
       </Button>
       <Dialog open={open} onClose={handleClose} onChange={handleChangeInput}>
-        <pre>{JSON.stringify(form, null, 2)}</pre>
         <DialogContent>
           <TextField
             autoFocus

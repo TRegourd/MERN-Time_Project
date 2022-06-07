@@ -24,3 +24,9 @@ export interface ITimeList {
   user: any;
   _id: string;
 }
+
+export interface IStyledCardProps {
+  big?: boolean;
+  small?: boolean;
+  eye?: boolean;
+}

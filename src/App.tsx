@@ -4,7 +4,6 @@ import { Route, Routes } from "react-router-dom";
 import Timesheets from "./pages/Timesheets";
 import Login from "./pages/Login";
 import { useContext } from "react";
-import Logout from "./pages/Logout";
 import Signin from "./pages/Signin";
 
 import Projects from "./pages/Projects";
@@ -23,7 +22,6 @@ const App = () => {
         <Route element={<Home />} path="/" />
         {logged && <Route element={<Timesheets />} path="/timesheet"></Route>}
         <Route element={<Login />} path="/login"></Route>
-        <Route element={<Logout />} path="/logout"></Route>
         <Route element={<Signin />} path="/signin"></Route>
         {logged && <Route element={<Projects />} path="/projects" />}
         <Route element={<Profile></Profile>} path="/profilePage"></Route>
