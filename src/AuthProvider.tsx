@@ -32,9 +32,9 @@ export default function AuthProvider({ children }: any) {
   }, []);
 
   function disconnect() {
-    navigate("/");
     setLogged(false);
     localStorage.removeItem("jwt");
+    navigate("/");
   }
 
   function getCurrentUser() {

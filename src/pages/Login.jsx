@@ -6,9 +6,11 @@ import services from "../services";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../AuthProvider";
+import { useSnackbar } from "notistack";
 
 export default function Login() {
   const { setLogged } = useContext(AuthContext);
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [body, setBody] = useState({
     email: "",
     password: "",
@@ -24,12 +26,12 @@ export default function Login() {
         const { jwt } = result.data;
         localStorage.setItem("jwt", jwt);
         setLogged(true);
-        alert("successfully logged");
+        enqueueSnackbar("Successfully Login", { variant: "success" });
         navigate("/");
       })
       .catch((err) => {
         console.log(err);
-        alert("incorrect login");
+        enqueueSnackbar("Incorrect Login", { variant: "error" });
       });
   }
 

@@ -10,11 +10,18 @@ import { MdAlternateEmail } from "react-icons/md";
 import styled from "styled-components";
 import { IProfileProps } from "../../Interfaces";
 import { AuthContext, AuthContextType } from "../../AuthProvider";
+import { Button } from "@mui/material";
+import { useSnackbar } from "notistack";
 
 export default function DisplayProfile() {
-  const { currentUser, getCurrentUser } = React.useContext(
+  const { currentUser, getCurrentUser, disconnect } = React.useContext(
     AuthContext
   ) as AuthContextType;
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  function handleClickLogout() {
+    disconnect();
+    enqueueSnackbar("Successfully Logout", { variant: "info" });
+  }
 
   useEffect(() => {
     getCurrentUser();
@@ -81,6 +88,13 @@ export default function DisplayProfile() {
           <EditProfile />
         </CardActions>
       </Card>
+      <Button
+        sx={{ marginTop: "1rem" }}
+        variant="contained"
+        onClick={handleClickLogout}
+      >
+        LogOut
+      </Button>
     </div>
   );
 }
