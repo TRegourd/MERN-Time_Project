@@ -20,7 +20,7 @@
 }
 
 .header-container > h1 {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.9);
 
   font-size: 100px;
   margin-top: -100px;
@@ -28,7 +28,7 @@
 
 .header-container > p {
   margin-top: 8px;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.9);
   font-size: 32px;
 }
 

@@ -23,8 +23,6 @@ import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers/";
-
-import "../components/timesheet.css";
 import Charts from "../components/Charts";
 import ExportCSV from "../components/TimeSheet_Components/ExportCSV";
 import { TimesheetFilter } from "../components/TimeSheet_Components/Filter";

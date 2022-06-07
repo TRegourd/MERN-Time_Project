@@ -39,11 +39,16 @@
 }
 
 .text-logo {
-  color: #fff;
+  color: black;
   display: flex;
   align-items: center;
   text-decoration: none;
   padding: 0.5rem 1rem;
+}
+
+.text-logo:hover {
+  color: #fff;
+  transition: all 0.2s ease-in-out;
 }
 
 .fa-typo3 {
@@ -76,7 +81,7 @@
 .nav-links:hover {
   border-bottom: 4px solid #fff;
   color: #fff;
-  transition: all 0.2s ease-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .fa-bars {
