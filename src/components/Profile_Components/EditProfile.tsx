@@ -7,11 +7,12 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import services from "../../services";
 import { IProfileProps, IUser } from "../../Interfaces";
+import { AuthContext, AuthContextType } from "../../AuthProvider";
 
-export default function EditProfile({
-  currentUser,
-  fetchAndSetCurrentUser,
-}: IProfileProps) {
+export default function EditProfile() {
+  const { currentUser, setCurrentUser } = React.useContext(
+    AuthContext
+  ) as AuthContextType;
   const [open, setOpen] = React.useState(false);
   const [form, setForm] = React.useState<IUser>({
     first_name: currentUser.first_name,
@@ -40,14 +41,39 @@ export default function EditProfile({
   };
 
   const handleSubmit = () => {
-    services
-      .updateCurrentUser(form)
-      .then(() => {
-        fetchAndSetCurrentUser();
-        setOpen(false);
-      })
-      .catch(() => alert("erreur"));
+    if (form.password) {
+      if (form.password === form.confirmPassword) {
+        services
+          .updateCurrentUser(form)
+          .then(() => {
+            services.getCurrentUser().then((user) => setCurrentUser(user));
+            setOpen(false);
+          })
+          .catch(() => alert("erreur"));
+      } else {
+        alert("Password does not match !");
+      }
+    } else {
+      services
+        .updateCurrentUser(form)
+        .then(() => {
+          services.getCurrentUser().then((user) => setCurrentUser(user));
+          setOpen(false);
+        })
+        .catch(() => alert("erreur"));
+    }
   };
+
+  React.useEffect(() => {
+    setForm({
+      first_name: currentUser.first_name,
+      last_name: currentUser.last_name,
+      adress: currentUser.adress,
+      position: currentUser.position,
+      email: currentUser.email,
+      _id: currentUser._id,
+    });
+  }, [currentUser]);
 
   return (
     <div>
@@ -55,7 +81,7 @@ export default function EditProfile({
         Edit Profile
       </Button>
       <Dialog open={open} onClose={handleClose} onChange={handleChangeInput}>
-        <DialogTitle>Edit My Profile</DialogTitle>
+        <pre>{JSON.stringify(form, null, 2)}</pre>
         <DialogContent>
           <TextField
             autoFocus
@@ -106,6 +132,24 @@ export default function EditProfile({
             fullWidth
             variant="standard"
             defaultValue={currentUser.email}
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            label="New Paswword"
+            type="password"
+            name="password"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Confirm New Password"
+            type="password"
+            name="confirmPassword"
+            fullWidth
+            variant="standard"
           />
         </DialogContent>
         <DialogActions>

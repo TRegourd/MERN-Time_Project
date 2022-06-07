@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useEffect, useState } from "react";
 import services from "../services";
 import {
@@ -28,16 +28,16 @@ import "../components/timesheet.css";
 import Charts from "../components/Charts";
 import ExportCSV from "../components/TimeSheet_Components/ExportCSV";
 import { TimesheetFilter } from "../components/TimeSheet_Components/Filter";
+import { AuthContext } from "../AuthProvider";
 
 export default function Timesheets() {
   const [timeList, setList] = useState([]);
-  const [currentUser, setCurrentUser] = useState({});
   const [projectList, setProjectList] = useState([]);
   const [dateValue, setDateValue] = useState(null);
   const [projectValue, setProjectValue] = useState("");
-  const [userValue, setUserValue] = useState("");
   const [filterStartValue, setFilterStartValue] = useState(null);
   const [filterEndValue, setFilterEndValue] = useState(null);
+  const { currentUser } = useContext(AuthContext);
 
   function fetchAndSetTimesheet() {
     if (filterStartValue && filterEndValue) {
@@ -46,19 +46,15 @@ export default function Timesheets() {
         .getFilteredTimesheetList(filter)
         .then((list) => {
           setList(list);
-          // setShowTimesheet(!showTimesheet);
         })
         .catch(() => alert("erreur"));
-      // setShowTimesheet(!showTimesheet);
     } else {
       services
         .getAllTimesheetList()
         .then((list) => {
           setList(list);
-          // setShowTimesheet(!showTimesheet);
         })
         .catch(() => alert("erreur"));
-      // setShowTimesheet(!showTimesheet);
     }
   }
 
@@ -71,15 +67,6 @@ export default function Timesheets() {
         fetchAndSetTimesheet();
         fetchAndSetChartData();
         alert("Timesheet Deleted from DB");
-      })
-      .catch(() => alert("erreur"));
-  }
-
-  function fetchAndSetUserList() {
-    services
-      .getCurrentUser()
-      .then((user) => {
-        setCurrentUser(user);
       })
       .catch(() => alert("erreur"));
   }
@@ -125,7 +112,7 @@ export default function Timesheets() {
     });
   }
 
-  // envoi du formulaire
+  // ** envoi du formulaire
 
   const [data, setData] = useState([]);
 
@@ -143,7 +130,6 @@ export default function Timesheets() {
   }
 
   useEffect(() => {
-    fetchAndSetUserList();
     fetchAndSetProjectList();
     fetchAndSetTimesheet();
     fetchAndSetChartData();
