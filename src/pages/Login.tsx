@@ -8,6 +8,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { AuthContext, AuthContextType } from "../AuthProvider";
 import { useSnackbar } from "notistack";
 import styled, { AnyStyledComponent, css } from "styled-components";
+import { IStyledCardProps } from "../Interfaces";
 
 export default function Login() {
   const { setLogged } = useContext(AuthContext) as AuthContextType;
@@ -163,13 +164,13 @@ const CardIcon: AnyStyledComponent = styled.span`
     opacity: 0.95;
   }
 
-  ${(props: CardProps) =>
+  ${(props: IStyledCardProps) =>
     props.big &&
     css`
       font-size: 26px;
     `}
 
-  ${(props: CardProps) =>
+  ${(props: IStyledCardProps) =>
     props.eye &&
     css`
       position: absolute;
@@ -177,7 +178,7 @@ const CardIcon: AnyStyledComponent = styled.span`
       right: 0;
     `}
 
-  ${(props: CardProps) =>
+  ${(props: IStyledCardProps) =>
     props.small &&
     css`
       font-size: 14px;
@@ -197,9 +198,3 @@ const CardLink = styled.a`
     color: #777;
   }
 `;
-
-interface CardProps {
-  big?: boolean;
-  small?: boolean;
-  eye?: boolean;
-}

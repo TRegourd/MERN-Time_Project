@@ -3,8 +3,9 @@ import { Button } from "@mui/material";
 import services from "../services";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import styled, { css } from "styled-components";
+import styled, { AnyStyledComponent, css } from "styled-components";
 import { useSnackbar } from "notistack";
+import { IStyledCardProps } from "../Interfaces";
 
 export default function Signin() {
   const [body, setBody] = useState({
@@ -17,7 +18,7 @@ export default function Signin() {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
 
-  function handleSubmit(e) {
+  function handleSubmit(e: React.MouseEvent<HTMLElement>) {
     e.preventDefault();
     services
       .signin(body)
@@ -31,11 +32,11 @@ export default function Signin() {
       });
   }
 
-  function updateBody(key, value) {
+  function updateBody(key: string, value: string) {
     setBody({ ...body, [key]: value });
   }
 
-  function handleChange(e) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     updateBody(name, value);
   }
@@ -48,7 +49,7 @@ export default function Signin() {
           <CardHeading>Sign in</CardHeading>
         </CardHeader>
 
-        <CardBody autoComplete="off" onChange={handleChange}>
+        <CardBody onChange={handleChange}>
           <CardFieldset>
             <CardInput
               placeholder="First Name"
@@ -169,7 +170,7 @@ const CardInput = styled.input`
   }
 `;
 
-const CardIcon = styled.span`
+const CardIcon: AnyStyledComponent = styled.span`
   color: #666;
   cursor: pointer;
   opacity: 0.25;
@@ -179,13 +180,13 @@ const CardIcon = styled.span`
     opacity: 0.95;
   }
 
-  ${(props) =>
+  ${(props: IStyledCardProps) =>
     props.big &&
     css`
       font-size: 26px;
     `}
 
-  ${(props) =>
+  ${(props: IStyledCardProps) =>
     props.eye &&
     css`
       position: absolute;
@@ -193,7 +194,7 @@ const CardIcon = styled.span`
       right: 0;
     `}
 
-  ${(props) =>
+  ${(props: IStyledCardProps) =>
     props.small &&
     css`
       font-size: 14px;
