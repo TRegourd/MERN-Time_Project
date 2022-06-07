@@ -11,6 +11,7 @@ import Home from "./pages/Home";
 import { AuthContext, AuthContextType } from "./AuthProvider";
 import Profile from "./pages/Profile";
 import Forgot from "./pages/Forgot";
+import Reset from "./pages/Reset";
 
 const App = () => {
   const { logged } = useContext(AuthContext) as AuthContextType;
@@ -25,6 +26,7 @@ const App = () => {
         <Route element={<Login />} path="/login"></Route>
         <Route element={<Signin />} path="/signin"></Route>
         <Route element={<Forgot />} path="/forgot"></Route>
+        <Route element={<Reset />} path="/reset/:id" />
         {logged && <Route element={<Projects />} path="/projects" />}
         <Route element={<Profile></Profile>} path="/profilePage"></Route>
       </Routes>
