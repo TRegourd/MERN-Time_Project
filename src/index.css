@@ -22,3 +22,10 @@ body {
   font-family: "Poppins", sans-serif;
   line-height: 1;
 }
+
+a,
+a:visited,
+a:hover,
+a:active {
+  color: inherit;
+}
