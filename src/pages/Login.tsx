@@ -5,13 +5,13 @@ import { Button } from "@mui/material";
 import services from "../services";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { AuthContext } from "../AuthProvider";
+import { AuthContext, AuthContextType } from "../AuthProvider";
 import { useSnackbar } from "notistack";
-import styled, { css } from "styled-components";
+import styled, { AnyStyledComponent, css } from "styled-components";
 
 export default function Login() {
-  const { setLogged } = useContext(AuthContext);
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { setLogged } = useContext(AuthContext) as AuthContextType;
+  const { enqueueSnackbar } = useSnackbar();
   const [body, setBody] = useState({
     email: "",
     password: "",
@@ -19,7 +19,7 @@ export default function Login() {
 
   const navigate = useNavigate();
 
-  function handleSubmit(e) {
+  function handleSubmit(e: React.MouseEvent<HTMLElement>) {
     e.preventDefault();
     services
       .login(body)
@@ -36,11 +36,11 @@ export default function Login() {
       });
   }
 
-  function updateBody(key, value) {
+  function updateBody(key: string, value: string) {
     setBody({ ...body, [key]: value });
   }
 
-  function handleChange(e) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     updateBody(name, value);
   }
@@ -53,7 +53,7 @@ export default function Login() {
           <CardHeading>Login</CardHeading>
         </CardHeader>
 
-        <CardBody autoComplete="off" onChange={handleChange}>
+        <CardBody onChange={handleChange}>
           <CardFieldset>
             <CardInput placeholder="E-mail" type="text" name="email" required />
           </CardFieldset>
@@ -69,11 +69,7 @@ export default function Login() {
           </CardFieldset>
 
           <CardFieldset>
-            <Button
-              style={{ width: "20%", alignSelf: "center" }}
-              variant="outlined"
-              onClick={handleSubmit}
-            >
+            <Button variant="outlined" onClick={handleSubmit}>
               Login
             </Button>
           </CardFieldset>
@@ -157,7 +153,7 @@ const CardInput = styled.input`
   }
 `;
 
-const CardIcon = styled.span`
+const CardIcon: AnyStyledComponent = styled.span`
   color: #666;
   cursor: pointer;
   opacity: 0.25;
@@ -167,13 +163,13 @@ const CardIcon = styled.span`
     opacity: 0.95;
   }
 
-  ${(props) =>
+  ${(props: CardProps) =>
     props.big &&
     css`
       font-size: 26px;
     `}
 
-  ${(props) =>
+  ${(props: CardProps) =>
     props.eye &&
     css`
       position: absolute;
@@ -181,7 +177,7 @@ const CardIcon = styled.span`
       right: 0;
     `}
 
-  ${(props) =>
+  ${(props: CardProps) =>
     props.small &&
     css`
       font-size: 14px;
@@ -201,3 +197,9 @@ const CardLink = styled.a`
     color: #777;
   }
 `;
+
+interface CardProps {
+  big?: boolean;
+  small?: boolean;
+  eye?: boolean;
+}
