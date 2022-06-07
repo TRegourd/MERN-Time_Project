@@ -9,6 +9,7 @@ export interface AuthContextType {
   disconnect: () => void;
   currentUser: IUser;
   setCurrentUser: (user: IUser) => void;
+  getCurrentUser: () => void;
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);
@@ -27,7 +28,7 @@ export default function AuthProvider({ children }: any) {
   useEffect(() => {
     const hasJwt = localStorage.getItem("jwt");
     setLogged(Boolean(hasJwt));
-    getCurrentUSer();
+    getCurrentUser();
   }, []);
 
   function disconnect() {
@@ -36,7 +37,7 @@ export default function AuthProvider({ children }: any) {
     localStorage.removeItem("jwt");
   }
 
-  function getCurrentUSer() {
+  function getCurrentUser() {
     services
       .getCurrentUser()
       .then((user) => {
@@ -45,7 +46,14 @@ export default function AuthProvider({ children }: any) {
       .catch(() => alert("erreur"));
   }
 
-  const value = { logged, setLogged, disconnect, currentUser, setCurrentUser };
+  const value = {
+    logged,
+    setLogged,
+    disconnect,
+    currentUser,
+    setCurrentUser,
+    getCurrentUser,
+  };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

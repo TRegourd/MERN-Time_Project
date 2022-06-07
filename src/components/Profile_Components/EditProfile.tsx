@@ -64,13 +64,23 @@ export default function EditProfile() {
     }
   };
 
+  React.useEffect(() => {
+    setForm({
+      first_name: currentUser.first_name,
+      last_name: currentUser.last_name,
+      adress: currentUser.adress,
+      position: currentUser.position,
+      email: currentUser.email,
+      _id: currentUser._id,
+    });
+  }, [currentUser]);
+
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
         Edit Profile
       </Button>
       <Dialog open={open} onClose={handleClose} onChange={handleChangeInput}>
-        <DialogTitle>Edit My Profile</DialogTitle>
         <pre>{JSON.stringify(form, null, 2)}</pre>
         <DialogContent>
           <TextField

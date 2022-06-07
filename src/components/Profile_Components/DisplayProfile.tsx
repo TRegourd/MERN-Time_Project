@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ProfileAvatar from "./Avatar";
 import EditProfile from "./EditProfile";
 import Card from "@mui/material/Card";
@@ -12,7 +12,14 @@ import { IProfileProps } from "../../Interfaces";
 import { AuthContext, AuthContextType } from "../../AuthProvider";
 
 export default function DisplayProfile() {
-  const { currentUser } = React.useContext(AuthContext) as AuthContextType;
+  const { currentUser, getCurrentUser } = React.useContext(
+    AuthContext
+  ) as AuthContextType;
+
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
+
   return (
     <div>
       <Card
