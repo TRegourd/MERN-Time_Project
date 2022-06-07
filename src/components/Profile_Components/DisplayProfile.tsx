@@ -9,11 +9,10 @@ import { BiBuildings, BiMap, BiUser } from "react-icons/bi";
 import { MdAlternateEmail } from "react-icons/md";
 import styled from "styled-components";
 import { IProfileProps } from "../../Interfaces";
+import { AuthContext, AuthContextType } from "../../AuthProvider";
 
-export default function DisplayProfile({
-  currentUser,
-  fetchAndSetCurrentUser,
-}: IProfileProps) {
+export default function DisplayProfile() {
+  const { currentUser } = React.useContext(AuthContext) as AuthContextType;
   return (
     <div>
       <Card
@@ -72,10 +71,7 @@ export default function DisplayProfile({
         </CardContent>
 
         <CardActions>
-          <EditProfile
-            currentUser={currentUser}
-            fetchAndSetCurrentUser={fetchAndSetCurrentUser}
-          />
+          <EditProfile />
         </CardActions>
       </Card>
     </div>

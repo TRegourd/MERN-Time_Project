@@ -12,7 +12,6 @@ export interface IUser {
 
 export interface IProfileProps {
   currentUser: IUser;
-  fetchAndSetCurrentUser: () => void;
 }
 
 export interface ITimeList {

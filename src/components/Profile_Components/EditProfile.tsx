@@ -7,11 +7,12 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import services from "../../services";
 import { IProfileProps, IUser } from "../../Interfaces";
+import { AuthContext, AuthContextType } from "../../AuthProvider";
 
-export default function EditProfile({
-  currentUser,
-  fetchAndSetCurrentUser,
-}: IProfileProps) {
+export default function EditProfile() {
+  const { currentUser, setCurrentUser } = React.useContext(
+    AuthContext
+  ) as AuthContextType;
   const [open, setOpen] = React.useState(false);
   const [form, setForm] = React.useState<IUser>({
     first_name: currentUser.first_name,
@@ -43,7 +44,7 @@ export default function EditProfile({
     services
       .updateCurrentUser(form)
       .then(() => {
-        fetchAndSetCurrentUser();
+        services.getCurrentUser().then((user) => setCurrentUser(user));
         setOpen(false);
       })
       .catch(() => alert("erreur"));
