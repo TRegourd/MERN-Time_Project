@@ -50,7 +50,7 @@
 
 /* Social Icons */
 .social-icon-link {
-  color: #fff;
+  color: #fff !important;
   font-size: 24px;
 }
 
