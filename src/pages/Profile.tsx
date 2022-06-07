@@ -1,15 +1,10 @@
 import { Grid } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
-import { AuthContext, AuthContextType } from "../AuthProvider";
+import React from "react";
 
 import DisplayProfile from "../components/Profile_Components/DisplayProfile";
 import LogOutSnackbar from "../components/Profile_Components/LogoutSnackbar";
-import { IUser } from "../Interfaces";
-import services from "../services";
 
 export default function Profile() {
-  const { currentUser } = useContext(AuthContext) as AuthContextType;
-
   return (
     <div className="profileContainer">
       <Grid container spacing={1} marginTop={2} justifyContent="center">
