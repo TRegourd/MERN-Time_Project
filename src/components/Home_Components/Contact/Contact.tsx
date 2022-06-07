@@ -1,35 +1,55 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import ContactSnackbar from "./ContactSnackbar";
 import "../Header/HomeHeader.css";
+import { useSnackbar } from "notistack";
+import services from "../../../services";
+import { Button } from "@mui/material";
 
 const Contact = () => {
   const [form, setForm] = useState({
     email: "", //currentUser.email,
     message: "",
   });
+  const { enqueueSnackbar } = useSnackbar();
 
-  function updateForm(key, value) {
+  function updateForm(key: string, value: string) {
     setForm({ ...form, [key]: value });
   }
 
-  function handleChangeInput(e) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     updateForm(name, value);
+  }
+
+  async function handleSubmit(e: React.MouseEvent<HTMLElement>) {
+    e.preventDefault();
+    services
+      .createNewMessage(form)
+      .then(() => {
+        enqueueSnackbar("Message successfully sent !", {
+          variant: "success",
+        });
+      })
+      .catch((err) => {
+        enqueueSnackbar("Incorrect entry !", { variant: "error" });
+        console.log(err);
+      });
   }
 
   return (
     <Container id="contact">
       <Wrapper>
         {/* <pre>{JSON.stringify(form, null, 2)}</pre> */}
-        <FormContainer onChange={handleChangeInput}>
+        <FormContainer onChange={handleChange}>
           <Title>
             Questions? <br /> Let's Get In Touch
           </Title>
           <Form>
             <Input placeholder="Your Email" name="email" />
             <TextArea placeholder="Your Message" name="message" />
-            <ContactSnackbar body={form} />
+            <Button variant="contained" onClick={handleSubmit}>
+              Send Message
+            </Button>
           </Form>
         </FormContainer>
       </Wrapper>
@@ -57,7 +77,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const FormContainer = styled.form`
+const FormContainer = styled.div`
   width: 50%;
   @media only screen and (max-width: 480px) {
     width: 100%;
@@ -73,7 +93,7 @@ const Title = styled.h1`
   }
 `;
 
-const Form = styled.form`
+const Form = styled.div`
   height: 300px;
   display: flex;
   flex-direction: column;
