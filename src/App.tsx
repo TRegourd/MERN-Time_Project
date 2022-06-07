@@ -10,6 +10,7 @@ import Projects from "./pages/Projects";
 import Home from "./pages/Home";
 import { AuthContext, AuthContextType } from "./AuthProvider";
 import Profile from "./pages/Profile";
+import Forgot from "./pages/Forgot";
 
 const App = () => {
   const { logged } = useContext(AuthContext) as AuthContextType;
@@ -23,6 +24,7 @@ const App = () => {
         {logged && <Route element={<Timesheets />} path="/timesheet"></Route>}
         <Route element={<Login />} path="/login"></Route>
         <Route element={<Signin />} path="/signin"></Route>
+        <Route element={<Forgot />} path="/forgot"></Route>
         {logged && <Route element={<Projects />} path="/projects" />}
         <Route element={<Profile></Profile>} path="/profilePage"></Route>
       </Routes>
