@@ -112,6 +112,11 @@ const services = {
       .then((res) => res.data);
   },
 
+  /**
+   * SERVICES AUTH
+   *
+   */
+
   login(body) {
     // email, password
     return base.post("/auth/login", body);
@@ -120,6 +125,19 @@ const services = {
   signin(body) {
     return base.post("/auth/signin", body);
   },
+
+  forgot(body) {
+    return base.post("/auth/forgot", body);
+  },
+
+  reset(body, id) {
+    return base.put(`/auth/reset/${id}`, body);
+  },
+
+  /**
+   * SERVICES CONTACT
+   *
+   */
 
   createNewMessage(body) {
     return base.post("/contact", body);

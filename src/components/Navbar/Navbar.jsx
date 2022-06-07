@@ -88,7 +88,7 @@ function Navbar() {
             )}
           </ul>
           {button && !logged && (
-            <Button buttonStyle="btn--outline">SIGN UP AS PRO</Button>
+            <Button buttonStyle="btn--outline">SIGN UP</Button>
           )}
         </div>
       </nav>
