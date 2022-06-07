@@ -41,13 +41,27 @@ export default function EditProfile() {
   };
 
   const handleSubmit = () => {
-    services
-      .updateCurrentUser(form)
-      .then(() => {
-        services.getCurrentUser().then((user) => setCurrentUser(user));
-        setOpen(false);
-      })
-      .catch(() => alert("erreur"));
+    if (form.password) {
+      if (form.password === form.confirmPassword) {
+        services
+          .updateCurrentUser(form)
+          .then(() => {
+            services.getCurrentUser().then((user) => setCurrentUser(user));
+            setOpen(false);
+          })
+          .catch(() => alert("erreur"));
+      } else {
+        alert("Password does not match !");
+      }
+    } else {
+      services
+        .updateCurrentUser(form)
+        .then(() => {
+          services.getCurrentUser().then((user) => setCurrentUser(user));
+          setOpen(false);
+        })
+        .catch(() => alert("erreur"));
+    }
   };
 
   return (
@@ -57,6 +71,7 @@ export default function EditProfile() {
       </Button>
       <Dialog open={open} onClose={handleClose} onChange={handleChangeInput}>
         <DialogTitle>Edit My Profile</DialogTitle>
+        <pre>{JSON.stringify(form, null, 2)}</pre>
         <DialogContent>
           <TextField
             autoFocus
@@ -107,6 +122,24 @@ export default function EditProfile() {
             fullWidth
             variant="standard"
             defaultValue={currentUser.email}
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            label="New Paswword"
+            type="password"
+            name="password"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Confirm New Password"
+            type="password"
+            name="confirmPassword"
+            fullWidth
+            variant="standard"
           />
         </DialogContent>
         <DialogActions>
