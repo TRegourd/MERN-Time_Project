@@ -10,73 +10,31 @@ import {
   MenuItem,
   InputLabel,
   FormControl,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
 } from "@mui/material";
-import dayjs from "dayjs";
 
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers/";
 import Charts from "../components/Charts";
-import ExportCSV from "../components/TimeSheet_Components/ExportCSV";
+
 import { TimesheetFilter } from "../components/TimeSheet_Components/Filter";
 import { AuthContext } from "../AuthProvider";
+import TimeDataGrid from "../components/TimeSheet_Components/DataGrid";
+import {
+  fetchChartData,
+  fetchProjectList,
+  fetchTimeSheetList,
+} from "../libs/apiCalls";
 
 export default function Timesheets() {
-  const [timeList, setList] = useState([]);
+  const [timeList, setTimeList] = useState([]);
   const [projectList, setProjectList] = useState([]);
   const [dateValue, setDateValue] = useState(null);
   const [projectValue, setProjectValue] = useState("");
   const [filterStartValue, setFilterStartValue] = useState(null);
   const [filterEndValue, setFilterEndValue] = useState(null);
+  const [data, setData] = useState([]);
   const { currentUser } = useContext(AuthContext);
-
-  function fetchAndSetTimesheet() {
-    if (filterStartValue && filterEndValue) {
-      const filter = { startDate: filterStartValue, endDate: filterEndValue };
-      services
-        .getFilteredTimesheetList(filter)
-        .then((list) => {
-          setList(list);
-        })
-        .catch(() => alert("erreur"));
-    } else {
-      services
-        .getAllTimesheetList()
-        .then((list) => {
-          setList(list);
-        })
-        .catch(() => alert("erreur"));
-    }
-  }
-
-  useEffect(fetchAndSetTimesheet, []);
-
-  function deleteTimesheet(id) {
-    services
-      .deleteTimesheetById(id)
-      .then(() => {
-        fetchAndSetTimesheet();
-        fetchAndSetChartData();
-        alert("Timesheet Deleted from DB");
-      })
-      .catch(() => alert("erreur"));
-  }
-
-  function fetchAndSetProjectList() {
-    services
-      .getProjectsList()
-      .then((list) => {
-        setProjectList(list);
-      })
-      .catch(() => alert("erreur"));
-  }
 
   // envoi du formulaire
 
@@ -105,38 +63,34 @@ export default function Timesheets() {
   function handleSubmit(e) {
     e.preventDefault();
     services.createNewTimesheet(body).then(() => {
-      fetchAndSetChartData();
-      fetchAndSetTimesheet();
+      fetchChartData(filterStartValue, filterEndValue).then((result) => {
+        setData(result);
+      });
+      fetchTimeSheetList().then((result) => {
+        setTimeList(result);
+      });
     });
   }
 
   // ** envoi du formulaire
 
-  const [data, setData] = useState([]);
-
-  function fetchAndSetChartData() {
-    if (filterStartValue && filterEndValue) {
-      const filter = { startDate: filterStartValue, endDate: filterEndValue };
-      services.getTotalTimebyProject(filter).then((result) => {
-        setData(result);
-      });
-    } else {
-      services.getTotalTimebyProject().then((result) => {
-        setData(result);
-      });
-    }
-  }
-
-  useEffect(() => {
-    fetchAndSetProjectList();
-    fetchAndSetTimesheet();
-    fetchAndSetChartData();
-  }, []);
-
   function handleFilter() {
-    fetchAndSetTimesheet();
-    fetchAndSetChartData();
+    fetchChartData(filterStartValue, filterEndValue).then((result) => {
+      setData(result);
+    });
   }
+
+  React.useEffect(() => {
+    fetchTimeSheetList().then((result) => {
+      setTimeList(result);
+    });
+    fetchProjectList().then((result) => {
+      setProjectList(result);
+    });
+    fetchChartData(filterStartValue, filterEndValue).then((result) => {
+      setData(result);
+    });
+  }, []);
 
   return (
     <div style={{ marginTop: "100px" }}>
@@ -217,62 +171,11 @@ export default function Timesheets() {
           setFilterEndValue,
           handleFilter
         )}
-        {timeList.length != 0 && <ExportCSV timeList={timeList}></ExportCSV>}
       </Box>
       <Box>
         <Charts data={data}></Charts>
       </Box>
-      <Grid
-        className="timesheets"
-        container
-        direction="row"
-        spacing={2}
-        justifyContent="Center"
-      >
-        <Grid item xs={10}>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 400 }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Description</TableCell>
-                  <TableCell align="center">Project</TableCell>
-                  <TableCell align="center">Date</TableCell>
-                  <TableCell align="center">Duration</TableCell>
-                  <TableCell align="center"></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {timeList.map((time) => (
-                  <TableRow
-                    key={time._id}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      {time.desc}
-                    </TableCell>
-                    <TableCell align="center">{time.project.name}</TableCell>
-                    <TableCell align="center">
-                      {dayjs(time.date).format("DD-MM-YYYY")}
-                    </TableCell>
-                    <TableCell align="center">{time.duration}</TableCell>
-                    <TableCell align="center">
-                      <Button
-                        variant="outlined"
-                        className="deleteButton"
-                        onClick={() => {
-                          deleteTimesheet(time._id);
-                        }}
-                      >
-                        Delete
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Grid>
-      </Grid>
+      {timeList.length != 0 && <TimeDataGrid list={timeList}></TimeDataGrid>}
     </div>
   );
 }
