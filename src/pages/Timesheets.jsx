@@ -25,6 +25,7 @@ import {
   fetchProjectList,
   fetchTimeSheetList,
 } from "../libs/apiCalls";
+import AddTimeSheet from "../components/TimeSheet_Components/AddTimeSheet";
 
 export default function Timesheets() {
   const [timeList, setTimeList] = useState([]);
@@ -93,68 +94,9 @@ export default function Timesheets() {
   }, []);
 
   return (
-    <div style={{ marginTop: "100px" }}>
+    <div style={{ marginTop: "10px" }}>
       {/* <pre>{JSON.stringify(body, null, 2)}</pre> */}
-
-      <Box
-        component="form"
-        onSubmit={handleSubmit}
-        onChange={handleChangeInput}
-        sx={{
-          "& > :not(style)": { m: 1, width: "25ch" },
-          display: "flex",
-          justifyContent: "center",
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DatePicker
-            label="Date"
-            name="date"
-            value={dateValue}
-            onChange={(newValue) => {
-              setDateValue(newValue);
-            }}
-            renderInput={(params) => <TextField {...params} />}
-          />
-        </LocalizationProvider>
-
-        <TextField
-          id="filled-basic"
-          name="desc"
-          label="Description"
-          variant="filled"
-        />
-        <TextField
-          id="filled-basic"
-          name="duration"
-          label="Duration (min)"
-          variant="filled"
-        />
-        <FormControl>
-          <InputLabel id="projectLabel">Project</InputLabel>
-          <Select
-            labelId="projectLabel"
-            name="project"
-            value={projectValue}
-            onChange={(newValue) => {
-              setProjectValue(newValue.target.value);
-            }}
-          >
-            <MenuItem value={""}>Chose Project</MenuItem>
-            {projectList.map((item) => (
-              <MenuItem key={item._id} value={item._id}>
-                {item.name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-
-        <Button type="sumbit" variant="contained">
-          Submit
-        </Button>
-      </Box>
+      <AddTimeSheet></AddTimeSheet>
       <Box
         sx={{
           display: "flex",
