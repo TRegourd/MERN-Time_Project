@@ -13,10 +13,10 @@
 :root {
   --transition: all 400ms ease;
 }
-
+/* 
 ::-webkit-scrollbar {
   display: none;
-}
+} */
 
 body {
   font-family: "Poppins", sans-serif;

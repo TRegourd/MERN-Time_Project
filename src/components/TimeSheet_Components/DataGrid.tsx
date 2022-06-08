@@ -35,6 +35,7 @@ function CustomToolbar() {
 }
 
 export default function TimeDataGrid({ list }: any) {
+  const [pageSize, setPageSize] = React.useState<number>(5);
   const [timeList, setTimeList] = React.useState<any | []>(list);
   const [columnVisibilityModel, setColumnVisibilityModel] =
     React.useState<GridColumnVisibilityModel>({
@@ -145,6 +146,7 @@ export default function TimeDataGrid({ list }: any) {
       >
         <div style={{ flexGrow: 1 }}>
           <DataGrid
+            sx={{ margin: "auto" }}
             rows={rows}
             columns={columns}
             columnVisibilityModel={columnVisibilityModel}
@@ -170,7 +172,10 @@ export default function TimeDataGrid({ list }: any) {
             }}
             experimentalFeatures={{ newEditingApi: true }}
             editMode="row"
-            autoPageSize={true}
+            rowsPerPageOptions={[5, 10, 20, 100]}
+            pageSize={pageSize}
+            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+            pagination
           />
         </div>
       </div>
