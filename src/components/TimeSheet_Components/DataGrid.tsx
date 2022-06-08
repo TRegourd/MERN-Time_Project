@@ -1,8 +1,6 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
 import {
   GridColumns,
-  GridRowsProp,
   DataGrid,
   GridRowId,
   GridEventListener,
@@ -13,20 +11,29 @@ import {
   GridToolbarFilterButton,
   GridToolbarColumnsButton,
   GridColumnVisibilityModel,
+  GridRowModel,
 } from "@mui/x-data-grid";
 import { fetchTimeSheetList } from "../../libs/apiCalls";
 import dayjs from "dayjs";
 import { DeleteButton } from "./deleteButton";
 import AddTimeSheet from "./AddTimeSheet";
-import { AuthContext, AuthContextType } from "../../AuthProvider";
-import { Select } from "@mui/material";
+import services from "../../services";
 
 interface SelectedCellParams {
   id: GridRowId;
   field: string;
 }
 
-function CustomToolbar() {
+// interface ToolBarProps {
+//   cellMode: string;
+//   selectedCellParams: Object[];
+//   setSelectedCellParams: React.Dispatch<any>;
+//   cellModesModel: Object;
+//   setCellModesModel: React.Dispatch<any>;
+//   setTimeList: React.Dispatch<any>;
+// }
+
+function CustomToolbar(/*props: ToolBarProps*/) {
   return (
     <GridToolbarContainer
       sx={{ display: "flex", justifyContent: "space-between" }}
@@ -43,7 +50,7 @@ function CustomToolbar() {
 }
 
 export default function TimeDataGrid({ timeList, projectList }: any) {
-  const [pageSize, setPageSize] = React.useState<number>(5);
+  const [pageSize, setPageSize] = React.useState<number>(10);
   const [timeSheetList, setTimeList] = React.useState<any | []>(timeList);
   const [currentProjectList, setProjectList] = React.useState<any | []>(
     projectList
@@ -104,7 +111,7 @@ export default function TimeDataGrid({ timeList, projectList }: any) {
       field: "desc",
       headerName: "Description",
       type: "string",
-      width: 200,
+      width: 250,
       editable: true,
     },
     {
@@ -149,6 +156,28 @@ export default function TimeDataGrid({ timeList, projectList }: any) {
     },
   ];
 
+  const processRowUpdate = React.useCallback(
+    async (newRow: GridRowModel) => {
+      // Make the HTTP request to save in the backend
+      const project = currentProjectList.find((el: any) => {
+        return el.name === newRow.project;
+      });
+      await services
+        .updateTimesheet({ ...newRow, project: project._id })
+        .then(() => {
+          fetchTimeSheetList().then((result) => {
+            setTimeList(result);
+          });
+        });
+      return newRow;
+    },
+    [services.updateTimesheet]
+  );
+
+  const handleProcessRowUpdateError = React.useCallback((error: Error) => {
+    console.log(error);
+  }, []);
+
   return (
     <div style={{ height: 400, width: "100%", marginRight: 20 }}>
       <div
@@ -162,6 +191,8 @@ export default function TimeDataGrid({ timeList, projectList }: any) {
           <DataGrid
             sx={{ margin: "auto" }}
             rows={rows}
+            processRowUpdate={processRowUpdate}
+            onProcessRowUpdateError={handleProcessRowUpdateError}
             columns={columns}
             columnVisibilityModel={columnVisibilityModel}
             onColumnVisibilityModelChange={(newModel) =>
@@ -179,6 +210,7 @@ export default function TimeDataGrid({ timeList, projectList }: any) {
                 setSelectedCellParams,
                 cellModesModel,
                 setCellModesModel,
+                setTimeList,
               },
               cell: {
                 onFocus: handleCellFocus,

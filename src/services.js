@@ -112,6 +112,17 @@ const services = {
       .then((res) => res.data);
   },
 
+  updateTimesheet(body) {
+    const token = localStorage.getItem("jwt");
+    return base
+      .put(`/timesheet/update/${body._id}`, body, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        return res.data;
+      });
+  },
+
   /**
    * SERVICES AUTH
    *

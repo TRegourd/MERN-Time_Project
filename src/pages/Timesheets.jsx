@@ -96,7 +96,6 @@ export default function Timesheets() {
   return (
     <div style={{ marginTop: "10px" }}>
       {/* <pre>{JSON.stringify(body, null, 2)}</pre> */}
-      <AddTimeSheet></AddTimeSheet>
       <Box
         sx={{
           display: "flex",
