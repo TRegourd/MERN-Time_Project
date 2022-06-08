@@ -1,8 +1,6 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
 import {
   GridColumns,
-  GridRowsProp,
   DataGrid,
   GridRowId,
   GridEventListener,
@@ -13,29 +11,50 @@ import {
   GridToolbarFilterButton,
   GridToolbarColumnsButton,
   GridColumnVisibilityModel,
+  GridRowModel,
 } from "@mui/x-data-grid";
 import { fetchTimeSheetList } from "../../libs/apiCalls";
 import dayjs from "dayjs";
 import { DeleteButton } from "./deleteButton";
+import AddTimeSheet from "./AddTimeSheet";
+import services from "../../services";
 
 interface SelectedCellParams {
   id: GridRowId;
   field: string;
 }
 
-function CustomToolbar() {
+// interface ToolBarProps {
+//   cellMode: string;
+//   selectedCellParams: Object[];
+//   setSelectedCellParams: React.Dispatch<any>;
+//   cellModesModel: Object;
+//   setCellModesModel: React.Dispatch<any>;
+//   setTimeList: React.Dispatch<any>;
+// }
+
+function CustomToolbar(/*props: ToolBarProps*/) {
   return (
-    <GridToolbarContainer>
-      <GridToolbarColumnsButton />
-      <GridToolbarFilterButton />
-      <GridToolbarDensitySelector />
-      <GridToolbarExport />
+    <GridToolbarContainer
+      sx={{ display: "flex", justifyContent: "space-between" }}
+    >
+      <AddTimeSheet />
+      <div>
+        <GridToolbarColumnsButton />
+        <GridToolbarFilterButton />
+        <GridToolbarDensitySelector />
+        <GridToolbarExport />
+      </div>
     </GridToolbarContainer>
   );
 }
 
-export default function TimeDataGrid({ list }: any) {
-  const [timeList, setTimeList] = React.useState<any | []>(list);
+export default function TimeDataGrid({ timeList, projectList }: any) {
+  const [pageSize, setPageSize] = React.useState<number>(10);
+  const [timeSheetList, setTimeList] = React.useState<any | []>(timeList);
+  const [currentProjectList, setProjectList] = React.useState<any | []>(
+    projectList
+  );
   const [columnVisibilityModel, setColumnVisibilityModel] =
     React.useState<GridColumnVisibilityModel>({
       id: false,
@@ -78,10 +97,10 @@ export default function TimeDataGrid({ list }: any) {
     [cellMode]
   );
 
-  const rows = timeList?.map((timeSheet: any) => ({
+  const rows = timeSheetList?.map((timeSheet: any) => ({
     ...timeSheet,
     date: dayjs(timeSheet.date).format("DD/MM/YYYY"),
-    projectName: timeSheet.project.name,
+    project: timeSheet.project.name,
     userName: `${timeSheet.user.first_name} ${timeSheet.user.last_name}`,
     id: timeSheet._id,
   }));
@@ -92,7 +111,7 @@ export default function TimeDataGrid({ list }: any) {
       field: "desc",
       headerName: "Description",
       type: "string",
-      width: 200,
+      width: 250,
       editable: true,
     },
     {
@@ -110,9 +129,12 @@ export default function TimeDataGrid({ list }: any) {
       editable: true,
     },
     {
-      field: "projectName",
+      field: "project",
       headerName: "Project",
-      type: "string",
+      type: "singleSelect",
+      valueOptions: currentProjectList.map((el: any) => {
+        return el.name;
+      }),
       width: 200,
       editable: true,
     },
@@ -134,6 +156,28 @@ export default function TimeDataGrid({ list }: any) {
     },
   ];
 
+  const processRowUpdate = React.useCallback(
+    async (newRow: GridRowModel) => {
+      // Make the HTTP request to save in the backend
+      const project = currentProjectList.find((el: any) => {
+        return el.name === newRow.project;
+      });
+      await services
+        .updateTimesheet({ ...newRow, project: project._id })
+        .then(() => {
+          fetchTimeSheetList().then((result) => {
+            setTimeList(result);
+          });
+        });
+      return newRow;
+    },
+    [services.updateTimesheet]
+  );
+
+  const handleProcessRowUpdateError = React.useCallback((error: Error) => {
+    console.log(error);
+  }, []);
+
   return (
     <div style={{ height: 400, width: "100%", marginRight: 20 }}>
       <div
@@ -145,7 +189,10 @@ export default function TimeDataGrid({ list }: any) {
       >
         <div style={{ flexGrow: 1 }}>
           <DataGrid
+            sx={{ margin: "auto" }}
             rows={rows}
+            processRowUpdate={processRowUpdate}
+            onProcessRowUpdateError={handleProcessRowUpdateError}
             columns={columns}
             columnVisibilityModel={columnVisibilityModel}
             onColumnVisibilityModelChange={(newModel) =>
@@ -163,6 +210,7 @@ export default function TimeDataGrid({ list }: any) {
                 setSelectedCellParams,
                 cellModesModel,
                 setCellModesModel,
+                setTimeList,
               },
               cell: {
                 onFocus: handleCellFocus,
@@ -170,7 +218,10 @@ export default function TimeDataGrid({ list }: any) {
             }}
             experimentalFeatures={{ newEditingApi: true }}
             editMode="row"
-            autoPageSize={true}
+            rowsPerPageOptions={[5, 10, 20, 100]}
+            pageSize={pageSize}
+            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+            pagination
           />
         </div>
       </div>

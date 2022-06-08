@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, ReactComponentElement } from "react";
 import {
   Button,
   Dialog,
@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 
 import { AuthContext, AuthContextType } from "../../AuthProvider";
-import { fetchProjectList } from "../../libs/apiCalls";
+import { fetchProjectList, fetchTimeSheetList } from "../../libs/apiCalls";
 import services from "../../services";
 import { useSnackbar } from "notistack";
 import { BsFillFileEarmarkPlusFill } from "react-icons/bs";
@@ -28,7 +28,7 @@ const MenuProps = {
   },
 };
 
-export default function AddTimeSheet({}) {
+export default function AddTimeSheet(/*setTimeList: React.Dispatch<any>*/) {
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
   const [projectValue, setProjectValue] = useState("");
@@ -39,7 +39,7 @@ export default function AddTimeSheet({}) {
     duration: "",
     date: "",
     project: "",
-    user: currentUser._id,
+    user: "",
   });
 
   const handleProjectChange = (event: any) => {
@@ -50,8 +50,11 @@ export default function AddTimeSheet({}) {
   const handleSubmit = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     services
-      .createNewTimesheet(form)
+      .createNewTimesheet({ ...form, user: currentUser._id })
       .then(() => {
+        // fetchTimeSheetList().then((result) => {
+        //   setTimeList(result);
+        // });
         enqueueSnackbar("TimeSheet Successfully Created", {
           variant: "success",
         });
@@ -132,7 +135,7 @@ export default function AddTimeSheet({}) {
           />
 
           <FormControl sx={{ m: 1, width: "100%", maxWidth: 250 }}>
-            <InputLabel id="select-project-label">Role</InputLabel>
+            <InputLabel id="select-project-label">Project</InputLabel>
             <Select
               labelId="select-project-label"
               id="select-project"

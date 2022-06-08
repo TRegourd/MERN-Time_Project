@@ -96,7 +96,6 @@ export default function Timesheets() {
   return (
     <div style={{ marginTop: "10px" }}>
       {/* <pre>{JSON.stringify(body, null, 2)}</pre> */}
-      <AddTimeSheet></AddTimeSheet>
       <Box
         sx={{
           display: "flex",
@@ -117,7 +116,12 @@ export default function Timesheets() {
       <Box>
         <Charts data={data}></Charts>
       </Box>
-      {timeList.length != 0 && <TimeDataGrid list={timeList}></TimeDataGrid>}
+      {timeList.length != 0 && projectList.length != 0 && (
+        <TimeDataGrid
+          timeList={timeList}
+          projectList={projectList}
+        ></TimeDataGrid>
+      )}
     </div>
   );
 }
