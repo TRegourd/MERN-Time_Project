@@ -39,7 +39,7 @@ export default function AddTimeSheet({}) {
     duration: "",
     date: "",
     project: "",
-    user: currentUser._id,
+    user: "",
   });
 
   const handleProjectChange = (event: any) => {
@@ -50,7 +50,7 @@ export default function AddTimeSheet({}) {
   const handleSubmit = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     services
-      .createNewTimesheet(form)
+      .createNewTimesheet({ ...form, user: currentUser._id })
       .then(() => {
         enqueueSnackbar("TimeSheet Successfully Created", {
           variant: "success",
@@ -109,7 +109,7 @@ export default function AddTimeSheet({}) {
         }}
       >
         <DialogContent>
-          {/* <pre>{JSON.stringify(form, null, 2)}</pre> */}
+          <pre>{JSON.stringify(form, null, 2)}</pre>
           <TextField
             id="filled-basic"
             name="desc"
