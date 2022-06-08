@@ -17,6 +17,9 @@ import {
 import { fetchTimeSheetList } from "../../libs/apiCalls";
 import dayjs from "dayjs";
 import { DeleteButton } from "./deleteButton";
+import AddTimeSheet from "./AddTimeSheet";
+import { AuthContext, AuthContextType } from "../../AuthProvider";
+import { Select } from "@mui/material";
 
 interface SelectedCellParams {
   id: GridRowId;
@@ -25,18 +28,26 @@ interface SelectedCellParams {
 
 function CustomToolbar() {
   return (
-    <GridToolbarContainer>
-      <GridToolbarColumnsButton />
-      <GridToolbarFilterButton />
-      <GridToolbarDensitySelector />
-      <GridToolbarExport />
+    <GridToolbarContainer
+      sx={{ display: "flex", justifyContent: "space-between" }}
+    >
+      <AddTimeSheet />
+      <div>
+        <GridToolbarColumnsButton />
+        <GridToolbarFilterButton />
+        <GridToolbarDensitySelector />
+        <GridToolbarExport />
+      </div>
     </GridToolbarContainer>
   );
 }
 
-export default function TimeDataGrid({ list }: any) {
+export default function TimeDataGrid({ timeList, projectList }: any) {
   const [pageSize, setPageSize] = React.useState<number>(5);
-  const [timeList, setTimeList] = React.useState<any | []>(list);
+  const [timeSheetList, setTimeList] = React.useState<any | []>(timeList);
+  const [currentProjectList, setProjectList] = React.useState<any | []>(
+    projectList
+  );
   const [columnVisibilityModel, setColumnVisibilityModel] =
     React.useState<GridColumnVisibilityModel>({
       id: false,
@@ -79,10 +90,10 @@ export default function TimeDataGrid({ list }: any) {
     [cellMode]
   );
 
-  const rows = timeList?.map((timeSheet: any) => ({
+  const rows = timeSheetList?.map((timeSheet: any) => ({
     ...timeSheet,
     date: dayjs(timeSheet.date).format("DD/MM/YYYY"),
-    projectName: timeSheet.project.name,
+    project: timeSheet.project.name,
     userName: `${timeSheet.user.first_name} ${timeSheet.user.last_name}`,
     id: timeSheet._id,
   }));
@@ -111,9 +122,12 @@ export default function TimeDataGrid({ list }: any) {
       editable: true,
     },
     {
-      field: "projectName",
+      field: "project",
       headerName: "Project",
-      type: "string",
+      type: "singleSelect",
+      valueOptions: currentProjectList.map((el: any) => {
+        return el.name;
+      }),
       width: 200,
       editable: true,
     },

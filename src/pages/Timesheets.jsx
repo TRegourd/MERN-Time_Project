@@ -117,7 +117,12 @@ export default function Timesheets() {
       <Box>
         <Charts data={data}></Charts>
       </Box>
-      {timeList.length != 0 && <TimeDataGrid list={timeList}></TimeDataGrid>}
+      {timeList.length != 0 && projectList.length != 0 && (
+        <TimeDataGrid
+          timeList={timeList}
+          projectList={projectList}
+        ></TimeDataGrid>
+      )}
     </div>
   );
 }
