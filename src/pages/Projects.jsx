@@ -6,6 +6,7 @@ import stringifyRGB from "../libs/colors";
 
 import services from "../services";
 import DashboardMenu from "../components/DashboardMenu/DashboardMenu";
+import ProjectDataGrid from "../components/Projects_Components/DataGrid";
 
 export default function Projects() {
   const [projectsList, setprojectsList] = useState([]);
@@ -97,64 +98,9 @@ export default function Projects() {
   return (
     <div>
       <DashboardMenu />
-      <Grid container Spacing={2}>
-        <Grid item xs={12} textAlign="center">
-          <h2> New Project</h2>
-        </Grid>
-        <Grid item xs={12} textAlign="center">
-          <Box
-            component="form"
-            onSubmit={createProjectSubmit}
-            onChange={handleChangeName}
-            sx={{
-              "& > :not(style)": { m: 2, width: "100%" },
-            }}
-            noValidate
-            autoComplete="off"
-          >
-            <Grid container direction="row" spacing={1} alignItems="center">
-              <Grid item xs={2}>
-                <ButtonColor
-                  r="120"
-                  g="200"
-                  b="200"
-                  name="color"
-                  onUpdateColor={(color) => handleChangeColor(color)}
-                ></ButtonColor>
-              </Grid>
-              <Grid item xs={7} textAlign="left">
-                <TextField
-                  required
-                  id="outlined-required"
-                  label="Project name"
-                  name="projectName"
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={2}>
-                <Button type="sumbit" variant="contained">
-                  Submit
-                </Button>
-              </Grid>
-            </Grid>
-          </Box>
-        </Grid>
-        <Grid item xs={12} textAlign="center">
-          <h2>
-            Projects of {currentUser.first_name} {currentUser.last_name}
-          </h2>
-        </Grid>
-        <Grid item xs={12} textAlign="center">
-          {projectsList.map((oneProject) => (
-            <Project
-              key={oneProject._id}
-              {...oneProject}
-              onChangeProjectName={(id, name) => modifyProject(id, name)}
-              onDeleteProject={() => deleteProject(oneProject)}
-            />
-          ))}
-        </Grid>
-      </Grid>
+      {projectsList.length != 0 && (
+        <ProjectDataGrid projectList={projectsList} />
+      )}
     </div>
   );
 }
