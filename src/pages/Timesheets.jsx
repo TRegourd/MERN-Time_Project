@@ -26,6 +26,7 @@ import {
   fetchTimeSheetList,
 } from "../libs/apiCalls";
 import AddTimeSheet from "../components/TimeSheet_Components/AddTimeSheet";
+import DashboardMenu from "../components/DashboardMenu/DashboardMenu";
 
 export default function Timesheets() {
   const [timeList, setTimeList] = useState([]);
@@ -94,7 +95,8 @@ export default function Timesheets() {
   }, []);
 
   return (
-    <div style={{ marginTop: "10px" }}>
+    <div>
+      <DashboardMenu />
       {/* <pre>{JSON.stringify(body, null, 2)}</pre> */}
       <Box
         sx={{

@@ -1,0 +1,28 @@
+.menuContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 20px;
+  background: rgb(0, 0, 0, 0.1);
+  backdrop-filter: blur(15px);
+  position: sticky;
+  top: 80px;
+  z-index: 998;
+}
+
+.menuLink {
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+}
+
+.menuLink:hover {
+  color: grey;
+  transition: all 0.2s ease-in-out;
+}
+
+@media screen and (max-width: 960px) {
+  .menuLinkLogo {
+    display: none;
+  }
+}
