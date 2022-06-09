@@ -43,23 +43,11 @@ function Navbar() {
             {logged && (
               <li className="nav-item">
                 <Link
-                  to="/timesheet"
+                  to="/dashboard"
                   className="nav-links"
                   onClick={closeMobileMenu}
                 >
-                  TimeSheets
-                </Link>
-              </li>
-            )}
-
-            {logged && (
-              <li className="nav-item">
-                <Link
-                  to="/projects"
-                  className="nav-links"
-                  onClick={closeMobileMenu}
-                >
-                  Projects
+                  Dashboard
                 </Link>
               </li>
             )}

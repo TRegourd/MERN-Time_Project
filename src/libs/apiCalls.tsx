@@ -1,6 +1,6 @@
 import services from "../services";
 
-async function fetchTimeSheetList(): Promise<Object[]> {
+async function fetchTimeSheetList(): Promise<[]> {
   try {
     const timeList = await services.getAllTimesheetList().then((result) => {
       return result;
@@ -12,7 +12,7 @@ async function fetchTimeSheetList(): Promise<Object[]> {
   }
 }
 
-async function fetchProjectList() {
+async function fetchProjectList(): Promise<[]> {
   try {
     const projectList = await services.getProjectsList().then((result) => {
       return result;
@@ -24,7 +24,10 @@ async function fetchProjectList() {
   }
 }
 
-async function fetchChartData(filterStartValue: Date, filterEndValue: Date) {
+async function fetchChartData(
+  filterStartValue: Date | null,
+  filterEndValue: Date | null
+) {
   if (filterStartValue && filterEndValue) {
     const filter = { startDate: filterStartValue, endDate: filterEndValue };
     const chartData = await services
