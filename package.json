@@ -1,6 +1,10 @@
 {
   "name": "frontend",
   "version": "0.1.0",
+  "engines": {
+    "node": "16",
+    "npm": "8"
+  },
   "private": true,
   "dependencies": {
     "@date-io/date-fns": "^2.13.1",
