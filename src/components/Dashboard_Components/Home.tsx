@@ -10,6 +10,9 @@ import { Box } from "@mui/system";
 import { BiAlarmAdd } from "react-icons/bi";
 import AddTimeSheet from "../TimeSheet_Components/AddTimeSheet";
 import AddProject from "../Projects_Components/AddProject";
+import Charts from "../Charts";
+import Statistics from "./Statistics";
+import { Link } from "react-router-dom";
 
 export default function ImgMediaCard() {
   return (
@@ -56,14 +59,12 @@ export default function ImgMediaCard() {
               <Typography gutterBottom variant="h5" component="div">
                 Statistics
               </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Lizards are a widespread group of squamate reptiles, with over
-                6,000 species, ranging across all continents except Antarctica
-              </Typography>
+              <Statistics />
             </CardContent>
             <CardActions>
-              <Button size="small">Share</Button>
-              <Button size="small">Learn More</Button>
+              <Button size="small">
+                <Link to="/report">Learn More</Link>
+              </Button>
             </CardActions>
           </Card>
         </Grid>
