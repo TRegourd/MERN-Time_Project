@@ -100,7 +100,7 @@ export default function AddTimeSheet(/*setTimeList: React.Dispatch<any>*/) {
         variant="contained"
         onClick={handleClickOpen}
       >
-        <BsFillFileEarmarkPlusFill />
+        <BsFillFileEarmarkPlusFill size={30} />
         <span>Create TimeSheet</span>
       </Button>
       <Dialog

@@ -2,7 +2,7 @@ import { Box } from "@mui/system";
 import React, { useContext, useState } from "react";
 import { AuthContext, AuthContextType } from "../AuthProvider";
 import Charts from "../components/Charts";
-import DashboardMenu from "../components/DashboardMenu/DashboardMenu";
+import DashboardMenu from "../components/Dashboard_Components/DashboardMenu";
 import { TimesheetFilter } from "../components/TimeSheet_Components/Filter";
 import { fetchChartData } from "../libs/apiCalls";
 
