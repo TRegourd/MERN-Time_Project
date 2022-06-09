@@ -4,7 +4,7 @@ import { AuthContext, AuthContextType } from "../AuthProvider";
 import TimeDataGrid from "../components/TimeSheet_Components/DataGrid";
 import { fetchProjectList, fetchTimeSheetList } from "../libs/apiCalls";
 
-import DashboardMenu from "../components/DashboardMenu/DashboardMenu";
+import DashboardMenu from "../components/Dashboard_Components/DashboardMenu";
 
 export default function Timesheets() {
   const [timeList, setTimeList] = useState([]);

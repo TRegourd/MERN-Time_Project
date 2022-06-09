@@ -80,7 +80,7 @@ export default function AddProject(/*setTimeList: React.Dispatch<any>*/) {
         variant="contained"
         onClick={handleClickOpen}
       >
-        <BsFillFileEarmarkPlusFill />
+        <BsFillFileEarmarkPlusFill size={30} />
         <span>Create Project</span>
       </Button>
       <Dialog
