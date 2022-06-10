@@ -6,6 +6,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { BiBuildings, BiMap, BiUser } from "react-icons/bi";
+import { FiUserCheck } from "react-icons/fi";
 import { MdAlternateEmail } from "react-icons/md";
 import styled from "styled-components";
 import { IProfileProps } from "../../Interfaces";
@@ -60,6 +61,15 @@ export default function DisplayProfile() {
                 className="profileDetails"
               >
                 <BiBuildings />
+                <span>{currentUser.company}</span>
+              </Typography>
+              <Typography
+                sx={{ fontSize: 20 }}
+                color="text.secondary"
+                gutterBottom
+                className="profileDetails"
+              >
+                <FiUserCheck />
                 <span>{currentUser.position}</span>
               </Typography>
               <Typography
