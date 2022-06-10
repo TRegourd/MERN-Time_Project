@@ -23,12 +23,11 @@ function DashboardMenu() {
         <BiPieChartAlt className="menuLinkLogo" />
         <span>My Report</span>
       </Link>
-      {currentUser.isAdmin && (
-        <Link className="menuLink" to="/teams">
-          <AiOutlineTeam className="menuLinkLogo" />
-          <span>My Teams</span>
-        </Link>
-      )}
+
+      <Link className="menuLink" to="/teams">
+        <AiOutlineTeam className="menuLinkLogo" />
+        <span>My Teams</span>
+      </Link>
     </div>
   );
 }

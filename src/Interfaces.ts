@@ -9,6 +9,7 @@ export interface IUser {
   position?: string;
   _id: string;
   isAdmin?: boolean;
+  team?: [];
 }
 
 export interface IProfileProps {
