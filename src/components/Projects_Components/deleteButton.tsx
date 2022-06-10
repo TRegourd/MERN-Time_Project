@@ -1,17 +1,18 @@
 import * as React from "react";
-import { fetchProjectList } from "../../libs/apiCalls";
+
 import services from "../../services";
 import { BsFillTrashFill } from "react-icons/bs";
 import { Button } from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { useSnackbar } from "notistack";
+import { GridContextType, GridDataContext } from "../../GridDataProvider";
 
-export function DeleteButton(
-  params: any,
-  setCurrentProjectList: React.Dispatch<any>
-) {
+export function DeleteButton(params: any) {
   const { enqueueSnackbar } = useSnackbar();
+  const { getCurrentProjects } = React.useContext(
+    GridDataContext
+  ) as GridContextType;
   function handleDelete() {
     const isConfirm = window.confirm("Confirm Project Delete ?");
     if (isConfirm)
@@ -21,9 +22,7 @@ export function DeleteButton(
           enqueueSnackbar("Project Successfully Deleted", {
             variant: "success",
           });
-          fetchProjectList().then((result) => {
-            setCurrentProjectList(result);
-          });
+          getCurrentProjects();
         })
         .catch(() => enqueueSnackbar("Incorrect Entry", { variant: "error" }));
   }

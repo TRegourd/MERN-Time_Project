@@ -12,10 +12,10 @@ import {
 } from "@mui/material";
 
 import { AuthContext, AuthContextType } from "../../AuthProvider";
-import { fetchProjectList, fetchTimeSheetList } from "../../libs/apiCalls";
 import services from "../../services";
 import { useSnackbar } from "notistack";
 import { BsFillFileEarmarkPlusFill } from "react-icons/bs";
+import { GridContextType, GridDataContext } from "../../GridDataProvider";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -32,7 +32,9 @@ export default function AddTimeSheet(/*setTimeList: React.Dispatch<any>*/) {
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
   const [projectValue, setProjectValue] = useState("");
-  const [projectList, setProjectList] = useState([]);
+  const { currentProjects, getCurrentProjects } = useContext(
+    GridDataContext
+  ) as GridContextType;
   const { currentUser } = useContext(AuthContext) as AuthContextType;
   const [form, setForm] = useState({
     desc: "",
@@ -82,9 +84,7 @@ export default function AddTimeSheet(/*setTimeList: React.Dispatch<any>*/) {
   };
 
   React.useEffect(() => {
-    fetchProjectList().then((result) => {
-      setProjectList(result);
-    });
+    getCurrentProjects();
   }, []);
 
   return (
@@ -144,13 +144,14 @@ export default function AddTimeSheet(/*setTimeList: React.Dispatch<any>*/) {
               onChange={handleProjectChange}
               name="project"
             >
-              {projectList.map((value: any) => {
-                return (
-                  <MenuItem key={value._id} value={value._id}>
-                    {value.name}
-                  </MenuItem>
-                );
-              })}
+              {currentProjects &&
+                currentProjects.map((value: any) => {
+                  return (
+                    <MenuItem key={value._id} value={value._id}>
+                      {value.name}
+                    </MenuItem>
+                  );
+                })}
             </Select>
           </FormControl>
         </DialogContent>

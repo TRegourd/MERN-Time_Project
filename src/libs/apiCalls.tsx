@@ -12,18 +12,6 @@ async function fetchTimeSheetList(): Promise<[]> {
   }
 }
 
-async function fetchProjectList(): Promise<[]> {
-  try {
-    const projectList = await services.getProjectsList().then((result) => {
-      return result;
-    });
-    return projectList;
-  } catch (error) {
-    console.log(error);
-    return [];
-  }
-}
-
 async function fetchTeamList(): Promise<[]> {
   try {
     const teamList = await services.getTeamList().then((result) => {
@@ -56,4 +44,4 @@ async function fetchChartData(
   }
 }
 
-export { fetchTimeSheetList, fetchProjectList, fetchChartData, fetchTeamList };
+export { fetchTimeSheetList, fetchChartData, fetchTeamList };

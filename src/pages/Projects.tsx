@@ -1,25 +1,24 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import DashboardMenu from "../components/Dashboard_Components/DashboardMenu";
 import ProjectDataGrid from "../components/Projects_Components/DataGrid";
-import { fetchProjectList } from "../libs/apiCalls";
+import { GridContextType, GridDataContext } from "../GridDataProvider";
 
 export default function Projects() {
-  const [projectsList, setProjectsList] = useState([]);
+  const { currentProjects, setCurrentProjects, getCurrentProjects } =
+    useContext(GridDataContext) as GridContextType;
 
   useEffect(() => {
-    fetchProjectList().then((result) => {
-      setProjectsList(result);
-    });
+    getCurrentProjects();
   }, []);
 
   return (
     <div>
       <DashboardMenu />
-      {projectsList.length != 0 && (
+      {currentProjects && (
         <ProjectDataGrid
-          projectList={projectsList}
-          setProjectList={setProjectsList}
+          projectList={currentProjects}
+          setProjectList={setCurrentProjects}
         />
       )}
     </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DashboardMenu from "../components/Dashboard_Components/DashboardMenu";
 import TeamDataGrid from "../components/Teams_Components/DataGrid";
-import { fetchProjectList, fetchTeamList } from "../libs/apiCalls";
+import { fetchTeamList } from "../libs/apiCalls";
 
 function Teams() {
   const [teamsList, setTeamsList] = useState([]);

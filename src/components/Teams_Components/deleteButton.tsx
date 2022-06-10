@@ -1,5 +1,5 @@
 import * as React from "react";
-import { fetchProjectList, fetchTeamList } from "../../libs/apiCalls";
+import { fetchTeamList } from "../../libs/apiCalls";
 import services from "../../services";
 import { BsFillTrashFill } from "react-icons/bs";
 import { Button } from "@mui/material";
