@@ -18,6 +18,7 @@ import { DeleteButton } from "./deleteButton";
 import services from "../../services";
 import { GridContextType, GridDataContext } from "../../GridDataProvider";
 import JoinTeam from "./JoinTeam";
+import { LeaveTeamButton } from "./LeaveTeamButton";
 
 interface SelectedCellParams {
   id: GridRowId;
@@ -91,15 +92,15 @@ export default function UserTeamDataGrid({ teamList }: any) {
 
   const columns: GridColumns = [
     { field: "id", headerName: "ID", width: 220, editable: false },
-    { field: "name", headerName: "Team", width: 300, editable: true },
+    { field: "name", headerName: "Team", width: 300, editable: false },
     { field: "code", headerName: "Code", width: 200, editable: false },
     {
       field: "delete",
-      headerName: "",
+      headerName: "Leave",
       width: 100,
       editable: false,
       renderCell: (params) => {
-        return DeleteButton(params);
+        return LeaveTeamButton(params);
       },
     },
   ];

@@ -1,4 +1,4 @@
-import React, { useState, useContext, ReactComponentElement } from "react";
+import React, { useState, useContext } from "react";
 import {
   Button,
   Dialog,
@@ -10,16 +10,12 @@ import {
 import { AuthContext, AuthContextType } from "../../AuthProvider";
 import services from "../../services";
 import { useSnackbar } from "notistack";
-import { BsFillFileEarmarkPlusFill } from "react-icons/bs";
-import { GridContextType, GridDataContext } from "../../GridDataProvider";
+import { AiOutlineUsergroupAdd } from "react-icons/ai";
 
 export default function JoinTeam() {
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
-  const { getCurrentTeams } = useContext(GridDataContext) as GridContextType;
-  const { currentUser, getCurrentUser } = useContext(
-    AuthContext
-  ) as AuthContextType;
+  const { getCurrentUser } = useContext(AuthContext) as AuthContextType;
   const [form, setForm] = useState({
     code: "",
   });
@@ -69,7 +65,7 @@ export default function JoinTeam() {
         variant="contained"
         onClick={handleClickOpen}
       >
-        <BsFillFileEarmarkPlusFill size={30} />
+        <AiOutlineUsergroupAdd size={30} />
         <span>Join a Team</span>
       </Button>
       <Dialog
@@ -92,7 +88,7 @@ export default function JoinTeam() {
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={handleSubmit} variant="outlined">
-            Create
+            Join
           </Button>
         </DialogActions>
       </Dialog>
