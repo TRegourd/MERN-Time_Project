@@ -1,29 +1,5 @@
 import services from "../services";
 
-// async function fetchTimeSheetList(): Promise<[]> {
-//   try {
-//     const timeList = await services.getAllTimesheetList().then((result) => {
-//       return result;
-//     });
-//     return timeList;
-//   } catch (error) {
-//     console.log(error);
-//     return [];
-//   }
-// }
-
-async function fetchTeamList(): Promise<[]> {
-  try {
-    const teamList = await services.getTeamList().then((result) => {
-      return result;
-    });
-    return teamList;
-  } catch (error) {
-    console.log(error);
-    return [];
-  }
-}
-
 async function fetchChartData(
   filterStartValue: Date | null,
   filterEndValue: Date | null
@@ -44,4 +20,4 @@ async function fetchChartData(
   }
 }
 
-export { fetchChartData, fetchTeamList };
+export { fetchChartData };
