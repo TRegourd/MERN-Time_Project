@@ -62,7 +62,6 @@ export default function Signin() {
           <ManagerSigninForm />
         </TabPanel>
       </Box>
-      {/* <pre>{JSON.stringify(body, null, 2)}</pre> */}
     </div>
   );
 }

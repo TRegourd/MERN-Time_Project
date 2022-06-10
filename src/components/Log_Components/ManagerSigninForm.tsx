@@ -13,6 +13,8 @@ function ManagerSigninForm() {
     email: "",
     password: "",
     confirmPassword: "",
+    company: "",
+    isAdmin: true,
   });
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
@@ -42,7 +44,7 @@ function ManagerSigninForm() {
 
   return (
     <div>
-      {" "}
+      {/* <pre>{JSON.stringify(body, null, 2)}</pre> */}
       <CardWrapper>
         <CardHeader>
           <CardHeading>Sign in as a Team Manager</CardHeading>
@@ -68,6 +70,9 @@ function ManagerSigninForm() {
 
           <CardFieldset>
             <CardInput placeholder="E-mail" type="text" name="email" required />
+          </CardFieldset>
+          <CardFieldset>
+            <CardInput placeholder="Company" type="text" name="company" />
           </CardFieldset>
 
           <CardFieldset>
