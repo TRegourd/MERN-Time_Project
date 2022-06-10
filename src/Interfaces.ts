@@ -3,11 +3,13 @@ export interface IUser {
   email: string;
   first_name: string;
   last_name: string;
+  company?: string;
   password?: string;
   confirmPassword?: string;
   position?: string;
   _id: string;
   isAdmin?: boolean;
+  team?: [];
 }
 
 export interface IProfileProps {

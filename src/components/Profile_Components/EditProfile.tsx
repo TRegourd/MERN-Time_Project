@@ -21,6 +21,7 @@ export default function EditProfile() {
     last_name: currentUser.last_name,
     adress: currentUser.adress,
     position: currentUser.position,
+    company: currentUser.company,
     email: currentUser.email,
     _id: currentUser._id,
   });
@@ -109,6 +110,16 @@ export default function EditProfile() {
             fullWidth
             variant="standard"
             defaultValue={currentUser.last_name}
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Company"
+            type="text"
+            name="company"
+            fullWidth
+            variant="standard"
+            defaultValue={currentUser.company}
           />
           <TextField
             autoFocus

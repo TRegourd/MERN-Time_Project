@@ -176,6 +176,24 @@ const services = {
       })
       .then((res) => res.data);
   },
+
+  addUserToTeam(body) {
+    const token = localStorage.getItem("jwt");
+    return base
+      .put(`/teams/addUser`, body, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => res.data);
+  },
+
+  leaveTeam(id) {
+    const token = localStorage.getItem("jwt");
+    return base
+      .get(`/teams/leave/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => res.data);
+  },
 };
 
 export default services;

@@ -63,6 +63,7 @@ export default function ImgMediaCard() {
             </CardContent>
           </Card>
         </Grid>
+
         {currentUser.isAdmin && (
           <Grid item>
             <Card sx={{ maxWidth: 300, display: "flex" }}>
