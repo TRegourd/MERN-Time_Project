@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import DashboardMenu from "../components/Dashboard_Components/DashboardMenu";
 import TeamDataGrid from "../components/Teams_Components/DataGrid";
-import { fetchProjectList, fetchTeamList } from "../libs/apiCalls";
+import { GridContextType, GridDataContext } from "../GridDataProvider";
 
 function Teams() {
-  const [teamsList, setTeamsList] = useState([]);
+  const { currentTeams, getCurrentTeams } = useContext(
+    GridDataContext
+  ) as GridContextType;
 
-  useEffect(() => {
-    fetchTeamList().then((result) => {
-      setTeamsList(result);
-    });
+  React.useEffect(() => {
+    getCurrentTeams();
   }, []);
 
   return (
     <div>
       <DashboardMenu />
-      {teamsList.length != 0 && <TeamDataGrid teamList={teamsList} />}
+      {currentTeams && <TeamDataGrid teamList={currentTeams} />}
     </div>
   );
 }

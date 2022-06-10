@@ -1,14 +1,15 @@
 import * as React from "react";
-import { fetchTimeSheetList } from "../../libs/apiCalls";
 import services from "../../services";
 import { BsFillTrashFill } from "react-icons/bs";
 import { Button } from "@mui/material";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
 import { useSnackbar } from "notistack";
+import { GridContextType, GridDataContext } from "../../GridDataProvider";
 
-export function DeleteButton(params: any, setTimeList: React.Dispatch<any>) {
+export function DeleteButton(params: any) {
   const { enqueueSnackbar } = useSnackbar();
+  const { getCurrentTimesheets } = React.useContext(
+    GridDataContext
+  ) as GridContextType;
   function handleDelete() {
     const isConfirm = window.confirm("Confirm TimeSheet Delete ?");
     if (isConfirm)
@@ -18,9 +19,7 @@ export function DeleteButton(params: any, setTimeList: React.Dispatch<any>) {
           enqueueSnackbar("TimeSheet Successfully Deleted", {
             variant: "success",
           });
-          fetchTimeSheetList().then((result) => {
-            setTimeList(result);
-          });
+          getCurrentTimesheets();
         })
         .catch(() => enqueueSnackbar("Incorrect Entry", { variant: "error" }));
   }

@@ -41,20 +41,6 @@ const services = {
       .then((res) => res.data);
   },
 
-  updateProjectName(projectId, name) {
-    return base
-      .put(`/projects/id/name/${projectId}`, { name })
-      .then((res) => res.data);
-  },
-
-  updateProjectColor(projectId, color) {
-    const { r, g, b } = stringifyRGB(color);
-
-    return base
-      .put(`/projects/id/color/${projectId}`, { r, g, b }) // {r,g,b} variable passées en body
-      .then((res) => res.data);
-  },
-
   createProject(body) {
     const token = localStorage.getItem("jwt");
     return base.post(`/projects/`, body, {
@@ -177,6 +163,15 @@ const services = {
     const token = localStorage.getItem("jwt");
     return base
       .delete(`/teams/delete/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => res.data);
+  },
+
+  modifyTeam(id, body) {
+    const token = localStorage.getItem("jwt");
+    return base
+      .put(`/teams/update/${id}`, body, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => res.data);

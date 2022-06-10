@@ -13,27 +13,17 @@ import {
   GridColumnVisibilityModel,
   GridRowModel,
 } from "@mui/x-data-grid";
-import { fetchProjectList, fetchTimeSheetList } from "../../libs/apiCalls";
-import dayjs from "dayjs";
 import { DeleteButton } from "./deleteButton";
 import AddProject from "./AddProject";
 import services from "../../services";
+import { GridContextType, GridDataContext } from "../../GridDataProvider";
 
 interface SelectedCellParams {
   id: GridRowId;
   field: string;
 }
 
-// interface ToolBarProps {
-//   cellMode: string;
-//   selectedCellParams: Object[];
-//   setSelectedCellParams: React.Dispatch<any>;
-//   cellModesModel: Object;
-//   setCellModesModel: React.Dispatch<any>;
-//   setTimeList: React.Dispatch<any>;
-// }
-
-function CustomToolbar(/*props: ToolBarProps*/) {
+function CustomToolbar() {
   return (
     <GridToolbarContainer
       sx={{ display: "flex", justifyContent: "space-between" }}
@@ -50,10 +40,10 @@ function CustomToolbar(/*props: ToolBarProps*/) {
 }
 
 export default function ProjectDataGrid({ projectList }: any) {
+  const { getCurrentProjects } = React.useContext(
+    GridDataContext
+  ) as GridContextType;
   const [pageSize, setPageSize] = React.useState<number>(10);
-  const [currentProjectList, setProjectList] = React.useState<any | []>(
-    projectList
-  );
   const [columnVisibilityModel, setColumnVisibilityModel] =
     React.useState<GridColumnVisibilityModel>({
       project: true,
@@ -86,7 +76,6 @@ export default function ProjectDataGrid({ projectList }: any) {
   const handleCellKeyDown = React.useCallback<GridEventListener<"cellKeyDown">>(
     (params, event) => {
       if (cellMode === "edit") {
-        // Prevents calling event.preventDefault() if Tab is pressed on a cell in edit mode
         event.defaultMuiPrevented = true;
       }
     },
@@ -95,14 +84,12 @@ export default function ProjectDataGrid({ projectList }: any) {
 
   const rows = projectList?.map((project: any) => ({
     ...project,
-    project: project.name,
-    customer: project.customer,
     id: project._id,
   }));
 
   const columns: GridColumns = [
     { field: "id", headerName: "ID", width: 220, editable: false },
-    { field: "project", headerName: "Project", width: 300, editable: true },
+    { field: "name", headerName: "Project", width: 300, editable: true },
     { field: "customer", headerName: "Customer", width: 200, editable: true },
     {
       field: "delete",
@@ -110,23 +97,15 @@ export default function ProjectDataGrid({ projectList }: any) {
       width: 100,
       editable: false,
       renderCell: (params) => {
-        return DeleteButton(params, setProjectList);
+        return DeleteButton(params);
       },
     },
   ];
 
   const processRowUpdate = React.useCallback(async (newRow: GridRowModel) => {
-    // Make the HTTP request to save in the backend
-    const project = currentProjectList.find((el: any) => {
-      return el.name === newRow.project;
+    await services.updateProject(newRow.id, newRow).then(() => {
+      getCurrentProjects();
     });
-    await services;
-    // .updateTimesheet({ ...newRow, project: project._id })
-    // .then(() => {
-    //   fetchTimeSheetList().then((result) => {
-    //     setTimeList(result);
-    //   });
-    // });
     return newRow;
   }, []);
 

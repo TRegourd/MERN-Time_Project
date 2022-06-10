@@ -13,27 +13,17 @@ import {
   GridColumnVisibilityModel,
   GridRowModel,
 } from "@mui/x-data-grid";
-import { fetchProjectList, fetchTimeSheetList } from "../../libs/apiCalls";
-import dayjs from "dayjs";
 import { DeleteButton } from "./deleteButton";
 import AddProject from "./AddTeam";
 import services from "../../services";
+import { GridContextType, GridDataContext } from "../../GridDataProvider";
 
 interface SelectedCellParams {
   id: GridRowId;
   field: string;
 }
 
-// interface ToolBarProps {
-//   cellMode: string;
-//   selectedCellParams: Object[];
-//   setSelectedCellParams: React.Dispatch<any>;
-//   cellModesModel: Object;
-//   setCellModesModel: React.Dispatch<any>;
-//   setTimeList: React.Dispatch<any>;
-// }
-
-function CustomToolbar(/*props: ToolBarProps*/) {
+function CustomToolbar() {
   return (
     <GridToolbarContainer
       sx={{ display: "flex", justifyContent: "space-between" }}
@@ -51,7 +41,9 @@ function CustomToolbar(/*props: ToolBarProps*/) {
 
 export default function TeamDataGrid({ teamList }: any) {
   const [pageSize, setPageSize] = React.useState<number>(10);
-  const [currentTeamList, setTeamList] = React.useState<any | []>(teamList);
+  const { getCurrentTeams } = React.useContext(
+    GridDataContext
+  ) as GridContextType;
   const [columnVisibilityModel, setColumnVisibilityModel] =
     React.useState<GridColumnVisibilityModel>({
       project: true,
@@ -93,36 +85,27 @@ export default function TeamDataGrid({ teamList }: any) {
 
   const rows = teamList?.map((team: any) => ({
     ...team,
-    team: team.name,
     id: team._id,
   }));
 
   const columns: GridColumns = [
     { field: "id", headerName: "ID", width: 220, editable: false },
-    { field: "team", headerName: "Team", width: 300, editable: true },
+    { field: "name", headerName: "Team", width: 300, editable: true },
     {
       field: "delete",
       headerName: "",
       width: 100,
       editable: false,
       renderCell: (params) => {
-        return DeleteButton(params, setTeamList);
+        return DeleteButton(params);
       },
     },
   ];
 
   const processRowUpdate = React.useCallback(async (newRow: GridRowModel) => {
-    // Make the HTTP request to save in the backend
-    const project = currentTeamList.find((el: any) => {
-      return el.name === newRow.project;
+    await services.modifyTeam(newRow.id, newRow).then(() => {
+      getCurrentTeams();
     });
-    await services;
-    // .updateTimesheet({ ...newRow, project: project._id })
-    // .then(() => {
-    //   fetchTimeSheetList().then((result) => {
-    //     setTimeList(result);
-    //   });
-    // });
     return newRow;
   }, []);
 

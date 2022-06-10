@@ -1,4 +1,4 @@
-import React, { useState, useContext, ReactComponentElement } from "react";
+import React, { useState, useContext } from "react";
 import {
   Button,
   Dialog,
@@ -12,27 +12,18 @@ import {
 } from "@mui/material";
 
 import { AuthContext, AuthContextType } from "../../AuthProvider";
-import { fetchProjectList, fetchTimeSheetList } from "../../libs/apiCalls";
 import services from "../../services";
 import { useSnackbar } from "notistack";
 import { BsFillFileEarmarkPlusFill } from "react-icons/bs";
+import { GridContextType, GridDataContext } from "../../GridDataProvider";
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
-export default function AddTimeSheet(/*setTimeList: React.Dispatch<any>*/) {
+export default function AddTimeSheet() {
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
   const [projectValue, setProjectValue] = useState("");
-  const [projectList, setProjectList] = useState([]);
+  const { currentProjects, getCurrentTimesheets } = useContext(
+    GridDataContext
+  ) as GridContextType;
   const { currentUser } = useContext(AuthContext) as AuthContextType;
   const [form, setForm] = useState({
     desc: "",
@@ -52,9 +43,7 @@ export default function AddTimeSheet(/*setTimeList: React.Dispatch<any>*/) {
     services
       .createNewTimesheet({ ...form, user: currentUser._id })
       .then(() => {
-        // fetchTimeSheetList().then((result) => {
-        //   setTimeList(result);
-        // });
+        getCurrentTimesheets();
         enqueueSnackbar("TimeSheet Successfully Created", {
           variant: "success",
         });
@@ -82,9 +71,7 @@ export default function AddTimeSheet(/*setTimeList: React.Dispatch<any>*/) {
   };
 
   React.useEffect(() => {
-    fetchProjectList().then((result) => {
-      setProjectList(result);
-    });
+    getCurrentTimesheets();
   }, []);
 
   return (
@@ -144,13 +131,14 @@ export default function AddTimeSheet(/*setTimeList: React.Dispatch<any>*/) {
               onChange={handleProjectChange}
               name="project"
             >
-              {projectList.map((value: any) => {
-                return (
-                  <MenuItem key={value._id} value={value._id}>
-                    {value.name}
-                  </MenuItem>
-                );
-              })}
+              {currentProjects &&
+                currentProjects.map((value: any) => {
+                  return (
+                    <MenuItem key={value._id} value={value._id}>
+                      {value.name}
+                    </MenuItem>
+                  );
+                })}
             </Select>
           </FormControl>
         </DialogContent>

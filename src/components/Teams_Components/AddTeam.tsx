@@ -11,10 +11,12 @@ import { AuthContext, AuthContextType } from "../../AuthProvider";
 import services from "../../services";
 import { useSnackbar } from "notistack";
 import { BsFillFileEarmarkPlusFill } from "react-icons/bs";
+import { GridContextType, GridDataContext } from "../../GridDataProvider";
 
 export default function AddTeam(/*setTimeList: React.Dispatch<any>*/) {
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
+  const { getCurrentTeams } = useContext(GridDataContext) as GridContextType;
   const { currentUser } = useContext(AuthContext) as AuthContextType;
   const [form, setForm] = useState({
     name: "",
@@ -25,6 +27,7 @@ export default function AddTeam(/*setTimeList: React.Dispatch<any>*/) {
     services
       .createTeam({ ...form, user: currentUser._id })
       .then(() => {
+        getCurrentTeams();
         enqueueSnackbar("Team Successfully Created", {
           variant: "success",
         });

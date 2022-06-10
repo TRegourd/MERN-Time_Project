@@ -6,15 +6,18 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import AuthProvider from "./AuthProvider";
 import { SnackbarProvider } from "notistack";
+import GirdDataProvider from "./GridDataProvider";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <SnackbarProvider>
-          <App />
-        </SnackbarProvider>
+        <GirdDataProvider>
+          <SnackbarProvider>
+            <App />
+          </SnackbarProvider>
+        </GirdDataProvider>
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
