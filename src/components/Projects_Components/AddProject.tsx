@@ -8,22 +8,10 @@ import {
 } from "@mui/material";
 
 import { AuthContext, AuthContextType } from "../../AuthProvider";
-import { fetchTimeSheetList } from "../../libs/apiCalls";
 import services from "../../services";
 import { useSnackbar } from "notistack";
 import { BsFillFileEarmarkPlusFill } from "react-icons/bs";
 import { GridContextType, GridDataContext } from "../../GridDataProvider";
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
 
 export default function AddProject(/*setTimeList: React.Dispatch<any>*/) {
   const { enqueueSnackbar } = useSnackbar();

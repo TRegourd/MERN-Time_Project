@@ -1,4 +1,4 @@
-import React, { useState, useContext, ReactComponentElement } from "react";
+import React, { useState, useContext } from "react";
 import {
   Button,
   Dialog,
@@ -21,8 +21,9 @@ export default function AddTimeSheet() {
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
   const [projectValue, setProjectValue] = useState("");
-  const { currentProjects, getCurrentProjects, getCurrentTimesheets } =
-    useContext(GridDataContext) as GridContextType;
+  const { currentProjects, getCurrentTimesheets } = useContext(
+    GridDataContext
+  ) as GridContextType;
   const { currentUser } = useContext(AuthContext) as AuthContextType;
   const [form, setForm] = useState({
     desc: "",
@@ -70,7 +71,6 @@ export default function AddTimeSheet() {
   };
 
   React.useEffect(() => {
-    getCurrentProjects();
     getCurrentTimesheets();
   }, []);
 

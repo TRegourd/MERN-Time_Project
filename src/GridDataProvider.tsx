@@ -7,10 +7,12 @@ export interface GridContextType {
   currentProjects: any;
   setCurrentProjects: (result: any) => void;
   getCurrentProjects: () => void;
-
   currentTimesheets: any;
   setCurrentTimesheets: (result: any) => void;
   getCurrentTimesheets: () => void;
+  currentTeams: any;
+  setCurrentTeams: (result: any) => void;
+  getCurrentTeams: () => void;
 }
 
 export const GridDataContext = createContext<GridContextType | null>(null);
@@ -18,6 +20,7 @@ export const GridDataContext = createContext<GridContextType | null>(null);
 export default function GirdDataProvider({ children }: any) {
   const [currentProjects, setCurrentProjects] = useState();
   const [currentTimesheets, setCurrentTimesheets] = useState();
+  const [currentTeams, setCurrentTeams] = useState();
 
   function getCurrentProjects() {
     services
@@ -37,6 +40,15 @@ export default function GirdDataProvider({ children }: any) {
       .catch(() => alert("erreur"));
   }
 
+  function getCurrentTeams() {
+    services
+      .getTeamList()
+      .then((result) => {
+        setCurrentTeams(result);
+      })
+      .catch(() => alert("erreur"));
+  }
+
   const value = {
     currentProjects,
     setCurrentProjects,
@@ -44,6 +56,9 @@ export default function GirdDataProvider({ children }: any) {
     currentTimesheets,
     setCurrentTimesheets,
     getCurrentTimesheets,
+    currentTeams,
+    setCurrentTeams,
+    getCurrentTeams,
   };
 
   return (

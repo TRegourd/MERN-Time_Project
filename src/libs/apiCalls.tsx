@@ -1,16 +1,16 @@
 import services from "../services";
 
-async function fetchTimeSheetList(): Promise<[]> {
-  try {
-    const timeList = await services.getAllTimesheetList().then((result) => {
-      return result;
-    });
-    return timeList;
-  } catch (error) {
-    console.log(error);
-    return [];
-  }
-}
+// async function fetchTimeSheetList(): Promise<[]> {
+//   try {
+//     const timeList = await services.getAllTimesheetList().then((result) => {
+//       return result;
+//     });
+//     return timeList;
+//   } catch (error) {
+//     console.log(error);
+//     return [];
+//   }
+// }
 
 async function fetchTeamList(): Promise<[]> {
   try {
@@ -44,4 +44,4 @@ async function fetchChartData(
   }
 }
 
-export { fetchTimeSheetList, fetchChartData, fetchTeamList };
+export { fetchChartData, fetchTeamList };

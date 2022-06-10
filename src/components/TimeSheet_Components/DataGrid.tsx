@@ -24,16 +24,7 @@ interface SelectedCellParams {
   field: string;
 }
 
-// interface ToolBarProps {
-//   cellMode: string;
-//   selectedCellParams: Object[];
-//   setSelectedCellParams: React.Dispatch<any>;
-//   cellModesModel: Object;
-//   setCellModesModel: React.Dispatch<any>;
-//   setTimeList: React.Dispatch<any>;
-// }
-
-function CustomToolbar(/*props: ToolBarProps*/) {
+function CustomToolbar() {
   return (
     <GridToolbarContainer
       sx={{ display: "flex", justifyContent: "space-between" }}
@@ -89,7 +80,6 @@ export default function TimeDataGrid({ timeList, projectList }: any) {
   const handleCellKeyDown = React.useCallback<GridEventListener<"cellKeyDown">>(
     (params, event) => {
       if (cellMode === "edit") {
-        // Prevents calling event.preventDefault() if Tab is pressed on a cell in edit mode
         event.defaultMuiPrevented = true;
       }
     },
