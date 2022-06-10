@@ -5,8 +5,9 @@ import ProjectDataGrid from "../components/Projects_Components/DataGrid";
 import { GridContextType, GridDataContext } from "../GridDataProvider";
 
 export default function Projects() {
-  const { currentProjects, setCurrentProjects, getCurrentProjects } =
-    useContext(GridDataContext) as GridContextType;
+  const { currentProjects, getCurrentProjects } = useContext(
+    GridDataContext
+  ) as GridContextType;
 
   useEffect(() => {
     getCurrentProjects();
@@ -15,12 +16,7 @@ export default function Projects() {
   return (
     <div>
       <DashboardMenu />
-      {currentProjects && (
-        <ProjectDataGrid
-          projectList={currentProjects}
-          setProjectList={setCurrentProjects}
-        />
-      )}
+      {currentProjects && <ProjectDataGrid projectList={currentProjects} />}
     </div>
   );
 }

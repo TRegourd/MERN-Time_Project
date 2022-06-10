@@ -17,24 +17,12 @@ import { useSnackbar } from "notistack";
 import { BsFillFileEarmarkPlusFill } from "react-icons/bs";
 import { GridContextType, GridDataContext } from "../../GridDataProvider";
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
-export default function AddTimeSheet(/*setTimeList: React.Dispatch<any>*/) {
+export default function AddTimeSheet() {
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
   const [projectValue, setProjectValue] = useState("");
-  const { currentProjects, getCurrentProjects } = useContext(
-    GridDataContext
-  ) as GridContextType;
+  const { currentProjects, getCurrentProjects, getCurrentTimesheets } =
+    useContext(GridDataContext) as GridContextType;
   const { currentUser } = useContext(AuthContext) as AuthContextType;
   const [form, setForm] = useState({
     desc: "",
@@ -54,9 +42,7 @@ export default function AddTimeSheet(/*setTimeList: React.Dispatch<any>*/) {
     services
       .createNewTimesheet({ ...form, user: currentUser._id })
       .then(() => {
-        // fetchTimeSheetList().then((result) => {
-        //   setTimeList(result);
-        // });
+        getCurrentTimesheets();
         enqueueSnackbar("TimeSheet Successfully Created", {
           variant: "success",
         });
@@ -85,6 +71,7 @@ export default function AddTimeSheet(/*setTimeList: React.Dispatch<any>*/) {
 
   React.useEffect(() => {
     getCurrentProjects();
+    getCurrentTimesheets();
   }, []);
 
   return (

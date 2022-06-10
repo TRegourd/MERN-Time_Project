@@ -13,8 +13,6 @@ import {
   GridColumnVisibilityModel,
   GridRowModel,
 } from "@mui/x-data-grid";
-import { fetchTimeSheetList } from "../../libs/apiCalls";
-import dayjs from "dayjs";
 import { DeleteButton } from "./deleteButton";
 import AddProject from "./AddProject";
 import services from "../../services";
@@ -41,7 +39,7 @@ function CustomToolbar() {
   );
 }
 
-export default function ProjectDataGrid({ projectList, setProjectList }: any) {
+export default function ProjectDataGrid({ projectList }: any) {
   const { getCurrentProjects } = React.useContext(
     GridDataContext
   ) as GridContextType;
@@ -114,10 +112,6 @@ export default function ProjectDataGrid({ projectList, setProjectList }: any) {
   const handleProcessRowUpdateError = React.useCallback((error: Error) => {
     console.log(error);
   }, []);
-
-  React.useEffect(() => {
-    setProjectList(projectList);
-  }, [projectList]);
 
   return (
     <div style={{ height: 400, width: "100%", marginRight: 20 }}>

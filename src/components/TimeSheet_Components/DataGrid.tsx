@@ -13,11 +13,11 @@ import {
   GridColumnVisibilityModel,
   GridRowModel,
 } from "@mui/x-data-grid";
-import { fetchTimeSheetList } from "../../libs/apiCalls";
 import dayjs from "dayjs";
 import { DeleteButton } from "./deleteButton";
 import AddTimeSheet from "./AddTimeSheet";
 import services from "../../services";
+import { GridContextType, GridDataContext } from "../../GridDataProvider";
 
 interface SelectedCellParams {
   id: GridRowId;
@@ -51,10 +51,9 @@ function CustomToolbar(/*props: ToolBarProps*/) {
 
 export default function TimeDataGrid({ timeList, projectList }: any) {
   const [pageSize, setPageSize] = React.useState<number>(10);
-  const [timeSheetList, setTimeList] = React.useState<any | []>(timeList);
-  const [currentProjectList, setProjectList] = React.useState<any | []>(
-    projectList
-  );
+  const { getCurrentTimesheets } = React.useContext(
+    GridDataContext
+  ) as GridContextType;
   const [columnVisibilityModel, setColumnVisibilityModel] =
     React.useState<GridColumnVisibilityModel>({
       id: false,
@@ -97,7 +96,7 @@ export default function TimeDataGrid({ timeList, projectList }: any) {
     [cellMode]
   );
 
-  const rows = timeSheetList?.map((timeSheet: any) => ({
+  const rows = timeList?.map((timeSheet: any) => ({
     ...timeSheet,
     date: dayjs(timeSheet.date).format("DD/MM/YYYY"),
     project: timeSheet.project.name,
@@ -132,7 +131,7 @@ export default function TimeDataGrid({ timeList, projectList }: any) {
       field: "project",
       headerName: "Project",
       type: "singleSelect",
-      valueOptions: currentProjectList.map((el: any) => {
+      valueOptions: projectList.map((el: any) => {
         return el.name;
       }),
       width: 200,
@@ -151,7 +150,7 @@ export default function TimeDataGrid({ timeList, projectList }: any) {
       width: 100,
       editable: false,
       renderCell: (params) => {
-        return DeleteButton(params, setTimeList);
+        return DeleteButton(params);
       },
     },
   ];
@@ -159,15 +158,13 @@ export default function TimeDataGrid({ timeList, projectList }: any) {
   const processRowUpdate = React.useCallback(
     async (newRow: GridRowModel) => {
       // Make the HTTP request to save in the backend
-      const project = currentProjectList.find((el: any) => {
+      const project = projectList.find((el: any) => {
         return el.name === newRow.project;
       });
       await services
         .updateTimesheet({ ...newRow, project: project._id })
         .then(() => {
-          fetchTimeSheetList().then((result) => {
-            setTimeList(result);
-          });
+          getCurrentTimesheets();
         });
       return newRow;
     },
@@ -210,7 +207,6 @@ export default function TimeDataGrid({ timeList, projectList }: any) {
                 setSelectedCellParams,
                 cellModesModel,
                 setCellModesModel,
-                setTimeList,
               },
               cell: {
                 onFocus: handleCellFocus,

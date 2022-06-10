@@ -8,27 +8,28 @@ import DashboardMenu from "../components/Dashboard_Components/DashboardMenu";
 import { GridContextType, GridDataContext } from "../GridDataProvider";
 
 export default function Timesheets() {
-  const [timeList, setTimeList] = useState([]);
-  const [projectList, setProjectList] = useState([]);
-  const { currentUser } = useContext(AuthContext) as AuthContextType;
-  const { currentProjects, getCurrentProjects } = useContext(
-    GridDataContext
-  ) as GridContextType;
+  const {
+    currentProjects,
+    currentTimesheets,
+    getCurrentTimesheets,
+    getCurrentProjects,
+    setCurrentTimesheets,
+  } = useContext(GridDataContext) as GridContextType;
 
   React.useEffect(() => {
-    fetchTimeSheetList().then((result) => {
-      setTimeList(result);
-    });
+    getCurrentTimesheets();
+    getCurrentProjects();
   }, []);
 
   return (
     <div>
       <DashboardMenu />
       {/* <pre>{JSON.stringify(body, null, 2)}</pre> */}
-      {timeList.length != 0 && currentProjects && (
+      {currentTimesheets && currentProjects && (
         <TimeDataGrid
-          timeList={timeList}
+          timeList={currentTimesheets}
           projectList={currentProjects}
+          setTimeList={setCurrentTimesheets}
         ></TimeDataGrid>
       )}
     </div>
