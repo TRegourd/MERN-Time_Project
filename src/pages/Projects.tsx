@@ -17,7 +17,10 @@ export default function Projects() {
     <div>
       <DashboardMenu />
       {projectsList.length != 0 && (
-        <ProjectDataGrid projectList={projectsList} />
+        <ProjectDataGrid
+          projectList={projectsList}
+          setProjectList={setProjectsList}
+        />
       )}
     </div>
   );

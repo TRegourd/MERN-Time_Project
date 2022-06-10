@@ -49,9 +49,9 @@ function CustomToolbar(/*props: ToolBarProps*/) {
   );
 }
 
-export default function ProjectDataGrid({ projectList }: any) {
+export default function ProjectDataGrid({ projectList, setProjectList }: any) {
   const [pageSize, setPageSize] = React.useState<number>(10);
-  const [currentProjectList, setProjectList] = React.useState<any | []>(
+  const [currentProjectList, setCurrentProjectList] = React.useState<any | []>(
     projectList
   );
   const [columnVisibilityModel, setColumnVisibilityModel] =
@@ -95,14 +95,12 @@ export default function ProjectDataGrid({ projectList }: any) {
 
   const rows = projectList?.map((project: any) => ({
     ...project,
-    project: project.name,
-    customer: project.customer,
     id: project._id,
   }));
 
   const columns: GridColumns = [
     { field: "id", headerName: "ID", width: 220, editable: false },
-    { field: "project", headerName: "Project", width: 300, editable: true },
+    { field: "name", headerName: "Project", width: 300, editable: true },
     { field: "customer", headerName: "Customer", width: 200, editable: true },
     {
       field: "delete",
@@ -110,29 +108,28 @@ export default function ProjectDataGrid({ projectList }: any) {
       width: 100,
       editable: false,
       renderCell: (params) => {
-        return DeleteButton(params, setProjectList);
+        return DeleteButton(params, setCurrentProjectList);
       },
     },
   ];
 
   const processRowUpdate = React.useCallback(async (newRow: GridRowModel) => {
-    // Make the HTTP request to save in the backend
-    const project = currentProjectList.find((el: any) => {
-      return el.name === newRow.project;
+    await services.updateProject(newRow.id, newRow).then(() => {
+      fetchProjectList().then((result) => {
+        console.log(result);
+        setCurrentProjectList(result);
+      });
     });
-    await services;
-    // .updateTimesheet({ ...newRow, project: project._id })
-    // .then(() => {
-    //   fetchTimeSheetList().then((result) => {
-    //     setTimeList(result);
-    //   });
-    // });
     return newRow;
   }, []);
 
   const handleProcessRowUpdateError = React.useCallback((error: Error) => {
     console.log(error);
   }, []);
+
+  React.useEffect(() => {
+    setProjectList(currentProjectList);
+  }, [currentProjectList]);
 
   return (
     <div style={{ height: 400, width: "100%", marginRight: 20 }}>

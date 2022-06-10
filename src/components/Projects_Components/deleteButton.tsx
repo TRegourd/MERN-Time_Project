@@ -7,7 +7,10 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { useSnackbar } from "notistack";
 
-export function DeleteButton(params: any, setProjectList: React.Dispatch<any>) {
+export function DeleteButton(
+  params: any,
+  setCurrentProjectList: React.Dispatch<any>
+) {
   const { enqueueSnackbar } = useSnackbar();
   function handleDelete() {
     const isConfirm = window.confirm("Confirm Project Delete ?");
@@ -19,7 +22,7 @@ export function DeleteButton(params: any, setProjectList: React.Dispatch<any>) {
             variant: "success",
           });
           fetchProjectList().then((result) => {
-            setProjectList(result);
+            setCurrentProjectList(result);
           });
         })
         .catch(() => enqueueSnackbar("Incorrect Entry", { variant: "error" }));
