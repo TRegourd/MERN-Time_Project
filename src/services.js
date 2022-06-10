@@ -153,6 +153,34 @@ const services = {
   createNewMessage(body) {
     return base.post("/contact", body);
   },
+
+  /**
+   * SERVICES TEAMS
+   *
+   */
+
+  createTeam(body) {
+    const token = localStorage.getItem("jwt");
+    return base.post(`/teams/`, body, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  },
+
+  getTeamList() {
+    const token = localStorage.getItem("jwt");
+    return base
+      .get(`/teams`, { headers: { Authorization: `Bearer ${token}` } })
+      .then((res) => res.data);
+  },
+
+  deleteTeam(id) {
+    const token = localStorage.getItem("jwt");
+    return base
+      .delete(`/teams/delete/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => res.data);
+  },
 };
 
 export default services;
