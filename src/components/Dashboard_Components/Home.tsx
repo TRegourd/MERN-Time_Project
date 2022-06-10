@@ -13,8 +13,18 @@ import AddProject from "../Projects_Components/AddProject";
 import Charts from "../Charts";
 import Statistics from "./Statistics";
 import { Link } from "react-router-dom";
+import { AuthContext, AuthContextType } from "../../AuthProvider";
+import AddTeam from "../Teams_Components/AddTeam";
 
 export default function ImgMediaCard() {
+  const { currentUser, getCurrentUser } = React.useContext(
+    AuthContext
+  ) as AuthContextType;
+
+  React.useEffect(() => {
+    getCurrentUser();
+  }, []);
+
   return (
     <Box>
       <Grid
@@ -24,7 +34,7 @@ export default function ImgMediaCard() {
         columnSpacing={{ xs: 1, sm: 2, md: 2 }}
       >
         <Grid item>
-          <Card sx={{ maxWidth: 500, display: "flex" }}>
+          <Card sx={{ maxWidth: 300, display: "flex" }}>
             <CardActions>
               <AddTimeSheet />
             </CardActions>
@@ -39,7 +49,7 @@ export default function ImgMediaCard() {
           </Card>
         </Grid>
         <Grid item>
-          <Card sx={{ maxWidth: 500, display: "flex" }}>
+          <Card sx={{ maxWidth: 300, display: "flex" }}>
             <CardActions>
               <AddProject />
             </CardActions>
@@ -53,6 +63,23 @@ export default function ImgMediaCard() {
             </CardContent>
           </Card>
         </Grid>
+        {currentUser.isAdmin && (
+          <Grid item>
+            <Card sx={{ maxWidth: 300, display: "flex" }}>
+              <CardActions>
+                <AddTeam />
+              </CardActions>
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  Teams
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Manage your Teams
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        )}
         <Grid item>
           <Card sx={{ maxWidth: 1000 }}>
             <CardContent>

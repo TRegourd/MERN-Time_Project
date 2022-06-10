@@ -6,9 +6,8 @@ export interface IUser {
   password?: string;
   confirmPassword?: string;
   position?: string;
-  profilePicture?: string;
-  __v?: number;
   _id: string;
+  isAdmin?: boolean;
 }
 
 export interface IProfileProps {

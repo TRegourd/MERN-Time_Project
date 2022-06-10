@@ -14,6 +14,7 @@ import Forgot from "./pages/Forgot";
 import Reset from "./pages/Reset";
 import Dashboard from "./pages/Dashboard";
 import Report from "./pages/Report";
+import Teams from "./pages/Teams";
 
 const App = () => {
   const { logged } = useContext(AuthContext) as AuthContextType;
@@ -32,6 +33,7 @@ const App = () => {
         {logged && <Route element={<Projects />} path="/projects" />}
         {logged && <Route element={<Dashboard />} path="/dashboard" />}
         {logged && <Route element={<Report />} path="/report" />}
+        {logged && <Route element={<Teams />} path="/teams" />}
         <Route element={<Profile></Profile>} path="/profilePage"></Route>
       </Routes>
     </div>
