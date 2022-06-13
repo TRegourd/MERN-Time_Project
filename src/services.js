@@ -49,7 +49,12 @@ const services = {
   },
 
   deleteProject(projectId) {
-    return base.delete(`/projects/id/${projectId}`).then((res) => res.data);
+    const token = localStorage.getItem("jwt");
+    return base
+      .delete(`/projects/id/${projectId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => res.data);
   },
 
   /**
