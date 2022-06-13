@@ -44,7 +44,6 @@ export default function ProjectDataGrid({ projectList, teamList }: any) {
   const { getCurrentProjects } = React.useContext(
     GridDataContext
   ) as GridContextType;
-  const { currentUser } = React.useContext(AuthContext) as AuthContextType;
   const [pageSize, setPageSize] = React.useState<number>(10);
   const [columnVisibilityModel, setColumnVisibilityModel] =
     React.useState<GridColumnVisibilityModel>({
@@ -89,16 +88,6 @@ export default function ProjectDataGrid({ projectList, teamList }: any) {
     team: project.team?.name,
     id: project._id,
   }));
-
-  function getTeamSelector() {
-    if (teamList.lenght != 0) {
-      teamList?.map((team: any) => {
-        return team.name;
-      });
-    } else {
-      return "toto";
-    }
-  }
 
   function isEditable(): boolean {
     if (teamList.length != 0) {
