@@ -106,7 +106,7 @@ export default function AddProject(/*setTimeList: React.Dispatch<any>*/) {
             variant="filled"
           />
 
-          {currentTeams.length != 0 && (
+          {currentTeams?.length != 0 && (
             <FormControl sx={{ m: 1, width: "100%", maxWidth: 250 }}>
               <InputLabel id="select-project-label">Team</InputLabel>
               <Select
@@ -117,7 +117,7 @@ export default function AddProject(/*setTimeList: React.Dispatch<any>*/) {
                 onChange={handleTeamChange}
                 name="team"
               >
-                {currentTeams.map((value: any) => {
+                {currentTeams?.map((value: any) => {
                   return (
                     <MenuItem key={value._id} value={value._id}>
                       {value.name}
