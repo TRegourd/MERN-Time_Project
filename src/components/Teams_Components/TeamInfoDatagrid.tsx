@@ -13,11 +13,10 @@ import {
   GridColumnVisibilityModel,
   GridRowModel,
 } from "@mui/x-data-grid";
-import { DeleteButton } from "./deleteButton";
-import AddTeam from "./AddTeam";
 import services from "../../services";
 import { GridContextType, GridDataContext } from "../../GridDataProvider";
-import { TeamInfo } from "./TeamInfoButton";
+import JoinTeam from "./JoinTeam";
+import { RemoveMemberButton } from "./RemoveMemberButton";
 
 interface SelectedCellParams {
   id: GridRowId;
@@ -29,7 +28,7 @@ function CustomToolbar() {
     <GridToolbarContainer
       sx={{ display: "flex", justifyContent: "space-between" }}
     >
-      <AddTeam />
+      <JoinTeam />
       <div>
         <GridToolbarColumnsButton />
         <GridToolbarFilterButton />
@@ -40,16 +39,13 @@ function CustomToolbar() {
   );
 }
 
-export default function TeamDataGrid({ teamList }: any) {
+export default function TeamInfoDatagrid({ teamId }: any) {
   const [pageSize, setPageSize] = React.useState<number>(10);
-  const { getCurrentTeams } = React.useContext(
-    GridDataContext
-  ) as GridContextType;
+  const { getCurrentTeams, getCurrentTeamMembers, currentTeamMembers } =
+    React.useContext(GridDataContext) as GridContextType;
   const [columnVisibilityModel, setColumnVisibilityModel] =
     React.useState<GridColumnVisibilityModel>({
-      project: true,
       id: false,
-      customer: true,
     });
   const [selectedCellParams, setSelectedCellParams] =
     React.useState<SelectedCellParams | null>(null);
@@ -65,6 +61,10 @@ export default function TeamDataGrid({ teamList }: any) {
     },
     []
   );
+
+  React.useEffect(() => {
+    getCurrentTeamMembers(teamId);
+  }, []);
 
   const cellMode = React.useMemo(() => {
     if (!selectedCellParams) {
@@ -84,31 +84,44 @@ export default function TeamDataGrid({ teamList }: any) {
     [cellMode]
   );
 
-  const rows = teamList?.map((team: any) => ({
-    ...team,
-    id: team._id,
+  const rows = currentTeamMembers?.map((member: any) => ({
+    ...member,
+    id: member._id,
   }));
 
   const columns: GridColumns = [
     { field: "id", headerName: "ID", width: 220, editable: false },
-    { field: "name", headerName: "Team", width: 300, editable: true },
-    { field: "code", headerName: "Code", width: 200, editable: false },
     {
-      field: "teamInfo",
-      headerName: "Team Info",
-      width: 100,
+      field: "first_name",
+      headerName: "First Name",
+      width: 200,
       editable: false,
-      renderCell: (params) => {
-        return TeamInfo(params);
-      },
     },
     {
-      field: "delete",
-      headerName: "",
-      width: 100,
+      field: "last_name",
+      headerName: "Last Name",
+      width: 200,
+      editable: false,
+    },
+    {
+      field: "position",
+      headerName: "Position",
+      width: 200,
+      editable: false,
+    },
+    {
+      field: "email",
+      headerName: "Email",
+      width: 200,
+      editable: false,
+    },
+    {
+      field: "",
+      headerName: "Remove",
+      width: 200,
       editable: false,
       renderCell: (params) => {
-        return DeleteButton(params);
+        return RemoveMemberButton(params, teamId);
       },
     },
   ];
@@ -125,7 +138,7 @@ export default function TeamDataGrid({ teamList }: any) {
   }, []);
 
   return (
-    <div style={{ height: 400, width: "100%", marginRight: 20 }}>
+    <div style={{ height: 500, width: "90vw", marginRight: 20 }}>
       <div
         style={{
           display: "flex",
