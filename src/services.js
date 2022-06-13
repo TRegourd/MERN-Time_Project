@@ -199,6 +199,33 @@ const services = {
       })
       .then((res) => res.data);
   },
+
+  getTeamMembers(id) {
+    const token = localStorage.getItem("jwt");
+    return base
+      .get(`/teams/members/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => res.data);
+  },
+  removeUser(id, body) {
+    const token = localStorage.getItem("jwt");
+    console.log(body);
+    return base
+      .put(`/teams/removeUser/${id}`, body, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => res.data);
+  },
+  inviteUser(id, body) {
+    const token = localStorage.getItem("jwt");
+    console.log(id);
+    return base
+      .post(`/teams/invite/${id}`, body, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => res.data);
+  },
 };
 
 export default services;
