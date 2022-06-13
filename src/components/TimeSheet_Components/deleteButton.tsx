@@ -4,15 +4,20 @@ import { BsFillTrashFill } from "react-icons/bs";
 import { Button } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { GridContextType, GridDataContext } from "../../GridDataProvider";
+import { useConfirm } from "material-ui-confirm";
 
 export function DeleteButton(params: any) {
   const { enqueueSnackbar } = useSnackbar();
   const { getCurrentTimesheets } = React.useContext(
     GridDataContext
   ) as GridContextType;
+  const confirm = useConfirm();
+
   function handleDelete() {
-    const isConfirm = window.confirm("Confirm TimeSheet Delete ?");
-    if (isConfirm)
+    confirm({
+      title: "Confirm Delete TimeSheet ?",
+      description: "This action is permanent",
+    }).then(() => {
       services
         .deleteTimesheetById(params.id)
         .then(() => {
@@ -22,6 +27,7 @@ export function DeleteButton(params: any) {
           getCurrentTimesheets();
         })
         .catch(() => enqueueSnackbar("Incorrect Entry", { variant: "error" }));
+    });
   }
   return (
     <>

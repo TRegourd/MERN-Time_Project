@@ -7,25 +7,38 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { useSnackbar } from "notistack";
 import { GridContextType, GridDataContext } from "../../GridDataProvider";
+import { useConfirm } from "material-ui-confirm";
 
 export function DeleteButton(params: any) {
   const { enqueueSnackbar } = useSnackbar();
   const { getCurrentProjects } = React.useContext(
     GridDataContext
   ) as GridContextType;
+  const confirm = useConfirm();
+
   function handleDelete() {
-    const isConfirm = window.confirm("Confirm Project Delete ?");
-    if (isConfirm)
-      services
-        .deleteProject(params.id)
-        .then(() => {
-          enqueueSnackbar("Project Successfully Deleted", {
-            variant: "success",
-          });
-          getCurrentProjects();
-        })
-        .catch(() => enqueueSnackbar("Incorrect Entry", { variant: "error" }));
+    confirm({
+      title: "Confirm Delete Project ?",
+      description: "This action will remove all associated timesheets",
+    })
+      .then(() => {
+        services
+          .deleteProject(params.id)
+          .then(() => {
+            enqueueSnackbar("Project Successfully Deleted", {
+              variant: "success",
+            });
+            getCurrentProjects();
+          })
+          .catch(() =>
+            enqueueSnackbar("Incorrect Entry", { variant: "error" })
+          );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
+
   return (
     <>
       <Button
