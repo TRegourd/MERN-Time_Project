@@ -16,8 +16,8 @@ import { GridContextType, GridDataContext } from "../../GridDataProvider";
 export default function AddTeam(/*setTimeList: React.Dispatch<any>*/) {
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
-  const { getCurrentTeams } = useContext(GridDataContext) as GridContextType;
   const { currentUser } = useContext(AuthContext) as AuthContextType;
+  const { getCurrentTeams } = useContext(GridDataContext) as GridContextType;
   const [form, setForm] = useState({
     name: "",
   });
@@ -65,7 +65,7 @@ export default function AddTeam(/*setTimeList: React.Dispatch<any>*/) {
           justifyContent: "center",
           margin: "auto",
         }}
-        variant="contained"
+        variant="text"
         onClick={handleClickOpen}
       >
         <BsFillFileEarmarkPlusFill size={30} />
