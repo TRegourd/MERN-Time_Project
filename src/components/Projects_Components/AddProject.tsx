@@ -4,6 +4,10 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField,
 } from "@mui/material";
 
@@ -17,8 +21,10 @@ export default function AddProject(/*setTimeList: React.Dispatch<any>*/) {
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
   const { currentUser } = useContext(AuthContext) as AuthContextType;
-  const { getCurrentProjects } = useContext(GridDataContext) as GridContextType;
-
+  const { getCurrentProjects, currentTeams } = useContext(
+    GridDataContext
+  ) as GridContextType;
+  const [teamValue, setTeamValue] = useState("");
   const [form, setForm] = useState({
     name: "",
     customer: "",
@@ -54,6 +60,11 @@ export default function AddProject(/*setTimeList: React.Dispatch<any>*/) {
   };
   const handleClickOpen = () => {
     setOpen(true);
+  };
+
+  const handleTeamChange = (event: any) => {
+    setTeamValue(event.target.value);
+    handleFormChange(event);
   };
 
   return (
@@ -94,6 +105,28 @@ export default function AddProject(/*setTimeList: React.Dispatch<any>*/) {
             label="Customer"
             variant="filled"
           />
+
+          {currentTeams?.length != 0 && (
+            <FormControl sx={{ m: 1, width: "100%", maxWidth: 250 }}>
+              <InputLabel id="select-project-label">Team</InputLabel>
+              <Select
+                labelId="select-project-label"
+                id="select-project"
+                value={teamValue}
+                label="Team"
+                onChange={handleTeamChange}
+                name="team"
+              >
+                {currentTeams?.map((value: any) => {
+                  return (
+                    <MenuItem key={value._id} value={value._id}>
+                      {value.name}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

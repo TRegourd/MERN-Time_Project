@@ -17,6 +17,7 @@ import { DeleteButton } from "./deleteButton";
 import AddProject from "./AddProject";
 import services from "../../services";
 import { GridContextType, GridDataContext } from "../../GridDataProvider";
+import { AuthContext, AuthContextType } from "../../AuthProvider";
 
 interface SelectedCellParams {
   id: GridRowId;
@@ -39,7 +40,7 @@ function CustomToolbar() {
   );
 }
 
-export default function ProjectDataGrid({ projectList }: any) {
+export default function ProjectDataGrid({ projectList, teamList }: any) {
   const { getCurrentProjects } = React.useContext(
     GridDataContext
   ) as GridContextType;
@@ -84,13 +85,30 @@ export default function ProjectDataGrid({ projectList }: any) {
 
   const rows = projectList?.map((project: any) => ({
     ...project,
+    team: project.team?.name,
     id: project._id,
   }));
+
+  function isEditable(): boolean {
+    if (teamList.length != 0) {
+      return true;
+    } else return false;
+  }
 
   const columns: GridColumns = [
     { field: "id", headerName: "ID", width: 220, editable: false },
     { field: "name", headerName: "Project", width: 300, editable: true },
     { field: "customer", headerName: "Customer", width: 200, editable: true },
+    {
+      field: "team",
+      headerName: "Team",
+      type: "singleSelect",
+      valueOptions: teamList?.map((team: any) => {
+        return team.name;
+      }),
+      width: 200,
+      editable: isEditable(),
+    },
     {
       field: "delete",
       headerName: "",
@@ -103,9 +121,14 @@ export default function ProjectDataGrid({ projectList }: any) {
   ];
 
   const processRowUpdate = React.useCallback(async (newRow: GridRowModel) => {
-    await services.updateProject(newRow.id, newRow).then(() => {
-      getCurrentProjects();
+    const team = teamList.find((el: any) => {
+      return el.name === newRow.team;
     });
+    await services
+      .updateProject(newRow.id, { ...newRow, team: team._id })
+      .then(() => {
+        getCurrentProjects();
+      });
     return newRow;
   }, []);
 
