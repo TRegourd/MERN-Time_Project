@@ -15,6 +15,7 @@ import Reset from "./pages/Reset";
 import Dashboard from "./pages/Dashboard";
 import Report from "./pages/Report";
 import Teams from "./pages/Teams";
+import InvitiationSignIn from "./pages/InvitationSignIn";
 
 const App = () => {
   const { logged } = useContext(AuthContext) as AuthContextType;
@@ -27,6 +28,7 @@ const App = () => {
         <Route element={<Home />} path="/" />
         <Route element={<Login />} path="/login"></Route>
         <Route element={<Signin />} path="/signin"></Route>
+        <Route element={<InvitiationSignIn />} path="/invitation/:id"></Route>
         <Route element={<Forgot />} path="/forgot"></Route>
         <Route element={<Reset />} path="/reset/:id" />
         {logged && <Route element={<Timesheets />} path="/timesheet"></Route>}

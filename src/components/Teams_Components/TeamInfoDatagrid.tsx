@@ -17,18 +17,19 @@ import services from "../../services";
 import { GridContextType, GridDataContext } from "../../GridDataProvider";
 import JoinTeam from "./JoinTeam";
 import { RemoveMemberButton } from "./RemoveMemberButton";
+import InviteButton from "./InviteButton";
 
 interface SelectedCellParams {
   id: GridRowId;
   field: string;
 }
 
-function CustomToolbar() {
+function CustomToolbar(props: any) {
   return (
     <GridToolbarContainer
       sx={{ display: "flex", justifyContent: "space-between" }}
     >
-      <JoinTeam />
+      <InviteButton teamId={props.teamId} />
       <div>
         <GridToolbarColumnsButton />
         <GridToolbarFilterButton />
@@ -169,6 +170,7 @@ export default function TeamInfoDatagrid({ teamId }: any) {
                 setSelectedCellParams,
                 cellModesModel,
                 setCellModesModel,
+                teamId: teamId,
               },
               cell: {
                 onFocus: handleCellFocus,
