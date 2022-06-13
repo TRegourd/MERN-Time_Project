@@ -104,7 +104,7 @@ export default function TeamDataGrid({ teamList }: any) {
     },
     {
       field: "delete",
-      headerName: "",
+      headerName: "Delete",
       width: 100,
       editable: false,
       renderCell: (params) => {

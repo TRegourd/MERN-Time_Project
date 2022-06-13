@@ -39,7 +39,7 @@ export function DeleteButton(params: any) {
           handleDelete();
         }}
       >
-        <BsFillTrashFill />
+        <BsFillTrashFill size={30} />
       </Button>
     </>
   );

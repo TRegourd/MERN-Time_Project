@@ -118,7 +118,7 @@ export default function TeamInfoDatagrid({ teamId }: any) {
     {
       field: "",
       headerName: "Remove",
-      width: 200,
+      width: 100,
       editable: false,
       renderCell: (params) => {
         return RemoveMemberButton(params, teamId);

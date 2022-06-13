@@ -1,5 +1,5 @@
 import * as React from "react";
-import { GrContactInfo } from "react-icons/gr";
+import { CgUserList } from "react-icons/cg";
 import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
 
 import { GridContextType, GridDataContext } from "../../GridDataProvider";
@@ -30,7 +30,7 @@ export function TeamInfo(params: any) {
           handleClickOpen();
         }}
       >
-        <GrContactInfo />
+        <CgUserList size={30} />
       </Button>
       <Dialog
         open={open}

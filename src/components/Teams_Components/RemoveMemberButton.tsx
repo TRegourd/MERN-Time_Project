@@ -1,6 +1,6 @@
 import * as React from "react";
 import services from "../../services";
-import { FaPeopleArrows } from "react-icons/fa";
+import { FaUserMinus } from "react-icons/fa";
 import { Button } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { GridContextType, GridDataContext } from "../../GridDataProvider";
@@ -15,14 +15,13 @@ export function RemoveMemberButton(params: any, teamId: string) {
 
   function handleLeave() {
     confirm({
-      title: "Confirm Leave Team ?",
-      description:
-        "This action will remove all associated projects and timesheets",
+      title: "Confirm Remove User From Team ?",
+      description: "This action is permanent",
     }).then(() => {
       services
         .removeUser(teamId, params?.row)
         .then(() => {
-          enqueueSnackbar("Team Successfully Left", {
+          enqueueSnackbar("Member Successfully Removed", {
             variant: "success",
           });
           getCurrentTeamMembers(teamId);
@@ -40,7 +39,7 @@ export function RemoveMemberButton(params: any, teamId: string) {
           handleLeave();
         }}
       >
-        <FaPeopleArrows />
+        <FaUserMinus />
       </Button>
     </>
   );

@@ -39,7 +39,7 @@ export function LeaveTeamButton(params: any) {
           handleLeave();
         }}
       >
-        <FaPeopleArrows />
+        <FaPeopleArrows size={30} />
       </Button>
     </>
   );
