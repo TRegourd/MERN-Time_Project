@@ -8,13 +8,13 @@ import Typography from "@mui/material/Typography";
 import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import { BiAlarmAdd } from "react-icons/bi";
-import AddTimeSheet from "../TimeSheet_Components/AddTimeSheet";
-import AddProject from "../Projects_Components/AddProject";
+import AddTimeSheet from "./AddTimeSheet";
+import AddProject from "./AddProject";
 import Charts from "../Charts";
 import Statistics from "./Statistics";
 import { Link } from "react-router-dom";
 import { AuthContext, AuthContextType } from "../../AuthProvider";
-import AddTeam from "../Teams_Components/AddTeam";
+import AddTeam from "./AddTeam";
 
 export default function ImgMediaCard() {
   const { currentUser, getCurrentUser } = React.useContext(
@@ -38,14 +38,6 @@ export default function ImgMediaCard() {
             <CardActions>
               <AddTimeSheet />
             </CardActions>
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                TimeSheets
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Track your Time on project
-              </Typography>
-            </CardContent>
           </Card>
         </Grid>
         <Grid item>
@@ -53,14 +45,6 @@ export default function ImgMediaCard() {
             <CardActions>
               <AddProject />
             </CardActions>
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                Projects
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Set Projects to track time on
-              </Typography>
-            </CardContent>
           </Card>
         </Grid>
 
@@ -70,14 +54,6 @@ export default function ImgMediaCard() {
               <CardActions>
                 <AddTeam />
               </CardActions>
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  Teams
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Manage your Teams
-                </Typography>
-              </CardContent>
             </Card>
           </Grid>
         )}

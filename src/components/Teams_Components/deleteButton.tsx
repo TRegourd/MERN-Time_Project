@@ -4,15 +4,21 @@ import { BsFillTrashFill } from "react-icons/bs";
 import { Button } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { GridContextType, GridDataContext } from "../../GridDataProvider";
+import { useConfirm } from "material-ui-confirm";
 
 export function DeleteButton(params: any) {
   const { enqueueSnackbar } = useSnackbar();
   const { getCurrentTeams } = React.useContext(
     GridDataContext
   ) as GridContextType;
+  const confirm = useConfirm();
+
   function handleDelete() {
-    const isConfirm = window.confirm("Confirm Team Delete ?");
-    if (isConfirm)
+    confirm({
+      title: "Confirm Delete Team ?",
+      description:
+        "This action will remove all associated projects and timesheets",
+    }).then(() => {
       services
         .deleteTeam(params.id)
         .then(() => {
@@ -22,6 +28,7 @@ export function DeleteButton(params: any) {
           getCurrentTeams();
         })
         .catch(() => enqueueSnackbar("Incorrect Entry", { variant: "error" }));
+    });
   }
   return (
     <>

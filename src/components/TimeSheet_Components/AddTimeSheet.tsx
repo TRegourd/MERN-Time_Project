@@ -47,6 +47,7 @@ export default function AddTimeSheet() {
         enqueueSnackbar("TimeSheet Successfully Created", {
           variant: "success",
         });
+        setOpen(false);
       })
       .catch((err) => {
         console.log(err);

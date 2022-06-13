@@ -39,6 +39,7 @@ export default function AddProject(/*setTimeList: React.Dispatch<any>*/) {
         enqueueSnackbar("Project Successfully Created", {
           variant: "success",
         });
+        setOpen(false);
       })
       .catch((err) => {
         console.log(err);

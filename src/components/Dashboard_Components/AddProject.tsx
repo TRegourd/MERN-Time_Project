@@ -1,9 +1,18 @@
-import React, { useState, useContext, ReactComponentElement } from "react";
+import React, {
+  useState,
+  useContext,
+  ReactComponentElement,
+  useEffect,
+} from "react";
 import {
   Button,
   Dialog,
   DialogActions,
   DialogContent,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField,
 } from "@mui/material";
 
@@ -13,22 +22,26 @@ import { useSnackbar } from "notistack";
 import { BsFillFileEarmarkPlusFill } from "react-icons/bs";
 import { GridContextType, GridDataContext } from "../../GridDataProvider";
 
-export default function AddTeam(/*setTimeList: React.Dispatch<any>*/) {
+export default function AddProject() {
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
-  const { getCurrentTeams } = useContext(GridDataContext) as GridContextType;
   const { currentUser } = useContext(AuthContext) as AuthContextType;
+  const { currentTeams, getCurrentTeams, getCurrentProjects } = useContext(
+    GridDataContext
+  ) as GridContextType;
+  const [teamValue, setTeamValue] = useState("");
   const [form, setForm] = useState({
     name: "",
+    customer: "",
   });
 
   const handleSubmit = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     services
-      .createTeam({ ...form, user: currentUser._id })
+      .createProject({ ...form, user: currentUser._id })
       .then(() => {
-        getCurrentTeams();
-        enqueueSnackbar("Team Successfully Created", {
+        getCurrentProjects();
+        enqueueSnackbar("Project Successfully Created", {
           variant: "success",
         });
         setOpen(false);
@@ -55,6 +68,15 @@ export default function AddTeam(/*setTimeList: React.Dispatch<any>*/) {
     setOpen(true);
   };
 
+  const handleTeamChange = (event: any) => {
+    setTeamValue(event.target.value);
+    handleFormChange(event);
+  };
+
+  useEffect(() => {
+    getCurrentTeams();
+  }, []);
+
   return (
     <div>
       <Button
@@ -65,11 +87,11 @@ export default function AddTeam(/*setTimeList: React.Dispatch<any>*/) {
           justifyContent: "center",
           margin: "auto",
         }}
-        variant="contained"
+        variant="text"
         onClick={handleClickOpen}
       >
         <BsFillFileEarmarkPlusFill size={30} />
-        <span>Create Team</span>
+        <span>Create Project</span>
       </Button>
       <Dialog
         open={open}
@@ -84,9 +106,37 @@ export default function AddTeam(/*setTimeList: React.Dispatch<any>*/) {
           <TextField
             id="filled-basic"
             name="name"
-            label="Team Name"
+            label="Project Name"
             variant="filled"
           />
+          <TextField
+            id="filled-basic"
+            name="customer"
+            label="Customer"
+            variant="filled"
+          />
+
+          {currentTeams?.length != 0 && (
+            <FormControl sx={{ m: 1, width: "100%", maxWidth: 250 }}>
+              <InputLabel id="select-project-label">Team</InputLabel>
+              <Select
+                labelId="select-project-label"
+                id="select-project"
+                value={teamValue}
+                label="Team"
+                onChange={handleTeamChange}
+                name="team"
+              >
+                {currentTeams?.map((value: any) => {
+                  return (
+                    <MenuItem key={value._id} value={value._id}>
+                      {value.name}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
