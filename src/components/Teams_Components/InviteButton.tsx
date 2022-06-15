@@ -79,7 +79,7 @@ export default function InviteButton({ teamId }: any) {
         }}
       >
         <DialogContent>
-          <pre>{JSON.stringify(form, null, 2)}</pre>
+          {/* <pre>{JSON.stringify(form, null, 2)}</pre> */}
           <TextField
             id="filled-basic"
             name="emails"
