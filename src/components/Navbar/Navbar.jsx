@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import "./Navbar.css";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AuthContext } from "../../AuthProvider";
-import Logo from "../../assets/stopwatch.png";
+import Logo from "../../assets/time-machine.png";
 
 function Navbar() {
   const { logged } = useContext(AuthContext); // as AuthContextType;
