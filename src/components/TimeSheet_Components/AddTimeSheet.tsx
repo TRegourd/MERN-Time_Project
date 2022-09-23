@@ -9,6 +9,7 @@ import {
   InputLabel,
   FormControl,
   TextField,
+  SelectChangeEvent,
 } from "@mui/material";
 
 import { AuthContext, AuthContextType } from "../../AuthProvider";
@@ -33,9 +34,9 @@ export default function AddTimeSheet() {
     user: "",
   });
 
-  const handleProjectChange = (event: any) => {
+  const handleProjectChange = (event: SelectChangeEvent<string>) => {
     setProjectValue(event.target.value);
-    handleFormChange(event);
+    handleFormChange(event as React.ChangeEvent<HTMLInputElement>);
   };
 
   const handleSubmit = (e: React.MouseEvent<HTMLElement>) => {

@@ -21,8 +21,39 @@
   transition: all 0.2s ease-in-out;
 }
 
+.dashboard-home-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+.dashboard-btns-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.chart-container {
+  width: 1000px;
+}
+
 @media screen and (max-width: 960px) {
   .menuLinkLogo {
     display: none;
+  }
+  .chart-container {
+    width: 500px;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .dashboard-btns-container {
+    flex-direction: column;
+  }
+  .chart-container {
+    width: 300px;
   }
 }
