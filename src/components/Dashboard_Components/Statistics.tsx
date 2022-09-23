@@ -9,33 +9,24 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { GridContextType, GridDataContext } from "../../GridDataProvider";
 
 import { fetchChartData } from "../../libs/apiCalls";
 
 export default function Statistics() {
-  const [data, setData] = useState([]);
+  const { chartData, fetchChartData } = useContext(
+    GridDataContext
+  ) as GridContextType;
 
   React.useEffect(() => {
-    fetchChartData(null, null).then((result) => {
-      setData(result);
-    });
+    fetchChartData(null, null);
   }, []);
+
   return (
-    <div
-      style={
-        {
-          // display: "flex",
-          // flexDirection: "column",
-          // justifyContent: "center",
-          // alignItems: "center",
-          // marginTop: "10px",
-          // width: "1000px",
-        }
-      }
-    >
+    <div>
       <ResponsiveContainer height={400}>
         <BarChart
-          data={data}
+          data={chartData}
           height={250}
           margin={{
             top: 5,

@@ -21,7 +21,7 @@ export default function AddTimeSheet() {
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
   const [projectValue, setProjectValue] = useState("");
-  const { currentProjects, getCurrentProjects } = useContext(
+  const { currentProjects, getCurrentProjects, fetchChartData } = useContext(
     GridDataContext
   ) as GridContextType;
   const { currentUser } = useContext(AuthContext) as AuthContextType;
@@ -43,6 +43,7 @@ export default function AddTimeSheet() {
     services
       .createNewTimesheet({ ...form, user: currentUser._id })
       .then(() => {
+        fetchChartData(null, null);
         enqueueSnackbar("TimeSheet Successfully Created", {
           variant: "success",
         });

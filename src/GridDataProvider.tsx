@@ -16,6 +16,12 @@ export interface GridContextType {
   currentTeamMembers: any;
   setCurrentTeamMembers: (result: any) => void;
   getCurrentTeamMembers: (teamId: string) => void;
+  chartData: any;
+  setChartData: (data: any) => void;
+  fetchChartData: (
+    filterStartValue: Date | null,
+    filterEndValue: Date | null
+  ) => void;
 }
 
 export const GridDataContext = createContext<GridContextType | null>(null);
@@ -25,6 +31,7 @@ export default function GirdDataProvider({ children }: any) {
   const [currentTimesheets, setCurrentTimesheets] = useState();
   const [currentTeams, setCurrentTeams] = useState();
   const [currentTeamMembers, setCurrentTeamMembers] = useState();
+  const [chartData, setChartData] = useState();
 
   function getCurrentProjects() {
     services
@@ -62,6 +69,28 @@ export default function GirdDataProvider({ children }: any) {
       .catch(() => alert("erreur"));
   }
 
+  function fetchChartData(
+    filterStartValue: Date | null,
+    filterEndValue: Date | null
+  ) {
+    if (filterStartValue && filterEndValue) {
+      const filter = { startDate: filterStartValue, endDate: filterEndValue };
+      services
+        .getTotalTimebyProject(filter)
+        .then((result) => {
+          setChartData(result);
+        })
+        .catch(() => alert("erreur"));
+    } else {
+      services
+        .getTotalTimebyProject()
+        .then((result) => {
+          setChartData(result);
+        })
+        .catch(() => alert("erreur"));
+    }
+  }
+
   const value = {
     currentProjects,
     setCurrentProjects,
@@ -75,6 +104,9 @@ export default function GirdDataProvider({ children }: any) {
     currentTeamMembers,
     setCurrentTeamMembers,
     getCurrentTeamMembers,
+    chartData,
+    setChartData,
+    fetchChartData,
   };
 
   return (
