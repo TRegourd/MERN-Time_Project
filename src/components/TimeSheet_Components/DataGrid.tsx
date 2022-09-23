@@ -88,7 +88,7 @@ export default function TimeDataGrid({ timeList, projectList }: any) {
 
   const rows = timeList?.map((timeSheet: any) => ({
     ...timeSheet,
-    date: dayjs(timeSheet.date).format("DD/MM/YYYY"),
+    date: dayjs(timeSheet.date).format("YYYY-MM-DD"),
     project: timeSheet.project.name,
     userName: `${timeSheet.user.first_name} ${timeSheet.user.last_name}`,
     id: timeSheet._id,
